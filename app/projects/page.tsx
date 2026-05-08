@@ -62,6 +62,48 @@ const flagshipFeatures = [
   "Coins and rewards",
 ];
 
+const goodGamePlatformLayers = [
+  {
+    title: "Storefront and checkout",
+    label: "Public shop",
+    copy: "Creator collections, product pages, carts, checkout and customer accounts.",
+    icon: HiOutlineShoppingCart,
+  },
+  {
+    title: "Product creator",
+    label: "Design tool",
+    copy: "Upload artwork, choose garments, preview colours and publish products.",
+    icon: HiOutlineSquares2X2,
+  },
+  {
+    title: "Creator dashboard",
+    label: "Creator hub",
+    copy: "Manage products, orders, earnings, rewards, assets and support.",
+    icon: HiOutlineChartBarSquare,
+  },
+  {
+    title: "Growth tools",
+    label: "Launch support",
+    copy: "Subscriptions, ambassador links, coins, logo tools and saved assets.",
+    icon: HiOutlineWrenchScrewdriver,
+  },
+];
+
+const goodGameToolSections = [
+  {
+    label: "Product creator",
+    title: "Turn artwork into products.",
+    copy: "Creators pick a product, place artwork, preview the design and save it to their store.",
+    tags: ["Artwork uploads", "Product previews", "Saved products"],
+  },
+  {
+    label: "Creator dashboard",
+    title: "Run the creator account.",
+    copy: "Creators manage their shop, products, orders, sales, rewards, assets and support from one dashboard.",
+    tags: ["Shop control", "Sales view", "Support hub"],
+  },
+];
+
 export default function ProjectsPage() {
   return (
     <>
@@ -154,6 +196,51 @@ export default function ProjectsPage() {
               ))}
             </div>
           </MotionReveal>
+        </div>
+      </section>
+
+      <section className="section dark-section good-game-platform-section" data-nav-tone="dark">
+        <div className="section-inner">
+          <MotionReveal className="good-game-section-heading">
+            <p className="eyebrow eyebrow-light">Good Game platform</p>
+            <h2>Storefront, creator tools and dashboard in one connected platform.</h2>
+          </MotionReveal>
+          <div className="good-game-platform-grid">
+            {goodGamePlatformLayers.map((item, index) => {
+              const Icon = item.icon;
+              return (
+                <MotionReveal
+                  className="good-game-platform-card"
+                  delay={index * 0.06}
+                  key={item.title}
+                >
+                  <div className="good-game-platform-card-top">
+                    <Icon aria-hidden="true" />
+                    <span>{item.label}</span>
+                  </div>
+                  <h3>{item.title}</h3>
+                  <p>{item.copy}</p>
+                </MotionReveal>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      <section className="section dark-section good-game-tools-section" data-nav-tone="dark">
+        <div className="section-inner good-game-tools-grid">
+          {goodGameToolSections.map((item, index) => (
+            <MotionReveal className="good-game-tool-panel" delay={index * 0.08} key={item.title}>
+              <p className="eyebrow eyebrow-light">{item.label}</p>
+              <h2>{item.title}</h2>
+              <p>{item.copy}</p>
+              <div className="good-game-tool-tags">
+                {item.tags.map((tag) => (
+                  <span key={tag}>{tag}</span>
+                ))}
+              </div>
+            </MotionReveal>
+          ))}
         </div>
       </section>
 

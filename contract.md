@@ -69,6 +69,9 @@ The Projects page frames BRANDD builds as connected websites, products, and syst
 - The Good Game Apparel section is the flagship project section and has the `id="good-game-apparel"` anchor.
 - Good Game Apparel is presented as BRANDD-owned creator-commerce platform work covering creator storefronts, product creator tools, subscriptions, revenue share, dashboard logic, referrals, and rewards.
 - The Good Game section uses dark storefront-inspired styling, gold accents, the gold Good Game Apparel logo, the `www.goodgameapparel.co.uk` public link, and a Cloudinary-hosted banner video.
+- Good Game has additional dark/gold sections for the platform layers: storefront and checkout, product creator, creator dashboard, and creator growth tools.
+- The Good Game product creator section explains artwork upload, product selection, design preview, and saving products to the creator store.
+- The Good Game creator dashboard section explains shop control, product and order management, sales visibility, rewards, assets, and support.
 - The Project Types section lists creator-commerce platforms, operational dashboards, MVP platforms, ecommerce systems, and business process tools.
 - The page ends with a dark CTA linking to Contact.
 
@@ -132,7 +135,7 @@ The Contact page collects project enquiries.
 - The MVP pages use CSS variables scoped by product slug:
   - `.mvp-beatify` uses green accent variables.
   - `.mvp-dtf-gang-designer` uses purple accent variables.
-- The Good Game flagship section uses a separate dark/gold visual system based around `#f2c653`, dark navy-black backgrounds, readable gold feature pills, glassy panels, the Good Game logo, and a video-backed visual.
+- The Good Game project sections use a separate dark/gold visual system based around `#f2c653`, dark navy-black backgrounds, readable gold feature pills, glassy panels, the Good Game logo, and a video-backed visual.
 - Responsive rules collapse grids at tablet sizes and simplify hero/section layouts at mobile sizes.
 
 ## Interaction Logic

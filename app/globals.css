@@ -1712,7 +1712,9 @@ h3 {
   text-transform: uppercase;
 }
 
-.good-game-project-section {
+.good-game-project-section,
+.good-game-platform-section,
+.good-game-tools-section {
   --gga-bg: #05070d;
   --gga-bg-mid: #080a11;
   --gga-ink: #f5f0e3;
@@ -1735,11 +1737,11 @@ h3 {
   scroll-margin-top: var(--header-height);
 }
 
-.good-game-project-section .eyebrow {
+:is(.good-game-project-section, .good-game-platform-section, .good-game-tools-section) .eyebrow {
   color: var(--gga-accent-strong);
 }
 
-.good-game-project-section .eyebrow::before {
+:is(.good-game-project-section, .good-game-platform-section, .good-game-tools-section) .eyebrow::before {
   background: linear-gradient(110deg, var(--gga-accent-fill-start), var(--gga-accent-fill-mid), var(--gga-accent-fill-end));
   box-shadow: 0 0 22px rgba(242, 198, 83, 0.3);
 }
@@ -1876,6 +1878,140 @@ h3 {
   background:
     linear-gradient(165deg, rgba(17, 23, 35, 0.82), rgba(8, 11, 19, 0.94)),
     rgba(242, 198, 83, 0.08);
+  color: #fff3cf;
+}
+
+.good-game-platform-section {
+  margin-top: -1px;
+  padding-top: clamp(70px, 8vw, 112px);
+}
+
+.good-game-tools-section {
+  margin-top: -1px;
+  padding-top: clamp(18px, 3vw, 44px);
+}
+
+.good-game-section-heading {
+  max-width: 900px;
+  margin-bottom: clamp(30px, 4vw, 52px);
+}
+
+.good-game-section-heading h2,
+.good-game-tool-panel h2 {
+  max-width: 860px;
+  color: #fff6df;
+  font-family: Impact, Haettenschweiler, "Franklin Gothic Medium", var(--font-display);
+  font-weight: 900;
+  letter-spacing: 0;
+  line-height: 0.92;
+}
+
+.good-game-section-heading h2 {
+  font-size: clamp(2.25rem, 4.4vw, 5.3rem);
+}
+
+.good-game-platform-grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.good-game-platform-card {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  min-height: 260px;
+  padding: clamp(20px, 2.5vw, 30px);
+  border: 1px solid rgba(242, 198, 83, 0.2);
+  border-radius: 8px;
+  background:
+    linear-gradient(160deg, rgba(255, 246, 223, 0.06), rgba(255, 246, 223, 0.015)),
+    rgba(9, 13, 22, 0.72);
+  box-shadow: 0 22px 58px rgba(1, 4, 10, 0.28);
+}
+
+.good-game-platform-card-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+}
+
+.good-game-platform-card-top svg {
+  width: 30px;
+  height: 30px;
+  color: var(--gga-accent-strong);
+}
+
+.good-game-platform-card-top span,
+.good-game-tool-tags span {
+  color: var(--gga-accent-strong);
+  font-size: 0.72rem;
+  font-weight: 950;
+  letter-spacing: 0;
+  text-transform: uppercase;
+}
+
+.good-game-platform-card h3 {
+  margin-top: 6px;
+  color: #fff6df;
+  font-size: clamp(1.35rem, 2vw, 2rem);
+  font-weight: 950;
+  line-height: 0.98;
+  text-transform: uppercase;
+}
+
+.good-game-platform-card p,
+.good-game-tool-panel > p:not(.eyebrow) {
+  color: var(--gga-ink-soft);
+  font-size: clamp(0.98rem, 1.1vw, 1.08rem);
+  font-weight: 750;
+  line-height: 1.48;
+}
+
+.good-game-tools-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 3vw, 32px);
+}
+
+.good-game-tool-panel {
+  display: grid;
+  align-content: start;
+  gap: 18px;
+  min-height: 360px;
+  padding: clamp(26px, 4vw, 48px);
+  border: 1px solid rgba(242, 198, 83, 0.24);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at top right, rgba(242, 198, 83, 0.14), transparent 36%),
+    linear-gradient(150deg, rgba(255, 246, 223, 0.075), rgba(7, 10, 18, 0.76) 58%),
+    rgba(5, 7, 13, 0.9);
+}
+
+.good-game-tool-panel h2 {
+  font-size: clamp(2rem, 3.6vw, 4.2rem);
+}
+
+.good-game-tool-panel > p:not(.eyebrow) {
+  max-width: 620px;
+}
+
+.good-game-tool-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: auto;
+}
+
+.good-game-tool-tags span {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid rgba(242, 198, 83, 0.22);
+  border-radius: 8px;
+  background: rgba(242, 198, 83, 0.12);
   color: #fff3cf;
 }
 
@@ -2327,6 +2463,10 @@ h3 {
     padding-top: calc(var(--header-height) + 54px);
   }
 
+  .good-game-platform-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
   .service-grid,
   .principle-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
@@ -2436,10 +2576,17 @@ h3 {
   .principle-grid,
   .proof-list,
   .flagship-feature-list,
+  .good-game-platform-grid,
+  .good-game-tools-grid,
   .mvp-stage-media-body,
   .service-orbit,
   .about-mark {
     grid-template-columns: 1fr;
+  }
+
+  .good-game-platform-card,
+  .good-game-tool-panel {
+    min-height: auto;
   }
 
   .flagship-project-visual,
