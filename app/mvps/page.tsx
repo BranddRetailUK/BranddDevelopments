@@ -119,6 +119,8 @@ export default function MvpsPage() {
           <p className="eyebrow eyebrow-light">MVPs</p>
           <h1>MVPs built to test the idea, onboard users and prove the system.</h1>
           <p>
+            An MVP is the smallest usable version of a product that can launch,
+            test demand and guide the next build.{" "}
             Brandd builds practical first-version products for businesses that
             need something real in users&apos; hands: a sharp version one with
             enough design, backend, database and product thinking to launch,

@@ -665,6 +665,17 @@ h3 {
   color: var(--black);
 }
 
+.page-hero-dark .button-dark {
+  border-color: var(--white);
+  background: var(--white);
+  color: var(--black);
+}
+
+.page-hero-dark .button-outline {
+  border-color: rgba(255, 255, 255, 0.34);
+  color: var(--white);
+}
+
 .hero-system {
   position: relative;
   z-index: 2;
@@ -1435,6 +1446,10 @@ h3 {
 
 .mvp-browser-bar strong {
   margin-left: auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .mvp-visual-main {
@@ -1660,6 +1675,10 @@ h3 {
 
 .flagship-browser-bar strong {
   margin-left: auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .flagship-screen-main {
@@ -2154,6 +2173,10 @@ h3 {
 
 .ace-browser-bar strong {
   margin-left: auto;
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 .ace-visual-banner {
@@ -2763,6 +2786,8 @@ h3 {
   }
 
   .section-grid,
+  .hero.section-grid,
+  .projects-hero.section-grid,
   .two-column,
   .flagship-project-panel,
   .ace-hero-grid,
@@ -2841,24 +2866,23 @@ h3 {
     padding: calc(var(--header-height) + 42px) 18px 60px;
   }
 
-  h1 {
-    font-size: clamp(2.35rem, 11vw, 3.8rem);
-    line-height: 0.96;
-  }
-
+  h1,
+  .page-hero-copy h1,
   .hero-copy h1 {
-    font-size: clamp(2.25rem, 10vw, 3.2rem);
+    max-width: 100%;
+    font-size: clamp(2.15rem, 9.5vw, 3.15rem);
     line-height: 0.98;
-  }
-
-  .projects-hero .page-hero-copy h1 {
-    font-size: clamp(2.25rem, 10vw, 3.2rem);
-    line-height: 0.98;
+    overflow-wrap: break-word;
   }
 
   h2 {
     font-size: clamp(1.75rem, 8.8vw, 2.8rem);
     line-height: 1;
+    overflow-wrap: break-word;
+  }
+
+  h3 {
+    overflow-wrap: break-word;
   }
 
   .hero-actions,
@@ -2868,7 +2892,14 @@ h3 {
   }
 
   .button {
+    min-height: 48px;
+    padding: 0 14px;
     width: 100%;
+    font-size: 0.74rem;
+    letter-spacing: 0;
+    line-height: 1.12;
+    text-align: center;
+    white-space: normal;
   }
 
   .interface-frame {
@@ -2905,6 +2936,31 @@ h3 {
     padding: 70px 18px;
   }
 
+  .hero-copy,
+  .page-hero-copy,
+  .section-heading,
+  .ace-hero-copy,
+  .ace-commerce-copy,
+  .ace-product-copy,
+  .mvp-detail-copy,
+  .mvp-stage-copy {
+    max-width: 100%;
+  }
+
+  .mvp-browser-bar,
+  .flagship-browser-bar,
+  .ace-browser-bar {
+    padding: 0 12px;
+    font-size: 0.64rem;
+  }
+
+  .mvp-visual-main strong,
+  .flagship-screen-main strong,
+  .ace-flow-stack strong,
+  .good-game-visual-content strong {
+    overflow-wrap: break-word;
+  }
+
   .service-grid,
   .project-grid,
   .workflow-grid,
@@ -2933,7 +2989,7 @@ h3 {
   }
 
   .ace-hero-copy h1 {
-    font-size: clamp(2.25rem, 10vw, 3.2rem);
+    font-size: clamp(2.15rem, 9.5vw, 3.15rem);
     line-height: 0.98;
   }
 
