@@ -26,6 +26,11 @@ export const navItems = [
         label: "Good Game Apparel",
         description: "Brandd-owned creator-commerce flagship project.",
       },
+      {
+        href: "/projects/ace-hits-tcg",
+        label: "Ace Hits TCG",
+        description: "Collector retail storefront for Pokemon TCG drops.",
+      },
     ],
   },
   { href: "/mvps", label: "MVPs" },
@@ -39,6 +44,7 @@ export type RouteTone = "light" | "dark";
 export const routeTones: Record<string, RouteTone> = {
   "/": "light",
   "/projects": "dark",
+  "/projects/ace-hits-tcg": "dark",
   "/mvps": "dark",
   "/services": "light",
   "/about-us": "dark",
