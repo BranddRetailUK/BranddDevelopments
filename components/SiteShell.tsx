@@ -87,8 +87,8 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
           <Link className="brand-mark" href="/" aria-label="BRANDD Developments home">
             <Image
               src={headerTone === "dark" ? whiteLogo : darkLogo}
-              width={260}
-              height={82}
+              width={886}
+              height={205}
               priority
               alt="BRANDD Developments"
             />
@@ -195,10 +195,12 @@ function NavLink({
   mobile?: boolean;
 }) {
   const children = "children" in item ? item.children : undefined;
+  const hrefPath = (href: string) => href.split("#")[0] || href;
   const active =
     item.href === "/"
       ? pathname === "/"
-      : pathname.startsWith(item.href) || Boolean(children?.some((child) => pathname.startsWith(child.href)));
+      : pathname.startsWith(item.href) ||
+        Boolean(children?.some((child) => pathname.startsWith(hrefPath(child.href))));
   const isOpen = openDropdown === item.href;
 
   if (children && !mobile) {
@@ -248,7 +250,7 @@ function NavLink({
               <span className="dropdown-accent dropdown-accent-two" aria-hidden="true" />
               {children.map((child) => (
                 <Link
-                  className={pathname === child.href ? "dropdown-link active" : "dropdown-link"}
+                  className={pathname === hrefPath(child.href) ? "dropdown-link active" : "dropdown-link"}
                   href={child.href}
                   key={child.href}
                   role="menuitem"
@@ -275,8 +277,8 @@ function SiteFooter() {
   return (
     <footer className="site-footer" data-nav-tone="dark">
       <div>
-        <Image src={whiteLogo} width={220} height={70} alt="BRANDD Developments" />
-        <p>Web design, development, backend systems, databases, MVPs, retail, and ecommerce.</p>
+        <Image src={whiteLogo} width={886} height={205} alt="BRANDD Developments" />
+        <p>Websites, product platforms, backend systems, databases, MVPs, ecommerce, integrations, and operational tools.</p>
       </div>
       <div className="footer-links">
         {navItems.map((item) => (

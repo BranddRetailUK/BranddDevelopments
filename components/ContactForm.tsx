@@ -27,16 +27,19 @@ export function ContactForm() {
       </label>
       <label>
         Service focus
-        <select name="focus" defaultValue="Web design and development">
-          <option>Web design and development</option>
-          <option>Backend services</option>
-          <option>Database management</option>
+        <select name="focus" defaultValue="Website design and frontend build">
+          <option>Website design and frontend build</option>
+          <option>Backend services and APIs</option>
+          <option>Database structure and reporting</option>
+          <option>Ecommerce and product systems</option>
           <option>MVP design and build</option>
-          <option>Retail and ecommerce</option>
+          <option>Monday.com and business integrations</option>
+          <option>Warehouse, stock and QR tracking systems</option>
+          <option>Custom dashboards and internal tools</option>
         </select>
       </label>
       <label>
-        What are you building?
+        What are you building, improving or trying to fix?
         <textarea name="message" rows={5} required />
       </label>
       <button className="button button-light" type="submit">

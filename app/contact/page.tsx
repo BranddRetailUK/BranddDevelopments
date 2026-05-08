@@ -19,12 +19,12 @@ export const metadata: Metadata = {
 const contactCards = [
   {
     title: "Project enquiries",
-    copy: "Share the goal, the timeline, and what needs to be built or improved.",
+    copy: "Share the goal, the current problem, and what needs to happen next.",
     icon: HiOutlineEnvelope,
   },
   {
     title: "Planning sessions",
-    copy: "Map the offer, the user journey, the system needs, and the launch path.",
+    copy: "Map the offer, user journey, system needs, integrations, and launch path.",
     icon: HiOutlineCalendarDays,
   },
   {
@@ -40,10 +40,11 @@ export default function ContactPage() {
       <section className="page-hero page-hero-light section-grid contact-hero" data-nav-tone="light">
         <MotionReveal className="page-hero-copy">
           <p className="eyebrow">Contact</p>
-          <h1>Start with the outcome. We will shape the build around it.</h1>
+          <h1>Tell us what you are building, improving or trying to fix.</h1>
           <p>
-            Tell us what you are launching, improving, replacing, or trying to
-            understand. We will come back with the clearest next step.
+            Whether you need a new website, a customer portal, an MVP, a backend
+            system, a database clean-up, an ecommerce workflow or a custom
+            business integration, Brandd can help shape the next step.
           </p>
         </MotionReveal>
         <MotionReveal className="contact-signal" delay={0.12}>

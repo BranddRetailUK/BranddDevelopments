@@ -4,11 +4,15 @@ import { SiteShell } from "@/components/SiteShell";
 
 export const metadata: Metadata = {
   title: {
-    default: "BRANDD Developments | Web Design, Development & Commerce Systems",
+    default: "BRANDD Developments | Websites, Product Platforms & Business Systems",
     template: "%s | BRANDD Developments",
   },
   description:
-    "BRANDD Developments designs and builds websites, backend systems, databases, MVPs, retail tools, and ecommerce platforms for ambitious brands.",
+    "BRANDD Developments designs and builds websites, product platforms, backend systems, databases, MVPs, ecommerce workflows, integrations, and operational tools.",
+  icons: {
+    icon: [{ url: "/icon", sizes: "128x128", type: "image/png" }],
+    apple: [{ url: "/icon", sizes: "128x128", type: "image/png" }],
+  },
 };
 
 export default function RootLayout({

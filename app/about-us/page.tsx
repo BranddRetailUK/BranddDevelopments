@@ -3,6 +3,7 @@ import Link from "next/link";
 import {
   HiArrowLongRight,
   HiOutlineAdjustmentsHorizontal,
+  HiOutlineChartBarSquare,
   HiOutlineCommandLine,
   HiOutlinePresentationChartLine,
 } from "react-icons/hi2";
@@ -18,19 +19,24 @@ export const metadata: Metadata = {
 
 const principles = [
   {
-    title: "Brand before interface",
-    copy: "The product should feel unmistakably connected to the business behind it.",
+    title: "Brand-led, system-minded",
+    copy: "The product should look like it belongs to the brand and work like it belongs to the business.",
     icon: HiOutlinePresentationChartLine,
   },
   {
-    title: "Systems before shortcuts",
-    copy: "Strong structures make content, orders, customers, and operations easier to manage later.",
+    title: "Useful before flashy",
+    copy: "Every page, dashboard and workflow should help the user do something clearly.",
     icon: HiOutlineCommandLine,
   },
   {
-    title: "Momentum with control",
-    copy: "Fast work still needs clean decisions, careful sequencing, and technical discipline.",
+    title: "Built for the next stage",
+    copy: "The first version should be clean enough to launch and structured enough to improve.",
     icon: HiOutlineAdjustmentsHorizontal,
+  },
+  {
+    title: "Commercially grounded",
+    copy: "We build around the real outcome: more sales, cleaner operations, better customer experience, stronger reporting or faster delivery.",
+    icon: HiOutlineChartBarSquare,
   },
 ];
 
@@ -40,11 +46,12 @@ export default function AboutPage() {
       <section className="page-hero page-hero-dark section-grid" data-nav-tone="dark">
         <MotionReveal className="page-hero-copy">
           <p className="eyebrow eyebrow-light">About us</p>
-          <h1>A development partner for brand-led businesses with real operational needs.</h1>
+          <h1>Brandd Developments builds the digital systems behind ambitious brands.</h1>
           <p>
-            BRANDD Developments sits between creative direction and technical
-            execution, building digital products that feel considered from the
-            first visit to the final workflow.
+            We work where design, development and operations overlap. That
+            means polished public websites, but also the backend services,
+            databases, dashboards, integrations and workflow tools that keep a
+            business moving after the first click.
           </p>
         </MotionReveal>
         <MotionReveal className="about-mark" delay={0.12}>
@@ -65,14 +72,15 @@ export default function AboutPage() {
         <div className="section-inner two-column">
           <MotionReveal>
             <p className="eyebrow">Position</p>
-            <h2>We build the digital layer a modern brand relies on.</h2>
+            <h2>For founders, operators and growing brands that have outgrown simple websites and off-the-shelf tools.</h2>
           </MotionReveal>
           <MotionReveal delay={0.08}>
             <p className="section-copy dark-copy">
-              The work can begin as a new website, a retail idea, a data issue,
-              a backend requirement, or an MVP that needs to become real. The
-              standard stays the same: make it clear, make it useful, make it
-              strong enough to carry the next stage.
+              We help shape the offer, design the user journey, build the
+              system and connect the moving parts. The work can be a new
+              storefront, a product creator, a customer portal, an MVP, a
+              stock-management tool, a dashboard, a QR tracking flow or a
+              custom integration between the tools your team already uses.
             </p>
           </MotionReveal>
         </div>

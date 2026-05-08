@@ -10,7 +10,7 @@ import { services, serviceTracks } from "@/content/site";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "Web design, web development, backend services, database management, MVP delivery, retail, and ecommerce services from BRANDD Developments.",
+    "UI/UX, frontend development, backend services, databases, ecommerce systems, MVP delivery, and business integrations from BRANDD Developments.",
 };
 
 export default function ServicesPage() {
@@ -19,10 +19,16 @@ export default function ServicesPage() {
       <section className="page-hero page-hero-light section-grid" data-nav-tone="light">
         <MotionReveal className="page-hero-copy">
           <p className="eyebrow">Services</p>
-          <h1>Practical digital services for brands that need more than a brochure site.</h1>
+          <h1>Practical digital services for businesses that need more than a good-looking website.</h1>
           <p>
-            From first design direction to complex operational systems, we build
-            the parts that let a brand sell, manage, measure, and grow online.
+            Brandd brings together UI/UX, frontend development, backend
+            services, databases, ecommerce logic and integrations to build
+            websites and systems that work as part of the business.
+          </p>
+          <p>
+            Some projects start with a homepage. Some start with a broken stock
+            process, a messy database, a product idea, a customer portal, a
+            warehouse workflow or a founder who needs an MVP live quickly.
           </p>
         </MotionReveal>
         <MotionReveal className="service-orbit" delay={0.12}>
@@ -51,7 +57,7 @@ export default function ServicesPage() {
           />
           <MotionReveal className="section-heading">
             <p className="eyebrow eyebrow-light">Service areas</p>
-            <h2>Specialist work that stays connected to the whole customer journey.</h2>
+            <h2>Specialist work that stays connected to the customer journey and the business underneath it.</h2>
           </MotionReveal>
           <ServiceGrid items={services} />
         </div>
@@ -65,9 +71,10 @@ export default function ServicesPage() {
           </MotionReveal>
           <div className="engagement-list">
             {[
-              "A focused design and build sprint for a launch date.",
-              "A technical partner for a growing ecommerce operation.",
-              "A backend and database clean-up for systems that need structure.",
+              "A focused website, UI/UX, or frontend sprint for a launch date.",
+              "A backend, database, or dashboard clean-up for systems that need structure.",
+              "An ecommerce or creator-commerce build with product, checkout, and fulfilment logic.",
+              "A business integration for Monday.com, Shopify, Discord, Stripe, QR tracking, or label printing.",
               "An MVP team to turn the first version into a real product.",
             ].map((item, index) => (
               <MotionReveal delay={index * 0.06} key={item}>

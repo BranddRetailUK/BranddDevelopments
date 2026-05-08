@@ -1,6 +1,7 @@
 import Link from "next/link";
 import {
   HiArrowLongRight,
+  HiArrowTopRightOnSquare,
   HiOutlineBolt,
   HiOutlineCircleStack,
   HiOutlineCubeTransparent,
@@ -12,24 +13,24 @@ import { MotionReveal } from "@/components/MotionReveal";
 import { ScrollAccent } from "@/components/ScrollAccent";
 import { ScrollBridge } from "@/components/ScrollBridge";
 import { ServiceGrid } from "@/components/ServiceGrid";
-import { services } from "@/content/site";
+import { mvpShowcases, services } from "@/content/site";
 
 const proofPoints = [
-  "Brand-led interface systems",
-  "Commerce-ready build foundations",
-  "Backend flows that scale cleanly",
-  "Launch plans shaped around real users",
+  "Brand-led frontend UI/UX",
+  "Database-backed product systems",
+  "Business integrations and automations",
+  "Ecommerce operations that connect cleanly",
 ];
 
 const workflow = [
   {
     title: "Shape the offer",
-    copy: "We turn the commercial objective into a clear site map, product flow, feature set, and launch sequence.",
+    copy: "We turn the commercial objective into a clear user journey, feature set, system shape, and launch sequence.",
     icon: HiOutlineSquares2X2,
   },
   {
     title: "Design the experience",
-    copy: "Interfaces are structured for attention, conversion, repeat use, and the practical work your team handles every day.",
+    copy: "Interfaces are structured around what users need to understand first, where they click next, and what the business needs to manage.",
     icon: HiOutlineDevicePhoneMobile,
   },
   {
@@ -46,17 +47,19 @@ export default function Home() {
         <div className="hero-copy">
           <MotionReveal>
             <p className="eyebrow">BRANDD Developments</p>
-            <h1>Websites, systems, and commerce builds for brands ready to move.</h1>
+            <h1>Websites, product platforms and business systems built for brands that need to move properly.</h1>
             <p className="hero-lede">
-              We design and develop sharp digital products across web, backend,
-              databases, MVPs, retail operations, and ecommerce.
+              Brandd Developments designs and builds the digital layer behind
+              modern businesses, from polished websites and ecommerce journeys
+              to backend services, databases, dashboards, automations, and
+              operational tools.
             </p>
             <div className="hero-actions">
-              <Link className="button button-dark" href="/services">
-                Explore services <HiArrowLongRight aria-hidden="true" />
+              <Link className="button button-dark" href="/contact">
+                Start a project <HiArrowLongRight aria-hidden="true" />
               </Link>
-              <Link className="button button-outline" href="/contact">
-                Start a brief
+              <Link className="button button-outline" href="/services">
+                View what we build
               </Link>
             </div>
           </MotionReveal>
@@ -73,22 +76,22 @@ export default function Home() {
             <div className="signal-panel signal-panel-primary">
               <HiOutlineBolt aria-hidden="true" />
               <div>
-                <span>Design sprint</span>
-                <strong>Brand to prototype</strong>
+                <span>Product layer</span>
+                <strong>Interface to system</strong>
               </div>
             </div>
             <div className="signal-panel">
               <HiOutlineCircleStack aria-hidden="true" />
               <div>
                 <span>Data layer</span>
-                <strong>Clean structure</strong>
+                <strong>Products, users, orders</strong>
               </div>
             </div>
             <div className="signal-panel">
               <HiOutlineShoppingBag aria-hidden="true" />
               <div>
-                <span>Retail stack</span>
-                <strong>Launch ready</strong>
+                <span>Operations</span>
+                <strong>Connected workflows</strong>
               </div>
             </div>
             <div className="interface-grid" aria-hidden="true">
@@ -129,18 +132,20 @@ export default function Home() {
           <MotionReveal>
             <p className="eyebrow eyebrow-light">Development studio</p>
             <h2 className="studio-title">
-              <span>Built for</span>
-              <span>the point where</span>
-              <span>brand, product,</span>
-              <span>and operations</span>
-              <span>meet.</span>
+              <span>Digital products</span>
+              <span>with frontend,</span>
+              <span>backend, and</span>
+              <span>operations</span>
+              <span>built in.</span>
             </h2>
           </MotionReveal>
           <MotionReveal delay={0.08}>
             <p className="section-copy">
-              A good website is rarely just a website. It is a public brand
-              surface, a customer journey, a product database, a sales channel,
-              and often the front door to the systems behind the business.
+              A website is usually only one part of the job. Behind the public
+              interface there may be customer accounts, product data, order
+              flows, stock logic, payment journeys, admin dashboards, API
+              integrations, reporting tools, and internal processes that need to
+              work together.
             </p>
             <div className="proof-list">
               {proofPoints.map((point) => (
@@ -161,7 +166,7 @@ export default function Home() {
         <div className="section-inner">
           <MotionReveal className="section-heading">
             <p className="eyebrow">What we build</p>
-            <h2>Services shaped around launches, improvements, and long-term growth.</h2>
+            <h2>Digital products with the front end, backend and operational thinking built in.</h2>
           </MotionReveal>
           <ServiceGrid items={services} />
         </div>
@@ -169,11 +174,80 @@ export default function Home() {
 
       <ScrollBridge
         tone="dark"
-        label="From service scope to build process"
+        label="MVPs built for real users and workflows"
         variant="rise"
       />
 
-      <section className="section dark-section crossover-section" data-nav-tone="dark">
+      <section className="section dark-section mvp-showcase-section" data-nav-tone="dark">
+        <div className="section-inner">
+          <ScrollAccent
+            className="section-accent section-accent-mvp-showcase"
+            rotateFrom={-9}
+            rotateTo={8}
+            xFrom="5%"
+            xTo="-4%"
+            yFrom="-4%"
+            yTo="5%"
+          />
+          <MotionReveal className="section-heading">
+            <p className="eyebrow eyebrow-light">MVP showcase</p>
+            <h2>Version-one products with account logic, upload flows, pricing rules, and real operational shape.</h2>
+          </MotionReveal>
+          <div className="mvp-showcase-grid">
+            {mvpShowcases.map((product, index) => (
+              <MotionReveal
+                className={`mvp-showcase-card mvp-${product.slug}`}
+                delay={index * 0.08}
+                key={product.name}
+              >
+                <div className="mvp-card-copy">
+                  <p className="eyebrow eyebrow-light">{product.eyebrow}</p>
+                  <h3>{product.name}</h3>
+                  <p>{product.shortCopy}</p>
+                  <ul>
+                    {product.features.slice(0, 3).map((feature) => (
+                      <li key={feature.title}>{feature.title}</li>
+                    ))}
+                  </ul>
+                  <a
+                    className="button button-light"
+                    href={product.href}
+                    rel="noreferrer"
+                    target="_blank"
+                  >
+                    View MVP <HiArrowTopRightOnSquare aria-hidden="true" />
+                  </a>
+                </div>
+                <div className="mvp-product-visual" aria-hidden="true">
+                  <div className="mvp-browser-bar">
+                    <span />
+                    <span />
+                    <span />
+                    <strong>{product.eyebrow}</strong>
+                  </div>
+                  <div className="mvp-visual-main">
+                    <span>{product.signals[0]}</span>
+                    <strong>{product.headline}</strong>
+                  </div>
+                  <div className="mvp-signal-list">
+                    {product.signals.map((signal) => (
+                      <span key={signal}>{signal}</span>
+                    ))}
+                  </div>
+                </div>
+              </MotionReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      <ScrollBridge
+        tone="light"
+        label="From service scope to build process"
+        variant="snap-cross"
+      />
+
+      <section className="section light-section crossover-section" data-nav-tone="light">
         <div className="section-inner">
           <div className="crossover-card">
             <ScrollAccent
@@ -186,7 +260,7 @@ export default function Home() {
               yTo="-5%"
             />
             <MotionReveal>
-              <p className="eyebrow eyebrow-light">Process</p>
+              <p className="eyebrow">Process</p>
               <h2>Clean direction first. Then fast, careful execution.</h2>
             </MotionReveal>
             <div className="workflow-grid">
