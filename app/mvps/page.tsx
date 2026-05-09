@@ -10,7 +10,6 @@ import {
 } from "react-icons/hi2";
 import { MotionReveal } from "@/components/MotionReveal";
 import { MvpProductVisual } from "@/components/MvpProductVisual";
-import { ScrollAccent } from "@/components/ScrollAccent";
 import { ScrollBridge } from "@/components/ScrollBridge";
 import { mvpShowcases } from "@/content/site";
 
@@ -146,24 +145,6 @@ export default function MvpsPage() {
         label="Focused scope with launch momentum"
         variant="rise"
       />
-
-      <section className="section dark-section mvp-stage-intro" data-nav-tone="dark">
-        <div className="section-inner">
-          <ScrollAccent
-            className="section-accent section-accent-mvps"
-            rotateFrom={10}
-            rotateTo={-9}
-            xFrom="-5%"
-            xTo="4%"
-            yFrom="5%"
-            yTo="-4%"
-          />
-          <MotionReveal className="section-heading">
-            <p className="eyebrow eyebrow-light">What this is for</p>
-            <h2>When the brief needs a real product, not months of theory.</h2>
-          </MotionReveal>
-        </div>
-      </section>
 
       <section className="section dark-section mvp-project-section mvp-beatify" data-nav-tone="dark">
         <div className="section-inner mvp-project-panel">

@@ -1051,10 +1051,6 @@ h3 {
   margin-top: 34px;
 }
 
-.mvp-stage-intro {
-  padding-bottom: clamp(28px, 4vw, 56px);
-}
-
 .mvp-stage-section {
   margin-top: -1px;
   padding-top: clamp(48px, 6vw, 90px);

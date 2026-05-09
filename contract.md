@@ -91,10 +91,9 @@ The Ace Hits TCG page presents a standalone collector retail storefront project.
 The MVPs page explains version-one product delivery.
 
 - The hero is dark with design/build/launch/learn messaging, a short headline, and a single-sentence lede about focused first versions.
-- The first explanatory section is "What this is for".
-- Beatify appears as the third content section and uses a dark section with the Beatify green accent and an animated listener-dashboard visual based on the Beatify music platform UI.
+- Beatify appears after the hero and uses a dark section with the Beatify green accent and an animated listener-dashboard visual based on the Beatify music platform UI.
 - Product scoping appears after Beatify as Stage 01.
-- DTF Designer appears as the fifth content section and uses a light section with the DTF purple accent and an animated 560mm x 1000mm gang-sheet upload/layout workspace visual based on the DTF Uploader UI.
+- DTF Designer appears after Product scoping and uses a light section with the DTF purple accent and an animated 560mm x 1000mm gang-sheet upload/layout workspace visual based on the DTF Uploader UI.
 - Prototype to product and Accounts and dashboards appear after DTF as Stage 02 and Stage 03.
 - The delivery section lists the first-release path from outcome definition through release and improvement.
 - The page ends with a dark CTA linking to Contact.
