@@ -47,7 +47,7 @@ export default function ContactPage() {
             yFrom="-5%"
             yTo="5%"
           />
-          <MotionReveal>
+          <MotionReveal className="contact-form-shell">
             <ContactForm />
           </MotionReveal>
           <div className="contact-info">

@@ -870,7 +870,6 @@ h3 {
 
 .section-heading,
 .service-grid,
-.service-track-grid,
 .project-grid,
 .workflow-grid,
 .principle-grid,
@@ -934,7 +933,6 @@ h3 {
 }
 
 .service-card,
-.service-track-card,
 .project-card,
 .workflow-item,
 .principle-card,
@@ -949,7 +947,6 @@ h3 {
 }
 
 .service-card::before,
-.service-track-card::before,
 .project-card::before,
 .principle-card::before,
 .contact-card::before {
@@ -961,7 +958,6 @@ h3 {
 }
 
 .service-card p,
-.service-track-card p,
 .project-card p,
 .workflow-item p,
 .principle-card p,
@@ -975,16 +971,14 @@ h3 {
 
 .light-section .project-card,
 .light-section .workflow-item,
-.light-section .service-card,
-.light-section .service-track-card {
+.light-section .service-card {
   border-color: var(--line);
   background: rgba(255, 255, 255, 0.68);
 }
 
 .light-section .project-card p,
 .light-section .workflow-item p,
-.light-section .service-card p,
-.light-section .service-track-card p {
+.light-section .service-card p {
   color: rgba(28, 28, 28, 0.68);
 }
 
@@ -1056,41 +1050,6 @@ h3 {
 
 .workflow-grid {
   margin-top: 34px;
-}
-
-.service-track-grid {
-  position: relative;
-  z-index: 2;
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 16px;
-}
-
-.service-track-card {
-  display: grid;
-  gap: 12px;
-}
-
-.service-track-card span {
-  display: inline-flex;
-  align-items: center;
-  width: fit-content;
-  min-height: 34px;
-  padding: 0 10px;
-  border: 1px solid var(--line-light);
-  border-radius: 8px;
-  color: rgba(255, 255, 255, 0.72);
-  font-size: 0.7rem;
-  font-weight: 950;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-}
-
-.service-track-card h3 {
-  max-width: 520px;
-  margin-bottom: 0;
-  font-size: clamp(1.25rem, 1.8vw, 2rem);
-  line-height: 0.98;
 }
 
 .mvp-stage-intro {
@@ -3006,11 +2965,31 @@ h3 {
   grid-template-columns: minmax(280px, 0.7fr) minmax(320px, 1fr);
   gap: clamp(24px, 5vw, 74px);
   align-items: start;
+  transition:
+    grid-template-columns 560ms cubic-bezier(0.22, 1, 0.36, 1),
+    gap 560ms cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.contact-form-shell {
+  min-width: 0;
 }
 
 .contact-info {
   display: grid;
   gap: 14px;
+  min-width: 0;
+  transition:
+    opacity 360ms ease,
+    transform 620ms cubic-bezier(0.22, 1, 0.36, 1),
+    filter 620ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform, filter;
+}
+
+.contact-info .contact-card {
+  transition:
+    translate 620ms cubic-bezier(0.22, 1, 0.36, 1),
+    rotate 620ms cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: translate, rotate;
 }
 
 .contact-form {
@@ -3020,6 +2999,10 @@ h3 {
   border: 1px solid var(--line-light);
   border-radius: 8px;
   background: rgba(255, 255, 255, 0.06);
+  transition:
+    background 320ms ease,
+    border-color 320ms ease,
+    box-shadow 520ms ease;
 }
 
 .form-heading {
@@ -3074,6 +3057,11 @@ h3 {
 
 .contact-form textarea {
   resize: vertical;
+  min-height: 150px;
+  transition:
+    border-color 180ms ease,
+    background 180ms ease,
+    min-height 520ms cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 .contact-form input:focus,
@@ -3103,6 +3091,47 @@ h3 {
 
 .form-error {
   color: #ff8aae;
+}
+
+@media (min-width: 1081px) {
+  .contact-layout:has(.brief-field:focus-within) {
+    grid-template-columns: minmax(0, 1fr) minmax(0, 0.01fr);
+    gap: 0;
+  }
+
+  .contact-layout:has(.brief-field:focus-within) .contact-form {
+    border-color: rgba(255, 11, 105, 0.42);
+    background:
+      linear-gradient(135deg, rgba(255, 255, 255, 0.09), rgba(255, 255, 255, 0.045)),
+      rgba(255, 255, 255, 0.06);
+    box-shadow: 0 34px 120px rgba(255, 11, 105, 0.16);
+  }
+
+  .contact-layout:has(.brief-field:focus-within) .contact-form textarea {
+    min-height: clamp(260px, 35vh, 430px);
+  }
+
+  .contact-layout:has(.brief-field:focus-within) .contact-info {
+    opacity: 0;
+    pointer-events: none;
+    filter: blur(8px);
+    transform: translateX(44vw) skewX(-4deg);
+  }
+
+  .contact-layout:has(.brief-field:focus-within) .contact-info .contact-card:nth-child(1) {
+    rotate: 4deg;
+    translate: 54vw -22px;
+  }
+
+  .contact-layout:has(.brief-field:focus-within) .contact-info .contact-card:nth-child(2) {
+    rotate: -3deg;
+    translate: 64vw 8px;
+  }
+
+  .contact-layout:has(.brief-field:focus-within) .contact-info .contact-card:nth-child(3) {
+    rotate: 5deg;
+    translate: 50vw 34px;
+  }
 }
 
 .not-found {
@@ -3397,7 +3426,6 @@ h3 {
   }
 
   .service-grid,
-  .service-track-grid,
   .project-grid,
   .workflow-grid,
   .principle-grid,

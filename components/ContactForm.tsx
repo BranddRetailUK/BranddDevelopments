@@ -96,7 +96,7 @@ export function ContactForm() {
           <option>Custom dashboards and internal tools</option>
         </select>
       </label>
-      <label>
+      <label className="brief-field">
         What are you building, improving or trying to fix?
         <textarea name="message" rows={5} required disabled={isSending} />
       </label>

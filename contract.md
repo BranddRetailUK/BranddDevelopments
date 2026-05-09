@@ -104,8 +104,7 @@ The MVPs page explains version-one product delivery.
 The Services page describes practical digital services for businesses that need more than a simple website.
 
 - The hero is light, text-only, and uses a single-sentence headline with a short lede.
-- The service tracks section splits UI/UX, Frontend, Backend, Databases, Integrations, MVPs, and Commerce into separate cards for individual service content.
-- The service areas section renders the shared `services` array in a dark grid.
+- The service areas section renders the shared `services` array in a dark grid as the primary service breakdown.
 - The delivery section lists engagement types for website/frontend sprints, backend/database/dashboard clean-up, ecommerce and creator commerce, integrations, and MVP builds.
 - The page ends with a dark CTA.
 
@@ -125,6 +124,7 @@ The Contact page collects project enquiries.
 - The page starts with a dark contact section that places `ContactForm` before the project enquiry, planning session, and UK-based online-first cards.
 - The light hero section follows the form section and describes projects that may involve websites, customer portals, MVPs, backend systems, database clean-up, ecommerce workflows, or custom integrations.
 - `ContactForm` renders name, email, service focus, and message fields.
+- On desktop layouts, focusing the project brief textarea expands the form across the contact grid and animates the supporting contact cards out of view so the user has more space to write.
 - Submitting the form posts to `POST /api/contact`, disables the form while sending, resets the form after a successful save, and shows success or error feedback.
 - The API validates the payload, creates the `contact_submissions` table if needed, and stores each enquiry with `status`, `email_status`, timestamps, and the request user agent. Email sending is not connected yet; `email_status` is prepared for the planned SendGrid step.
 
