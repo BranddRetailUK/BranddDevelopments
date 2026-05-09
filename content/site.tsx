@@ -103,16 +103,6 @@ export const services: Service[] = [
   },
 ];
 
-export const serviceTracks = [
-  "UI/UX",
-  "Frontend",
-  "Backend",
-  "Databases",
-  "Integrations",
-  "MVPs",
-  "Commerce",
-];
-
 export type MvpShowcase = {
   name: string;
   slug: string;
@@ -160,13 +150,13 @@ export const mvpShowcases: MvpShowcase[] = [
     signals: ["Creator releases", "Listener playback", "Paid downloads"],
   },
   {
-    name: "DTF Gang Designer",
+    name: "DTF Designer",
     slug: "dtf-gang-designer",
     eyebrow: "Print workflow MVP",
     href: "https://dtf-uploader-production.up.railway.app/",
     headline: "Gang sheet uploads, layout design, and bulk pricing.",
     shortCopy:
-      "DTF Gang Designer is a customer upload MVP for DTF print orders, built around 560mm x 1000mm gang sheets and combined-quantity pricing.",
+      "DTF Designer is a customer upload MVP for DTF print orders, built around 560mm x 1000mm gang sheets and combined-quantity pricing.",
     expandedCopy:
       "Customers can upload multiple gang sheets, set quantities, preview files, create a layout, and send an order. Profiles keep order history while admins can review files and update production status.",
     features: [

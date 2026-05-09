@@ -172,18 +172,13 @@ export default function MvpsPage() {
             <h2>{beatifyShowcase.name}</h2>
             <p>{beatifyShowcase.shortCopy}</p>
             <p>{beatifyShowcase.expandedCopy}</p>
-            <div className="tag-row tag-row-light">
-              {beatifyShowcase.signals.map((signal) => (
-                <span key={signal}>{signal}</span>
-              ))}
-            </div>
             <a
               className="button button-light button-mvp-accent"
               href={beatifyShowcase.href}
               rel="noreferrer"
               target="_blank"
             >
-              Open MVP <HiArrowTopRightOnSquare aria-hidden="true" />
+              Open Beatify <HiArrowTopRightOnSquare aria-hidden="true" />
             </a>
           </MotionReveal>
           <MotionReveal className="mvp-project-media" delay={0.12}>
@@ -215,18 +210,13 @@ export default function MvpsPage() {
             <h2>{dtfShowcase.name}</h2>
             <p>{dtfShowcase.shortCopy}</p>
             <p>{dtfShowcase.expandedCopy}</p>
-            <div className="tag-row">
-              {dtfShowcase.signals.map((signal) => (
-                <span key={signal}>{signal}</span>
-              ))}
-            </div>
             <a
               className="button button-dark button-mvp-accent"
               href={dtfShowcase.href}
               rel="noreferrer"
               target="_blank"
             >
-              Open MVP <HiArrowTopRightOnSquare aria-hidden="true" />
+              Open DTF Designer <HiArrowTopRightOnSquare aria-hidden="true" />
             </a>
           </MotionReveal>
           <MotionReveal className="mvp-project-media" delay={0.12}>

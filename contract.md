@@ -19,7 +19,6 @@ This file describes the current feature shape of the Brandd website. It is a pro
 - Top-level navigation items and the Projects dropdown children.
 - Per-route default header tone through `routeTones`.
 - Service offerings used by the homepage and Services page.
-- Service track labels used in the Services hero.
 - MVP showcase data used by the homepage and MVPs page.
 
 The current service offerings are:
@@ -35,7 +34,7 @@ The current service offerings are:
 The current MVP showcases are:
 
 - Beatify, a music platform MVP with creator release tools, listener playback, paid downloads, and creator insight messaging. Its accent colour is green.
-- DTF Gang Designer, a print workflow MVP with customer gang sheet uploads, a layout canvas, combined order pricing, order history, and admin status messaging. Its accent colour is purple.
+- DTF Designer, a print workflow MVP with customer gang sheet uploads, a layout canvas, combined order pricing, order history, and admin status messaging. Its accent colour is purple.
 
 ## Site Shell And Navigation
 
@@ -54,12 +53,11 @@ The current MVP showcases are:
 
 The homepage presents Brandd as a studio for sharp, functional websites and digital services, with modern animated web experiences made accessible at sensible prices.
 
-- The hero is a light section with a large but capped headline, a wider text column, a lede about modern websites, ecommerce experiences, business tools, and sensible pricing, primary and secondary calls to action, and a right-side interface visual.
-- The interface visual represents product, data, and operations layers through stacked signal panels.
+- The hero is a light, copy-led section with a large but capped headline, a wider text column, a lede about modern websites, ecommerce experiences, business tools, and sensible pricing, and primary and secondary calls to action.
 - Scroll accent rails animate across the hero.
 - A dark development-studio section explains that websites can include accounts, product data, order flows, stock logic, payments, dashboards, API integrations, reporting, and internal processes.
 - A services section renders the shared `services` array through `ServiceGrid`.
-- A dark MVP showcase section renders shared `mvpShowcases` as product cards with animated product-specific visuals for Beatify and DTF Gang Designer.
+- A dark MVP showcase section renders shared `mvpShowcases` as product cards with animated product-specific visuals for Beatify and DTF Designer.
 - A process section explains the workflow: shape the offer, design the experience, build the system.
 
 ### Projects `/projects`
@@ -95,7 +93,7 @@ The MVPs page explains version-one product delivery.
 - The first explanatory section is "What this is for".
 - Beatify appears as the third content section and uses a dark section with the Beatify green accent and an animated listener-dashboard visual based on the Beatify music platform UI.
 - Product scoping appears after Beatify as Stage 01.
-- DTF Gang Designer appears as the fifth content section and uses a light section with the DTF purple accent and an animated 560mm x 1000mm gang-sheet upload/layout workspace visual based on the DTF Uploader UI.
+- DTF Designer appears as the fifth content section and uses a light section with the DTF purple accent and an animated 560mm x 1000mm gang-sheet upload/layout workspace visual based on the DTF Uploader UI.
 - Prototype to product and Accounts and dashboards appear after DTF as Stage 02 and Stage 03.
 - The delivery section lists the first-release path from outcome definition through release and improvement.
 - The page ends with a dark CTA linking to Contact.
@@ -104,7 +102,8 @@ The MVPs page explains version-one product delivery.
 
 The Services page describes practical digital services for businesses that need more than a simple website.
 
-- The hero is light and includes service track chips around a connected-delivery signal.
+- The hero is light, text-only, and uses a single-sentence headline with a short lede.
+- The service tracks section splits UI/UX, Frontend, Backend, Databases, Integrations, MVPs, and Commerce into separate cards for individual service content.
 - The service areas section renders the shared `services` array in a dark grid.
 - The delivery section lists engagement types for website/frontend sprints, backend/database/dashboard clean-up, ecommerce and creator commerce, integrations, and MVP builds.
 - The page ends with a dark CTA.
@@ -133,7 +132,7 @@ The Contact page collects project enquiries.
 - `ScrollAccent` is a client component that animates decorative accent rails using scroll progress. It respects reduced motion.
 - `ScrollBridge` is a client component for animated transitions between dark and light page sections. It supports multiple movement variants and uses an accessible `aria-label`.
 - `ServiceGrid` maps shared service data into icon cards.
-- `MvpProductVisual` renders product-specific animated interface visuals for Beatify and DTF Gang Designer.
+- `MvpProductVisual` renders product-specific animated interface visuals for Beatify and DTF Designer.
 - `ContactForm` is a client-only visual form with local submitted state.
 
 ## Styling Contract

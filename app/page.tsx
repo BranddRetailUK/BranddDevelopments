@@ -2,11 +2,8 @@ import Link from "next/link";
 import {
   HiArrowLongRight,
   HiArrowTopRightOnSquare,
-  HiOutlineBolt,
-  HiOutlineCircleStack,
   HiOutlineCubeTransparent,
   HiOutlineDevicePhoneMobile,
-  HiOutlineShoppingBag,
   HiOutlineSquares2X2,
 } from "react-icons/hi2";
 import { MotionReveal } from "@/components/MotionReveal";
@@ -44,7 +41,7 @@ const workflow = [
 export default function Home() {
   return (
     <>
-      <section className="hero hero-light section-grid" data-nav-tone="light">
+      <section className="hero hero-light" data-nav-tone="light">
         <div className="hero-copy">
           <MotionReveal>
             <p className="eyebrow">Brandd</p>
@@ -65,46 +62,6 @@ export default function Home() {
             </div>
           </MotionReveal>
         </div>
-
-        <MotionReveal className="hero-system" delay={0.12}>
-          <div className="interface-frame">
-            <div className="frame-topline">
-              <span />
-              <span />
-              <span />
-              <strong>Live Build System</strong>
-            </div>
-            <div className="signal-panel signal-panel-primary">
-              <HiOutlineBolt aria-hidden="true" />
-              <div>
-                <span>Product layer</span>
-                <strong>Interface to system</strong>
-              </div>
-            </div>
-            <div className="signal-panel">
-              <HiOutlineCircleStack aria-hidden="true" />
-              <div>
-                <span>Data layer</span>
-                <strong>Products, users, orders</strong>
-              </div>
-            </div>
-            <div className="signal-panel">
-              <HiOutlineShoppingBag aria-hidden="true" />
-              <div>
-                <span>Operations</span>
-                <strong>Connected workflows</strong>
-              </div>
-            </div>
-            <div className="interface-grid" aria-hidden="true">
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-              <span />
-            </div>
-          </div>
-        </MotionReveal>
 
         <ScrollAccent
           className="accent-rail accent-rail-one"
@@ -216,7 +173,7 @@ export default function Home() {
                     rel="noreferrer"
                     target="_blank"
                   >
-                    View MVP <HiArrowTopRightOnSquare aria-hidden="true" />
+                    Open {product.name} <HiArrowTopRightOnSquare aria-hidden="true" />
                   </a>
                 </div>
                 <MvpProductVisual slug={product.slug} />
