@@ -15,7 +15,6 @@ const routes = [
   { name: "ace-hits", path: "/projects/ace-hits-tcg" },
   { name: "mvps", path: "/mvps" },
   { name: "services", path: "/services" },
-  { name: "about", path: "/about-us" },
   { name: "contact", path: "/contact" },
 ];
 

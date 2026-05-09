@@ -19,13 +19,14 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const routeTone = routeTones[pathname] ?? "light";
   const headerTone = visibleTone ?? (pathname === "/" ? (isScrolled ? "dark" : "light") : routeTone);
 
-  const splitNav = useMemo(
-    () => ({
-      left: navItems.slice(0, 3),
-      right: navItems.slice(3),
-    }),
-    [],
-  );
+  const splitNav = useMemo(() => {
+    const splitAt = Math.ceil(navItems.length / 2);
+
+    return {
+      left: navItems.slice(0, splitAt),
+      right: navItems.slice(splitAt),
+    };
+  }, []);
 
   useEffect(() => {
     const onScroll = () => setIsScrolled(window.scrollY > window.innerHeight * 0.72);

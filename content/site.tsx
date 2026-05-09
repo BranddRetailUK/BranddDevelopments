@@ -16,7 +16,6 @@ export const whiteLogo =
   "https://res.cloudinary.com/dhlqooyuk/image/upload/v1778265380/NEW_LOGO_WHT_NO_STRAP_heexb3.png";
 
 export const navItems = [
-  { href: "/", label: "Home" },
   {
     href: "/projects",
     label: "Projects",
@@ -35,7 +34,6 @@ export const navItems = [
   },
   { href: "/mvps", label: "MVPs" },
   { href: "/services", label: "Services" },
-  { href: "/about-us", label: "About us" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -47,7 +45,6 @@ export const routeTones: Record<string, RouteTone> = {
   "/projects/ace-hits-tcg": "dark",
   "/mvps": "dark",
   "/services": "light",
-  "/about-us": "dark",
   "/contact": "light",
 };
 
