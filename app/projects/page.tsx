@@ -25,41 +25,27 @@ const projectTypes = [
     title: "Creator-commerce platforms",
     copy: "For brands that need accounts, product tools, subscriptions, creator stores, revenue logic and fulfilment flows.",
     icon: HiOutlineShoppingCart,
-    tags: ["Accounts", "Subscriptions", "Fulfilment"],
   },
   {
     title: "Operational Dashboards",
     copy: "For teams managing products, orders, stock, customer records, production jobs, uploads, reporting or internal processes.",
     icon: HiOutlineChartBarSquare,
-    tags: ["Data", "Admin", "Reporting"],
   },
   {
     title: "MVP platforms",
     copy: "For ideas that need a working version one with real users, real data and a clear path to improvement.",
     icon: HiOutlineCpuChip,
-    tags: ["MVP", "Backend", "Users"],
   },
   {
     title: "Ecommerce systems",
     copy: "For brands selling products, managing catalogues, improving checkout journeys or connecting stores to fulfilment processes.",
     icon: HiOutlineSquares2X2,
-    tags: ["Products", "Checkout", "Operations"],
   },
   {
     title: "Business process tools",
     copy: "For companies still relying on manual admin, spreadsheets, disconnected apps or repeated internal tasks.",
     icon: HiOutlineWrenchScrewdriver,
-    tags: ["Automation", "Integrations", "Workflows"],
   },
-];
-
-const flagshipFeatures = [
-  "Creator storefronts",
-  "Product creator and design tools",
-  "Subscriptions and revenue share",
-  "Creator dashboard logic",
-  "Ambassador and referral system",
-  "Coins and rewards",
 ];
 
 const goodGamePlatformLayers = [
@@ -94,13 +80,11 @@ const goodGameToolSections = [
     label: "Product creator",
     title: "Turn artwork into products.",
     copy: "Creators pick a product, place artwork, preview the design and save it to their store.",
-    tags: ["Artwork uploads", "Product previews", "Saved products"],
   },
   {
     label: "Creator dashboard",
     title: "Run the creator account.",
     copy: "Creators manage their shop, products, orders, sales, rewards, assets and support from one dashboard.",
-    tags: ["Shop control", "Sales view", "Support hub"],
   },
 ];
 
@@ -154,11 +138,6 @@ export default function ProjectsPage() {
               tools, dashboard views, sales logic, subscription tiers and
               fulfilment requirements all have to work together cleanly.
             </p>
-            <div className="tag-row good-game-tag-row">
-              {flagshipFeatures.slice(0, 4).map((feature) => (
-                <span key={feature}>{feature}</span>
-              ))}
-            </div>
             <a
               className="button good-game-button"
               href="https://www.goodgameapparel.co.uk/"
@@ -190,11 +169,6 @@ export default function ProjectsPage() {
               <span>Made for creators.</span>
             </div>
             <div className="good-game-divider" />
-            <div className="flagship-feature-list good-game-feature-list">
-              {flagshipFeatures.map((feature) => (
-                <span key={feature}>{feature}</span>
-              ))}
-            </div>
           </MotionReveal>
         </div>
       </section>
@@ -234,11 +208,6 @@ export default function ProjectsPage() {
               <p className="eyebrow eyebrow-light">{item.label}</p>
               <h2>{item.title}</h2>
               <p>{item.copy}</p>
-              <div className="good-game-tool-tags">
-                {item.tags.map((tag) => (
-                  <span key={tag}>{tag}</span>
-                ))}
-              </div>
             </MotionReveal>
           ))}
         </div>
@@ -279,11 +248,6 @@ export default function ProjectsPage() {
                   </div>
                   <h3>{item.title}</h3>
                   <p>{item.copy}</p>
-                  <div className="tag-row">
-                    {item.tags.map((tag) => (
-                      <span key={tag}>{tag}</span>
-                    ))}
-                  </div>
                 </MotionReveal>
               );
             })}

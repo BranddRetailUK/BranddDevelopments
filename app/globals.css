@@ -905,7 +905,6 @@ h3 {
 }
 
 .proof-list span,
-.tag-row span,
 .about-mark span {
   display: inline-flex;
   align-items: center;
@@ -1415,16 +1414,6 @@ h3 {
   border-color: var(--mvp-accent, currentColor);
   background: var(--mvp-accent, currentColor);
   color: var(--mvp-accent-contrast, var(--white));
-}
-
-.tag-row-light span {
-  border-color: var(--line-light);
-  color: rgba(255, 255, 255, 0.76);
-}
-
-.mvp-project-section .tag-row span,
-.mvp-showcase-card .tag-row span {
-  border-color: var(--mvp-accent-border, var(--line));
 }
 
 .mvp-feature-list {
@@ -2171,28 +2160,6 @@ h3 {
   text-transform: uppercase;
 }
 
-.flagship-feature-list {
-  display: grid;
-  grid-template-columns: repeat(2, minmax(0, 1fr));
-  gap: 10px;
-  padding: 18px;
-}
-
-.flagship-feature-list span {
-  display: flex;
-  align-items: center;
-  min-height: 48px;
-  padding: 0 12px;
-  border: 1px solid rgba(28, 28, 28, 0.11);
-  border-radius: 8px;
-  background: rgba(255, 255, 255, 0.58);
-  color: rgba(28, 28, 28, 0.68);
-  font-size: 0.72rem;
-  font-weight: 950;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
-}
-
 .good-game-project-section,
 .good-game-platform-section,
 .good-game-tools-section {
@@ -2256,18 +2223,11 @@ h3 {
   background: linear-gradient(135deg, #ffe8ae, var(--gga-accent-strong));
 }
 
-.good-game-project-section .good-game-tag-row span {
-  border-color: rgba(242, 198, 83, 0.48);
-  background: rgba(242, 198, 83, 0.16);
-  color: #ffe8ae;
-  box-shadow: inset 0 0 0 1px rgba(255, 236, 188, 0.08);
-}
-
 .good-game-visual {
   position: relative;
   isolation: isolate;
   display: grid;
-  grid-template-rows: minmax(360px, 1fr) auto auto;
+  grid-template-rows: minmax(360px, 1fr) auto;
   border-color: rgba(242, 198, 83, 0.38);
   background: linear-gradient(165deg, rgba(17, 23, 35, 0.82), rgba(8, 11, 19, 0.94));
   box-shadow: 0 26px 60px rgba(1, 4, 10, 0.52);
@@ -2348,20 +2308,6 @@ h3 {
   box-shadow: 0 0 24px rgba(242, 198, 83, 0.32);
 }
 
-.good-game-feature-list {
-  position: relative;
-  z-index: 1;
-  background: rgba(5, 7, 13, 0.88);
-}
-
-.good-game-feature-list span {
-  border-color: rgba(242, 198, 83, 0.22);
-  background:
-    linear-gradient(165deg, rgba(17, 23, 35, 0.82), rgba(8, 11, 19, 0.94)),
-    rgba(242, 198, 83, 0.08);
-  color: #fff3cf;
-}
-
 .good-game-platform-section {
   margin-top: -1px;
   padding-top: clamp(70px, 8vw, 112px);
@@ -2424,8 +2370,7 @@ h3 {
   color: var(--gga-accent-strong);
 }
 
-.good-game-platform-card-top span,
-.good-game-tool-tags span {
+.good-game-platform-card-top span {
   color: var(--gga-accent-strong);
   font-size: 0.72rem;
   font-weight: 950;
@@ -2476,24 +2421,6 @@ h3 {
 
 .good-game-tool-panel > p:not(.eyebrow) {
   max-width: 620px;
-}
-
-.good-game-tool-tags {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 10px;
-  margin-top: auto;
-}
-
-.good-game-tool-tags span {
-  display: inline-flex;
-  align-items: center;
-  min-height: 40px;
-  padding: 0 14px;
-  border: 1px solid rgba(242, 198, 83, 0.22);
-  border-radius: 8px;
-  background: rgba(242, 198, 83, 0.12);
-  color: #fff3cf;
 }
 
 .ace-project-hero,
@@ -2863,20 +2790,6 @@ h3 {
 
 .project-grid {
   grid-template-columns: repeat(2, minmax(0, 1fr));
-}
-
-.tag-row {
-  display: flex;
-  flex-wrap: wrap;
-  gap: 8px;
-  margin-top: 24px;
-}
-
-.tag-row span {
-  min-height: 34px;
-  padding: 0 10px;
-  border: 1px solid var(--line);
-  color: rgba(28, 28, 28, 0.64);
 }
 
 .compact-cta {
@@ -3430,7 +3343,6 @@ h3 {
   .workflow-grid,
   .principle-grid,
   .proof-list,
-  .flagship-feature-list,
   .good-game-platform-grid,
   .good-game-tools-grid,
   .ace-highlight-grid,

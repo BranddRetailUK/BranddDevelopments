@@ -152,7 +152,7 @@ The Contact page collects project enquiries.
 - The MVP pages use CSS variables scoped by product slug:
   - `.mvp-beatify` uses green accent variables.
   - `.mvp-dtf-gang-designer` uses purple accent variables.
-- The Good Game project sections use a separate dark/gold visual system based around `#f2c653`, dark navy-black backgrounds, readable gold feature pills, glassy panels, the Good Game logo, and a video-backed visual.
+- The Good Game project sections use a separate dark/gold visual system based around `#f2c653`, dark navy-black backgrounds, glassy panels, the Good Game logo, and a video-backed visual.
 - Responsive rules collapse grids at tablet sizes and simplify hero/section layouts at mobile sizes.
 
 ## Interaction Logic

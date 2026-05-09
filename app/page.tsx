@@ -45,7 +45,7 @@ export default function Home() {
         <div className="hero-copy">
           <MotionReveal>
             <p className="eyebrow">Brandd</p>
-            <h1>Brandd creates sharp, functional websites and digital services.</h1>
+            <h1>Create sharp, functional websites and digital services.</h1>
             <p className="hero-lede">
               We build modern, animated websites, ecommerce experiences and
               business tools for growing brands. The kind of polished,
