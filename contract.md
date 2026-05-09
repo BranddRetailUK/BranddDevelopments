@@ -7,7 +7,8 @@ This file describes the current feature shape of the Brandd website. It is a pro
 - The site is a Next.js App Router project using TypeScript, React, `next/image`, Framer Motion, and `react-icons`.
 - Routes live under `app/`. Shared components live under `components/`. Shared content and navigation data live in `content/site.tsx`.
 - Styling is handled through `app/globals.css` with global design tokens, page section classes, component classes, and responsive breakpoints.
-- The site is primarily static marketing/UI content. There are no API routes, database calls, authentication flows, or server-side business workflows in this repo.
+- The site is primarily marketing/UI content with a server-side contact submission API. There are no authentication flows or broader server-side business workflows in this repo.
+- Contact enquiries use Postgres through `DATABASE_URL`. Optional database settings are documented in `.env.example`.
 - Cloudinary and the Ace Hits Shopify CDN are the configured remote image hosts in `next.config.ts`.
 - Playwright is available as a dev validation tool. `npm run check:mobile-layout` checks key routes at mobile widths against a running local site and writes screenshots to `/private/tmp/brandd-mobile-pass/playwright`.
 
@@ -124,7 +125,8 @@ The Contact page collects project enquiries.
 - The page starts with a dark contact section that places `ContactForm` before the project enquiry, planning session, and UK-based online-first cards.
 - The light hero section follows the form section and describes projects that may involve websites, customer portals, MVPs, backend systems, database clean-up, ecommerce workflows, or custom integrations.
 - `ContactForm` renders name, email, service focus, and message fields.
-- Submitting the form prevents default browser submission and toggles local success state. It does not send data to a backend, email service, CRM, or database.
+- Submitting the form posts to `POST /api/contact`, disables the form while sending, resets the form after a successful save, and shows success or error feedback.
+- The API validates the payload, creates the `contact_submissions` table if needed, and stores each enquiry with `status`, `email_status`, timestamps, and the request user agent. Email sending is not connected yet; `email_status` is prepared for the planned SendGrid step.
 
 ## Reusable Components
 
@@ -133,7 +135,7 @@ The Contact page collects project enquiries.
 - `ScrollBridge` is a client component for animated transitions between dark and light page sections. It supports multiple movement variants and uses an accessible `aria-label`.
 - `ServiceGrid` maps shared service data into icon cards.
 - `MvpProductVisual` renders product-specific animated interface visuals for Beatify and DTF Designer.
-- `ContactForm` is a client-only visual form with local submitted state.
+- `ContactForm` is a client component that submits project enquiries to the contact API and renders pending, success, and error states.
 
 ## Styling Contract
 
@@ -159,7 +161,7 @@ The Contact page collects project enquiries.
 - External project links open in a new tab and use `rel="noreferrer"`.
 - Header tone is recalculated on scroll and resize by sampling the section under the top-middle of the viewport.
 - Route and reveal animations use Framer Motion and fall back cleanly when reduced motion is preferred.
-- Contact form submission is local-only UI feedback.
+- Contact form submission is handled by `POST /api/contact`, which stores validated enquiries in Postgres.
 
 ## Maintenance Expectations
 
