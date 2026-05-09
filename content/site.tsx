@@ -67,7 +67,7 @@ export const services: Service[] = [
   },
   {
     title: "Frontend Development",
-    copy: "React and Next.js builds with reusable components, fast pages, clean structure, and room to grow.",
+    copy: "Modern frontend builds with reusable components, fast pages, clean structure, and room to grow.",
     icon: HiOutlineCodeBracketSquare,
     accent: "violet",
   },

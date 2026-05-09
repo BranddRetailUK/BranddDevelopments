@@ -25,7 +25,7 @@ export default function Icon() {
         }}
       >
         <img
-          alt="BRANDD Developments"
+          alt="Brandd"
           src={logoUrl}
           style={{
             height: "100%",

@@ -10,7 +10,7 @@ import { services, serviceTracks } from "@/content/site";
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "UI/UX, frontend development, backend services, databases, ecommerce systems, MVP delivery, and business integrations from BRANDD Developments.",
+    "UI/UX, frontend development, backend services, databases, ecommerce systems, MVP delivery, and business integrations from Brandd.",
 };
 
 export default function ServicesPage() {

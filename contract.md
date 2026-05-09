@@ -1,6 +1,6 @@
-# BRANDD Developments Site Contract
+# Brandd Site Contract
 
-This file describes the current feature shape of the BRANDD Developments website. It is a product and implementation contract for the codebase, not a changelog.
+This file describes the current feature shape of the Brandd website. It is a product and implementation contract for the codebase, not a changelog.
 
 ## Stack And Runtime
 
@@ -15,7 +15,7 @@ This file describes the current feature shape of the BRANDD Developments website
 
 `content/site.tsx` is the main shared content source for:
 
-- BRANDD logo URLs. Both header tones use the no-strap Cloudinary logo, with CSS inversion on light headers so the white mark remains visible.
+- Brandd logo URLs. Both header tones use the no-strap Cloudinary logo, with CSS inversion on light headers so the white mark remains visible.
 - Top-level navigation items and the Projects dropdown children.
 - Per-route default header tone through `routeTones`.
 - Service offerings used by the homepage and Services page.
@@ -41,7 +41,7 @@ The current MVP showcases are:
 
 `components/SiteShell.tsx` wraps all pages.
 
-- The header is fixed and uses a centered no-strap BRANDD logo with left and right navigation groups.
+- The header is fixed and uses a centered no-strap Brandd logo with left and right navigation groups.
 - Desktop navigation is split around the logo. The Projects item has dropdown sub-tabs for Good Game Apparel and Ace Hits TCG.
 - Mobile navigation opens from an icon button and renders top-level links plus child subnav links.
 - Header colour is controlled by route defaults and visible section tone. Sections expose `data-nav-tone="light"` or `data-nav-tone="dark"` so the shell can choose the correct logo and text colour while scrolling.
@@ -52,23 +52,23 @@ The current MVP showcases are:
 
 ### Home `/`
 
-The homepage presents BRANDD as a studio for websites, product platforms, and business systems.
+The homepage presents Brandd as a studio for sharp, functional websites and digital services, with modern animated web experiences made accessible at sensible prices.
 
-- The hero is a light section with a large but capped headline, a wider text column, a lede, primary and secondary calls to action, and a right-side interface visual.
+- The hero is a light section with a large but capped headline, a wider text column, a lede about modern websites, ecommerce experiences, business tools, and sensible pricing, primary and secondary calls to action, and a right-side interface visual.
 - The interface visual represents product, data, and operations layers through stacked signal panels.
 - Scroll accent rails animate across the hero.
 - A dark development-studio section explains that websites can include accounts, product data, order flows, stock logic, payments, dashboards, API integrations, reporting, and internal processes.
 - A services section renders the shared `services` array through `ServiceGrid`.
-- A dark MVP showcase section renders shared `mvpShowcases` as product cards with browser-style visuals.
+- A dark MVP showcase section renders shared `mvpShowcases` as product cards with animated product-specific visuals for Beatify and DTF Gang Designer.
 - A process section explains the workflow: shape the offer, design the experience, build the system.
 
 ### Projects `/projects`
 
-The Projects page frames BRANDD builds as connected websites, products, and systems.
+The Projects page frames Brandd builds as connected websites, products, and systems.
 
 - The hero is dark and includes a stacked project-type visual for creator commerce, operational dashboards, and MVP platforms.
 - The Good Game Apparel section is the flagship project section and has the `id="good-game-apparel"` anchor.
-- Good Game Apparel is presented as BRANDD-owned creator-commerce platform work covering creator storefronts, product creator tools, subscriptions, revenue share, dashboard logic, referrals, and rewards.
+- Good Game Apparel is presented as Brandd-owned creator-commerce platform work covering creator storefronts, product creator tools, subscriptions, revenue share, dashboard logic, referrals, and rewards.
 - The Good Game section uses dark storefront-inspired styling, gold accents, the gold Good Game Apparel logo, the `www.goodgameapparel.co.uk` public link, and a Cloudinary-hosted banner video.
 - Good Game has additional dark/gold sections for the platform layers: storefront and checkout, product creator, creator dashboard, and creator growth tools.
 - The Good Game product creator section explains artwork upload, product selection, design preview, and saving products to the creator store.
@@ -91,11 +91,11 @@ The Ace Hits TCG page presents a standalone collector retail storefront project.
 
 The MVPs page explains version-one product delivery.
 
-- The hero is dark with design/build/launch/learn messaging and a short sentence defining an MVP as the smallest usable version of a product that can launch, test demand, and guide the next build.
+- The hero is dark with design/build/launch/learn messaging, a short headline, and a single-sentence lede about focused first versions.
 - The first explanatory section is "What this is for".
-- Beatify appears as the third content section and uses a dark section with the Beatify green accent.
+- Beatify appears as the third content section and uses a dark section with the Beatify green accent and an animated listener-dashboard visual based on the Beatify music platform UI.
 - Product scoping appears after Beatify as Stage 01.
-- DTF Gang Designer appears as the fifth content section and uses a light section with the DTF purple accent.
+- DTF Gang Designer appears as the fifth content section and uses a light section with the DTF purple accent and an animated 560mm x 1000mm gang-sheet upload/layout workspace visual based on the DTF Uploader UI.
 - Prototype to product and Accounts and dashboards appear after DTF as Stage 02 and Stage 03.
 - The delivery section lists the first-release path from outcome definition through release and improvement.
 - The page ends with a dark CTA linking to Contact.
@@ -111,7 +111,7 @@ The Services page describes practical digital services for businesses that need 
 
 ### About Us `/about-us`
 
-The About page positions BRANDD as a practical web design and development studio for brand-led businesses.
+The About page positions Brandd as a practical web design and development studio for brand-led businesses.
 
 - The hero is dark and uses a four-item mark: Design, Build, Manage, Improve.
 - The position section explains work for founders, operators, and growing brands that have outgrown simple websites and off-the-shelf tools.
@@ -122,8 +122,8 @@ The About page positions BRANDD as a practical web design and development studio
 
 The Contact page collects project enquiries.
 
-- The hero is light and describes projects that may involve websites, customer portals, MVPs, backend systems, database clean-up, ecommerce workflows, or custom integrations.
-- The dark contact section shows cards for project enquiries, planning sessions, and UK-based online-first work.
+- The page starts with a dark contact section that places `ContactForm` before the project enquiry, planning session, and UK-based online-first cards.
+- The light hero section follows the form section and describes projects that may involve websites, customer portals, MVPs, backend systems, database clean-up, ecommerce workflows, or custom integrations.
 - `ContactForm` renders name, email, service focus, and message fields.
 - Submitting the form prevents default browser submission and toggles local success state. It does not send data to a backend, email service, CRM, or database.
 
@@ -133,15 +133,16 @@ The Contact page collects project enquiries.
 - `ScrollAccent` is a client component that animates decorative accent rails using scroll progress. It respects reduced motion.
 - `ScrollBridge` is a client component for animated transitions between dark and light page sections. It supports multiple movement variants and uses an accessible `aria-label`.
 - `ServiceGrid` maps shared service data into icon cards.
+- `MvpProductVisual` renders product-specific animated interface visuals for Beatify and DTF Gang Designer.
 - `ContactForm` is a client-only visual form with local submitted state.
 
 ## Styling Contract
 
 - The primary palette is black, white, off-white paper, muted grey, pink, magenta, violet, cyan, and blue.
-- The main BRANDD accent is a cyan-to-violet-to-magenta-to-pink gradient.
+- The main Brandd accent is a cyan-to-violet-to-magenta-to-pink gradient.
 - Cards, buttons, panels, and framed UI elements generally use `8px` border radius.
 - `light-section` and `dark-section` establish page section tone. `data-nav-tone` must be set on major sections so the fixed header stays legible.
-- The favicon is generated by `app/icon.tsx` as a padded square image so the wide no-strap BRANDD logo is contained rather than cropped.
+- The favicon is generated by `app/icon.tsx` as a padded square image so the wide no-strap Brandd logo is contained rather than cropped.
 - The homepage hero has its own grid and heading sizing so its headline is wider and less tall than the global page heading scale.
 - The Projects hero uses the same wider, capped heading treatment as the homepage hero.
 - Mobile hero headings share a capped scale across homepage, Projects, MVPs, Services, About, Contact, and project pages so large uppercase titles fit cleanly on phone screens.

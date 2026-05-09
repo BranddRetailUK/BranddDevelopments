@@ -17,7 +17,7 @@ import { ScrollBridge } from "@/components/ScrollBridge";
 export const metadata: Metadata = {
   title: "Projects",
   description:
-    "Project formats from BRANDD Developments across ecommerce, campaign websites, dashboards, and MVP platforms.",
+    "Project formats from Brandd across ecommerce, campaign websites, dashboards, and MVP platforms.",
 };
 
 const projectTypes = [

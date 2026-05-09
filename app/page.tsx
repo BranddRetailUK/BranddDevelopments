@@ -10,6 +10,7 @@ import {
   HiOutlineSquares2X2,
 } from "react-icons/hi2";
 import { MotionReveal } from "@/components/MotionReveal";
+import { MvpProductVisual } from "@/components/MvpProductVisual";
 import { ScrollAccent } from "@/components/ScrollAccent";
 import { ScrollBridge } from "@/components/ScrollBridge";
 import { ServiceGrid } from "@/components/ServiceGrid";
@@ -46,13 +47,13 @@ export default function Home() {
       <section className="hero hero-light section-grid" data-nav-tone="light">
         <div className="hero-copy">
           <MotionReveal>
-            <p className="eyebrow">BRANDD Developments</p>
-            <h1>Websites, product platforms and business systems built for brands that need to move properly.</h1>
+            <p className="eyebrow">Brandd</p>
+            <h1>Brandd creates sharp, functional websites and digital services.</h1>
             <p className="hero-lede">
-              Brandd Developments designs and builds the digital layer behind
-              modern businesses, from polished websites and ecommerce journeys
-              to backend services, databases, dashboards, automations, and
-              operational tools.
+              We build modern, animated websites, ecommerce experiences and
+              business tools for growing brands. The kind of polished,
+              high-end web experience that used to need a much bigger budget is
+              now within reach at a sensible price.
             </p>
             <div className="hero-actions">
               <Link className="button button-dark" href="/contact">
@@ -218,23 +219,7 @@ export default function Home() {
                     View MVP <HiArrowTopRightOnSquare aria-hidden="true" />
                   </a>
                 </div>
-                <div className="mvp-product-visual" aria-hidden="true">
-                  <div className="mvp-browser-bar">
-                    <span />
-                    <span />
-                    <span />
-                    <strong>{product.eyebrow}</strong>
-                  </div>
-                  <div className="mvp-visual-main">
-                    <span>{product.signals[0]}</span>
-                    <strong>{product.headline}</strong>
-                  </div>
-                  <div className="mvp-signal-list">
-                    {product.signals.map((signal) => (
-                      <span key={signal}>{signal}</span>
-                    ))}
-                  </div>
-                </div>
+                <MvpProductVisual slug={product.slug} />
               </MotionReveal>
             ))}
           </div>

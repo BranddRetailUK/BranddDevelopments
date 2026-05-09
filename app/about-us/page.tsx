@@ -14,7 +14,7 @@ import { ScrollBridge } from "@/components/ScrollBridge";
 export const metadata: Metadata = {
   title: "About Us",
   description:
-    "BRANDD Developments is a practical web design and development studio for brand-led businesses.",
+    "Brandd is a practical web design and development studio for brand-led businesses.",
 };
 
 const principles = [
@@ -46,7 +46,7 @@ export default function AboutPage() {
       <section className="page-hero page-hero-dark section-grid" data-nav-tone="dark">
         <MotionReveal className="page-hero-copy">
           <p className="eyebrow eyebrow-light">About us</p>
-          <h1>Brandd Developments builds the digital systems behind ambitious brands.</h1>
+          <h1>Brandd builds the digital systems behind ambitious brands.</h1>
           <p>
             We work where design, development and operations overlap. That
             means polished public websites, but also the backend services,

@@ -84,13 +84,13 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             ))}
           </div>
 
-          <Link className="brand-mark" href="/" aria-label="BRANDD Developments home">
+          <Link className="brand-mark" href="/" aria-label="Brandd home">
             <Image
               src={headerTone === "dark" ? whiteLogo : darkLogo}
               width={886}
               height={205}
               priority
-              alt="BRANDD Developments"
+              alt="Brandd"
             />
           </Link>
 
@@ -277,7 +277,7 @@ function SiteFooter() {
   return (
     <footer className="site-footer" data-nav-tone="dark">
       <div>
-        <Image src={whiteLogo} width={886} height={205} alt="BRANDD Developments" />
+        <Image src={whiteLogo} width={886} height={205} alt="Brandd" />
         <p>Websites, product platforms, backend systems, databases, MVPs, ecommerce, integrations, and operational tools.</p>
       </div>
       <div className="footer-links">

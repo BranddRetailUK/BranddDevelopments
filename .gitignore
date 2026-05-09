@@ -28,6 +28,7 @@ pnpm-debug.log*
 # hosting and tool output
 .vercel
 .turbo
+/mvp repos/
 
 # typescript
 *.tsbuildinfo

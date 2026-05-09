@@ -9,6 +9,7 @@ import {
   HiOutlineSquares2X2,
 } from "react-icons/hi2";
 import { MotionReveal } from "@/components/MotionReveal";
+import { MvpProductVisual } from "@/components/MvpProductVisual";
 import { ScrollAccent } from "@/components/ScrollAccent";
 import { ScrollBridge } from "@/components/ScrollBridge";
 import { mvpShowcases } from "@/content/site";
@@ -16,7 +17,7 @@ import { mvpShowcases } from "@/content/site";
 export const metadata: Metadata = {
   title: "MVPs",
   description:
-    "One-off project builds and version-one MVP design and development from BRANDD Developments.",
+    "One-off project builds and version-one MVP design and development from Brandd.",
 };
 
 const buildStages = [
@@ -117,14 +118,10 @@ export default function MvpsPage() {
       <section className="page-hero page-hero-dark section-grid" data-nav-tone="dark">
         <MotionReveal className="page-hero-copy">
           <p className="eyebrow eyebrow-light">MVPs</p>
-          <h1>MVPs built to test the idea, onboard users and prove the system.</h1>
+          <h1>MVPs built to test the idea.</h1>
           <p>
-            An MVP is the smallest usable version of a product that can launch,
-            test demand and guide the next build.{" "}
-            Brandd builds practical first-version products for businesses that
-            need something real in users&apos; hands: a sharp version one with
-            enough design, backend, database and product thinking to launch,
-            learn and improve.
+            Brandd builds focused first versions that launch quickly, onboard
+            real users and give the next build clear direction.
           </p>
           <div className="hero-actions">
             <Link className="button button-dark" href="/contact">
@@ -190,23 +187,7 @@ export default function MvpsPage() {
             </a>
           </MotionReveal>
           <MotionReveal className="mvp-project-media" delay={0.12}>
-            <div className="mvp-product-visual" aria-hidden="true">
-              <div className="mvp-browser-bar">
-                <span />
-                <span />
-                <span />
-                <strong>{beatifyShowcase.eyebrow}</strong>
-              </div>
-              <div className="mvp-visual-main">
-                <span>{beatifyShowcase.signals[0]}</span>
-                <strong>{beatifyShowcase.headline}</strong>
-              </div>
-              <div className="mvp-signal-list">
-                {beatifyShowcase.signals.map((signal) => (
-                  <span key={signal}>{signal}</span>
-                ))}
-              </div>
-            </div>
+            <MvpProductVisual slug={beatifyShowcase.slug} />
             <ul className="mvp-feature-list mvp-feature-list-dark">
               {beatifyShowcase.features.map((feature) => (
                 <li key={feature.title}>
@@ -249,23 +230,7 @@ export default function MvpsPage() {
             </a>
           </MotionReveal>
           <MotionReveal className="mvp-project-media" delay={0.12}>
-            <div className="mvp-product-visual mvp-product-visual-light" aria-hidden="true">
-              <div className="mvp-browser-bar">
-                <span />
-                <span />
-                <span />
-                <strong>{dtfShowcase.eyebrow}</strong>
-              </div>
-              <div className="mvp-visual-main">
-                <span>{dtfShowcase.signals[0]}</span>
-                <strong>{dtfShowcase.headline}</strong>
-              </div>
-              <div className="mvp-signal-list">
-                {dtfShowcase.signals.map((signal) => (
-                  <span key={signal}>{signal}</span>
-                ))}
-              </div>
-            </div>
+            <MvpProductVisual slug={dtfShowcase.slug} />
             <ul className="mvp-feature-list">
               {dtfShowcase.features.map((feature) => (
                 <li key={feature.title}>
