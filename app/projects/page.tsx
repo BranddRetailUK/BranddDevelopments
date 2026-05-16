@@ -50,41 +50,55 @@ const projectTypes = [
 
 const goodGamePlatformLayers = [
   {
-    title: "Storefront and checkout",
-    label: "Public shop",
-    copy: "Creator collections, product pages, carts, checkout and customer accounts.",
+    title: "Storefront",
+    label: "Public commerce",
+    copy: "A Next.js storefront for creator collections, product detail pages, customer accounts, carts, checkout, subscriptions, policies and SEO landing pages.",
     icon: HiOutlineShoppingCart,
   },
   {
-    title: "Product creator",
-    label: "Design tool",
-    copy: "Upload artwork, choose garments, preview colours and publish products.",
-    icon: HiOutlineSquares2X2,
-  },
-  {
     title: "Creator dashboard",
-    label: "Creator hub",
-    copy: "Manage products, orders, earnings, rewards, assets and support.",
+    label: "Account hub",
+    copy: "Authenticated creator tools for products, orders, earnings, subscriptions, rewards, saved artwork, support chat and storefront profile control.",
     icon: HiOutlineChartBarSquare,
   },
   {
-    title: "Growth tools",
-    label: "Launch support",
-    copy: "Subscriptions, ambassador links, coins, logo tools and saved assets.",
-    icon: HiOutlineWrenchScrewdriver,
+    title: "Product creator",
+    label: "Render pipeline",
+    copy: "Artwork upload, template selection, colour previews, product rendering, DB-native product rows, Cloudinary imagery and storefront publishing.",
+    icon: HiOutlineSquares2X2,
   },
 ];
 
 const goodGameToolSections = [
   {
-    label: "Product creator",
-    title: "Turn artwork into products.",
-    copy: "Creators pick a product, place artwork, preview the design and save it to their store.",
+    label: "Storefront service",
+    title: "A public storefront built around creator collections.",
+    copy: "The storefront is a full ecommerce surface rather than a theme-only shop: creator collection routes, collection directories, product pages, search-led discovery, cart and checkout flows, customer accounts, subscriptions and public SEO pages all read from the platform data underneath.",
+    points: [
+      "Creator collection and product routes",
+      "Cart, checkout and customer account flows",
+      "Subscriptions, packages and SEO landing pages",
+    ],
   },
   {
-    label: "Creator dashboard",
-    title: "Run the creator account.",
-    copy: "Creators manage their shop, products, orders, sales, rewards, assets and support from one dashboard.",
+    label: "Creator dashboard service",
+    title: "A dashboard for running the creator account.",
+    copy: "The dashboard brings the operational side into one account area: creators manage their profile, storefront status, product listings, order history, earnings, coins, payout state, support conversations, saved assets and subscription settings.",
+    points: [
+      "Product, order and revenue management",
+      "Saved artwork, logo tools and support chat",
+      "Subscription, package and storefront activation controls",
+    ],
+  },
+  {
+    label: "Product creator service",
+    title: "A product creator that saves real storefront products.",
+    copy: "The product creator lets creators upload artwork, pick templates, preview garment colours, manage print placement and queue render jobs that create local product, variant, image and artwork records for the storefront.",
+    points: [
+      "Artwork validation, uploads and template selection",
+      "Colour previews, print placement and render jobs",
+      "DB-native product, variant and image creation",
+    ],
   },
 ];
 
@@ -127,15 +141,15 @@ export default function ProjectsPage() {
             <p>
               Good Game Apparel is the clearest example of what Brandd can build
               when a brand needs more than a standard website. It combines
-              ecommerce, creator onboarding, subscriptions, creator stores,
-              product tools, revenue tracking, fulfilment logic, ambassador
-              referrals and dashboard-based account management into one
-              connected platform.
+              a public storefront, creator onboarding, subscriptions,
+              creator-owned storefronts, product creation tools, revenue
+              tracking, fulfilment logic and dashboard-based account management
+              into one connected platform.
             </p>
             <p>
               Because Good Game Apparel is owned by Brandd, it also works as a
-              live product lab: the storefront, account logic, product creation
-              tools, dashboard views, sales logic, subscription tiers and
+              live product lab: storefront routes, creator dashboard data,
+              product creation jobs, sales logic, subscription tiers and
               fulfilment requirements all have to work together cleanly.
             </p>
             <a
@@ -177,7 +191,7 @@ export default function ProjectsPage() {
         <div className="section-inner">
           <MotionReveal className="good-game-section-heading">
             <p className="eyebrow eyebrow-light">Good Game platform</p>
-            <h2>Storefront, creator tools and dashboard in one connected platform.</h2>
+            <h2>Storefront, creator dashboard and product creator in one connected platform.</h2>
           </MotionReveal>
           <div className="good-game-platform-grid">
             {goodGamePlatformLayers.map((item, index) => {
@@ -208,6 +222,11 @@ export default function ProjectsPage() {
               <p className="eyebrow eyebrow-light">{item.label}</p>
               <h2>{item.title}</h2>
               <p>{item.copy}</p>
+              <ul className="good-game-tool-list">
+                {item.points.map((point) => (
+                  <li key={point}>{point}</li>
+                ))}
+              </ul>
             </MotionReveal>
           ))}
         </div>

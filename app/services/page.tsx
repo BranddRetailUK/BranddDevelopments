@@ -175,13 +175,8 @@ export default function ServicesPage() {
                 <p className="eyebrow service-theme-eyebrow">{spotlight.eyebrow}</p>
                 <h2>{spotlight.title}</h2>
                 <p>{spotlight.copy}</p>
-                <ul className="service-theme-pill-list">
-                  {spotlight.highlights.map((highlight) => (
-                    <li key={highlight}>{highlight}</li>
-                  ))}
-                </ul>
                 <Link className="service-theme-link" href="/contact">
-                  Brief this service <HiArrowLongRight aria-hidden="true" />
+                  Talk to us about this <HiArrowLongRight aria-hidden="true" />
                 </Link>
               </MotionReveal>
 

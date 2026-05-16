@@ -72,11 +72,12 @@ The Projects page frames Brandd builds as connected websites, products, and syst
 
 - The hero is dark and includes a stacked project-type visual for creator commerce, operational dashboards, and MVP platforms.
 - The Good Game Apparel section is the flagship project section and has the `id="good-game-apparel"` anchor.
-- Good Game Apparel is presented as Brandd-owned creator-commerce platform work covering creator storefronts, product creator tools, subscriptions, revenue share, dashboard logic, referrals, and rewards.
+- Good Game Apparel is presented as Brandd-owned creator-commerce platform work covering public creator storefronts, creator dashboard services, product creator tools, subscriptions, revenue tracking, fulfilment logic, and account management.
 - The Good Game section uses dark storefront-inspired styling, gold accents, the gold Good Game Apparel logo, the `www.goodgameapparel.co.uk` public link, and a Cloudinary-hosted banner video.
-- Good Game has additional dark/gold sections for the platform layers: storefront and checkout, product creator, creator dashboard, and creator growth tools.
-- The Good Game product creator section explains artwork upload, product selection, design preview, and saving products to the creator store.
-- The Good Game creator dashboard section explains shop control, product and order management, sales visibility, rewards, assets, and support.
+- Good Game has additional dark/gold sections for the platform layers: storefront, creator dashboard, and product creator.
+- The Good Game storefront service panel explains creator collection routes, product pages, discovery, cart and checkout flows, customer accounts, subscriptions, packages, and SEO landing pages.
+- The Good Game creator dashboard service panel explains profile control, storefront status, product listings, order history, earnings, coins, payout state, support conversations, saved assets, and subscriptions.
+- The Good Game product creator service panel explains artwork validation and uploads, template selection, colour previews, print placement, render jobs, and DB-native product, variant, image, and artwork records.
 - The Project Types section lists creator-commerce platforms, operational dashboards, MVP platforms, ecommerce systems, and business process tools.
 - The page ends with a dark CTA linking to Contact.
 
@@ -112,7 +113,7 @@ The Services page describes practical digital services for businesses that need 
   - Discord Bot Building uses a purple community operations theme for role automation, slash commands, store alerts, and creator rewards.
   - Customer Portals & Dashboards uses a light cyan and amber dashboard theme for self-serve accounts, admin controls, reports, and status views.
   - AI Tools & Workflow Assistants uses a coral and cyan workflow theme for quote assistants, support triage, product content helpers, and admin workflow support.
-- Each themed service spotlight includes a service icon, feature chips, a contact CTA, a build-map visual, workflow steps, highlight tiles, and service-fit metrics.
+- Each themed service spotlight includes a service icon, customer-facing contact CTA, a build-map visual, workflow steps, highlight tiles, and service-fit metrics.
 - The delivery section lists engagement types for website/frontend sprints, Shopify apps and store extensions, Discord bots, customer portals and dashboards, AI workflow assistants, and MVP builds.
 - The page ends with a dark CTA.
 
