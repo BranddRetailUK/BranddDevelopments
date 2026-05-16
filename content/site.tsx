@@ -26,7 +26,7 @@ export const navItems = [
       {
         href: "/projects/good-game-apparel",
         label: "Good Game Apparel",
-        description: "Creator-commerce platform with storefront, dashboard, and product creator.",
+        description: "Made-for-creators merch platform with storefronts, dashboard tracking, and UK fulfilment.",
       },
       {
         href: "/projects/ace-hits-tcg",

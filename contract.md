@@ -78,12 +78,12 @@ The Projects page frames Brandd builds as connected websites, products, and syst
 
 The Good Game Apparel page presents Brandd-owned creator-commerce platform work as a standalone project page.
 
-- The hero is dark/gold, uses the main Good Game Apparel logo centered at the top, links externally to `https://www.goodgameapparel.co.uk/`, includes a Back to Projects action, and uses a Cloudinary-hosted video backdrop.
-- The hero summary cards introduce the three connected services: storefront, creator dashboard, and product creator.
-- The storefront service section explains creator collection routes, product pages, discovery, cart and checkout flows, customer accounts, subscriptions and SEO pages, with a browser-style storefront mockup.
-- The creator dashboard service section explains profile control, storefront status, product listings, order history, earnings, coins, payout state, support conversations, saved assets and subscriptions, with a dashboard UI mockup.
-- The product creator service section explains artwork validation and uploads, template selection, colour previews, print placement, render jobs, and DB-native product, variant, image and artwork records, with a product creator workspace mockup.
-- A connected-platform section shows the creator account, product records and storefront output as the shared data flow behind the public site and account tools.
+- The hero is dark/gold, uses the main Good Game Apparel logo centered at the top, links externally to `https://www.goodgameapparel.co.uk/`, includes a Back to Projects action, uses a Cloudinary-hosted video backdrop, and uses the storefront's "Bring your brand to life" / "Made for Creators" positioning.
+- The hero summary cards introduce the three connected services: storefront, creator dashboard, and product creator, using real storefront language around creator stores, subscriptions, UK fulfilment, dashboard tracking, rewards and payouts.
+- The storefront service section uses the Create Your Merch and live creator-store language to explain public creator stores, subscription tiers, made-to-order ordering, production, packing, fulfilment and delivery, with a browser-style storefront mockup.
+- The creator dashboard service section explains the Creator Hub account, creator earnings, coins, XP, payout state, Discord support, product setup, order activity and store performance, with a dashboard UI mockup.
+- The product creator service section explains Product Creator and Logo Generator workflows for artwork, product previews, product details, print methods and storefront publishing, with a product creator workspace mockup.
+- A connected-platform section shows design, print, shipping and earning as the shared data flow behind the creator account, product records and storefront output.
 - The page ends with a dark creator-commerce CTA linking to Contact.
 
 ### Ace Hits TCG `/projects/ace-hits-tcg`

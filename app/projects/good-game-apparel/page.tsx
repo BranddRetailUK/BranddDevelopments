@@ -13,9 +13,9 @@ import {
 import { MotionReveal } from "@/components/MotionReveal";
 
 export const metadata: Metadata = {
-  title: "Good Game Apparel",
+  title: "Good Game Apparel | Made for Creators",
   description:
-    "Good Game Apparel project page covering a creator-commerce storefront, creator dashboard, and product creator platform.",
+    "Good Game Apparel helps creators launch made-to-order apparel and merch with creator tools, storefronts, UK fulfilment, dashboard tracking, and subscription options.",
 };
 
 const goodGameLogo =
@@ -27,37 +27,37 @@ const goodGameVideo =
 const heroSystems = [
   {
     title: "Storefront",
-    copy: "Creator collections, product pages, cart, checkout, accounts, subscriptions and SEO pages.",
+    copy: "Creator stores, subscriptions, product discovery, cart and checkout for made-to-order merch.",
     icon: HiOutlineShoppingBag,
   },
   {
     title: "Creator dashboard",
-    copy: "Profile, storefront status, products, orders, earnings, coins, payouts, support and saved assets.",
+    copy: "One login for designs, storefront, production, fulfilment, rewards, payouts and support.",
     icon: HiOutlineChartBarSquare,
   },
   {
     title: "Product creator",
-    copy: "Artwork upload, template selection, colour preview, placement controls, render jobs and product records.",
+    copy: "Artwork uploads, product previews, logo-generator ideas and range management from the dashboard.",
     icon: HiOutlineSquares2X2,
   },
 ];
 
 const storefrontDetails = [
-  ["Creator routes", "/<collection> and /<collection>/<product> pages for public creator shops."],
-  ["Commerce paths", "Cart, checkout, customer accounts, policies and subscriptions stay connected to live data."],
-  ["Discovery", "Collection directories, product search, creator collections and public SEO landing pages."],
+  ["Creator Stores", "Dedicated collection pages let shoppers browse live creator ranges and product drops."],
+  ["Subscription tiers", "Free, Starter, Core and Pro options control listings, support and creator tools."],
+  ["Made to order", "Orders move through production, packing, fulfilment and delivery without creators buying stock upfront."],
 ];
 
 const dashboardDetails = [
-  ["Storefront control", "Creators can manage their profile, public status, subscription state and package access."],
-  ["Operations", "Product listings, order history, revenue, coins, payouts and support conversations sit in one account area."],
-  ["Creative assets", "Saved artwork, logo tools and product creator launch points keep repeat work close to the dashboard."],
+  ["Creator earnings", "Revenue share, coins, XP and payout state sit beside product and order activity."],
+  ["Launch support", "Discord support, subscription questions and product setup all stay close to the creator account."],
+  ["Store performance", "Products, orders and reward progress help creators see what is selling and what to launch next."],
 ];
 
 const creatorDetails = [
-  ["Artwork intake", "Uploads are validated before creators choose templates, garment colours and print placement."],
-  ["Render workflow", "The creator queues jobs that create preview imagery and production-ready product assets."],
-  ["Storefront output", "Local product, variant, image and artwork records are created for publishing to the storefront."],
+  ["Create artwork", "Creators can upload a logo, use existing artwork, or generate new ideas with dashboard tools."],
+  ["Build the collection", "Products, design placement, previews, titles and pricing are managed before launch."],
+  ["Print methods", "Transfer print, embroidery and UV printing support apparel, accessories and hard goods."],
 ];
 
 export default function GoodGameApparelPage() {
@@ -83,13 +83,12 @@ export default function GoodGameApparelPage() {
 
           <MotionReveal className="good-game-hero-copy" delay={0.08}>
             <p className="eyebrow eyebrow-light">Good Game Apparel</p>
-            <h1>Creator commerce with the storefront, dashboard and product creator built together.</h1>
+            <h1>Bring your brand to life.</h1>
             <p>
-              Good Game Apparel is a Brandd-owned creator-commerce platform.
-              The work joins a public ecommerce storefront, authenticated
-              creator account area, product creation tools, subscriptions,
-              order data, revenue tracking and fulfilment logic into one
-              connected product.
+              Premium print-on-demand apparel and merch, made for creators.
+              Brandd built the platform behind that promise: creator tools,
+              storefronts, UK fulfilment, dashboard tracking and subscriptions
+              for growing communities.
             </p>
             <div className="good-game-hero-actions">
               <a
@@ -125,12 +124,11 @@ export default function GoodGameApparelPage() {
         <div className="section-inner good-game-service-layout">
           <MotionReveal className="good-game-service-copy">
             <p className="eyebrow eyebrow-light">Storefront service</p>
-            <h2>A public storefront built around creator collections.</h2>
+            <h2>Start your collection and explore live creator stores.</h2>
             <p>
-              The storefront is a full commerce surface rather than a static
-              theme. It supports creator shops, product detail pages,
-              collection directories, search-led discovery, carts, checkout,
-              accounts, subscriptions and SEO pages.
+              The storefront turns the Create Your Merch flow into public
+              creator stores, subscriptions, product pages, search, cart,
+              account, checkout and support journeys for made-to-order merch.
             </p>
             <div className="good-game-detail-list">
               {storefrontDetails.map(([title, copy]) => (
@@ -159,16 +157,16 @@ export default function GoodGameApparelPage() {
               </div>
             </div>
             <div className="good-game-storefront-hero-card">
-              <span>Creator collection</span>
-              <strong>Team GG drop</strong>
-              <p>Public collection route, creator profile, products and subscription entry points.</p>
+              <span>Creator merch launch flow</span>
+              <strong>Design Print Ship Earn</strong>
+              <p>Creator stores, subscriptions and made-to-order fulfilment in one public storefront.</p>
             </div>
             <div className="good-game-product-board">
-              {["Oversized tee", "Creator hoodie", "Limited drop"].map((item, index) => (
+              {["Creator hoodie", "Oversized tee", "Custom canvas"].map((item, index) => (
                 <article key={item}>
                   <div className={`good-game-product-thumb good-game-product-thumb-${index + 1}`} />
                   <strong>{item}</strong>
-                  <span>{index === 0 ? "From £24.99" : index === 1 ? "From £44.99" : "Members only"}</span>
+                  <span>{index === 0 ? "Made to order" : index === 1 ? "Creator range" : "UV printed"}</span>
                 </article>
               ))}
             </div>
@@ -185,12 +183,12 @@ export default function GoodGameApparelPage() {
         <div className="section-inner good-game-service-layout">
           <MotionReveal className="good-game-service-copy">
             <p className="eyebrow eyebrow-light">Creator dashboard service</p>
-            <h2>An account hub for running the creator side of the platform.</h2>
+            <h2>One login for your merch collection and creator earnings.</h2>
             <p>
-              The dashboard gives creators a practical operating area for the
-              things that sit behind the public store: storefront status,
-              products, order history, earnings, coins, payouts, subscriptions,
-              saved assets and support.
+              The creator account connects designs, storefront, production,
+              fulfilment, rewards and payouts. It is where creators manage
+              products, track orders, watch reward progress and get setup
+              support.
             </p>
             <div className="good-game-detail-list">
               {dashboardDetails.map(([title, copy]) => (
@@ -215,9 +213,9 @@ export default function GoodGameApparelPage() {
               <div className="good-game-dashboard-topline">
                 <div>
                   <span>Creator dashboard</span>
-                  <strong>Team GG account</strong>
+                  <strong>Creator Hub</strong>
                 </div>
-                <em>Storefront active</em>
+                <em>Collection live</em>
               </div>
               <div className="good-game-dashboard-stats">
                 <article>
@@ -225,7 +223,7 @@ export default function GoodGameApparelPage() {
                   <strong>128</strong>
                 </article>
                 <article>
-                  <span>Revenue</span>
+                  <span>Creator sales</span>
                   <strong>£6.4k</strong>
                 </article>
                 <article>
@@ -236,8 +234,8 @@ export default function GoodGameApparelPage() {
               <div className="good-game-dashboard-table">
                 {[
                   ["Creator hoodie", "Live", "24 orders"],
-                  ["Oversized tee", "Draft", "Render ready"],
-                  ["Support thread", "Open", "2 replies"],
+                  ["Logo Generator", "Ready", "5 credits"],
+                  ["Discord support", "Open", "2 replies"],
                 ].map(([title, status, meta]) => (
                   <article key={title}>
                     <HiOutlineSparkles aria-hidden="true" />
@@ -256,12 +254,12 @@ export default function GoodGameApparelPage() {
         <div className="section-inner good-game-service-layout">
           <MotionReveal className="good-game-service-copy">
             <p className="eyebrow eyebrow-light">Product creator service</p>
-            <h2>A product creator that turns artwork into real storefront products.</h2>
+            <h2>Create products and launch fast.</h2>
             <p>
-              The product creator handles the work between an uploaded artwork
-              file and a sellable storefront product. Creators choose templates,
-              preview garment colours, adjust print placement and queue render
-              jobs that write the product records the storefront needs.
+              Product Creator and Logo Generator tools help creators move from
+              artwork to sellable merch without leaving the dashboard. The
+              workflow covers product choice, mockup previews, product details
+              and storefront publishing.
             </p>
             <div className="good-game-detail-list">
               {creatorDetails.map(([title, copy]) => (
@@ -278,11 +276,11 @@ export default function GoodGameApparelPage() {
               <strong>Product creator</strong>
               <label>
                 Template
-                <span>Oversized tee - front print</span>
+                <span>Creator hoodie - front print</span>
               </label>
               <label>
                 Artwork
-                <span>team-gg-mark.png validated</span>
+                <span>creator-logo.png ready</span>
               </label>
               <div className="good-game-colour-row">
                 <span />
@@ -301,9 +299,9 @@ export default function GoodGameApparelPage() {
               <strong>Render queue</strong>
               {[
                 ["Product row", "Created"],
-                ["Variants", "6 colours"],
-                ["Images", "Cloudinary"],
-                ["Storefront", "Ready"],
+                ["Mockups", "Previewed"],
+                ["Print method", "Transfer"],
+                ["Storefront", "Published"],
               ].map(([title, status]) => (
                 <article key={title}>
                   <HiOutlineCircleStack aria-hidden="true" />
@@ -320,13 +318,13 @@ export default function GoodGameApparelPage() {
         <div className="section-inner">
           <MotionReveal className="good-game-section-heading">
             <p className="eyebrow eyebrow-light">Connected platform</p>
-            <h2>The public store, creator account and product creator share the same product data.</h2>
+            <h2>Design, print, ship and earn as one connected platform.</h2>
           </MotionReveal>
           <div className="good-game-data-flow">
             {[
-              ["Creator account", "Profile, subscription, package access, saved assets, support and payout state."],
-              ["Product records", "Products, variants, artwork, images, render status and storefront publishing state."],
-              ["Storefront output", "Creator collections, product pages, search results, cart, checkout and SEO routes."],
+              ["Creator account", "Designs, storefront, production, fulfilment, rewards and payouts stay tied to one login."],
+              ["Product records", "Artwork, mockups, print method, products and subscription limits feed the storefront."],
+              ["Storefront output", "Creator stores, products, checkout, UK fulfilment and customer support complete the loop."],
             ].map(([title, copy], index) => (
               <MotionReveal className="good-game-data-node" delay={index * 0.06} key={title}>
                 <strong>{title}</strong>
@@ -341,7 +339,7 @@ export default function GoodGameApparelPage() {
         <div className="section-inner cta-row">
           <MotionReveal>
             <p className="eyebrow eyebrow-light">Creator commerce build</p>
-            <h2>Need a storefront with the operating system behind it?</h2>
+            <h2>Need creator tools, storefronts and fulfilment in one merch platform?</h2>
           </MotionReveal>
           <Link className="button good-game-button" href="/contact">
             Plan a commerce project <HiArrowLongRight aria-hidden="true" />
