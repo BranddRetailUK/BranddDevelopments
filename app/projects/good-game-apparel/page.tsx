@@ -24,6 +24,24 @@ const goodGameLogo =
 const goodGameVideo =
   "https://res.cloudinary.com/dhlqooyuk/video/upload/v1777315888/bannervid_ikakzu.mp4";
 
+const productTemplateImages = [
+  {
+    title: "Premium T-Shirt",
+    status: "Made to order",
+    src: "https://res.cloudinary.com/dhlqooyuk/image/upload/c_fill,g_auto,ar_4:5,w_640,h_800,f_auto,q_auto/v1771159715/product_imagery/MC%20Gaming/FIRE%20%7C%20Premium%20T-Shirt/product-10431588041031-image-67433574793543.jpg",
+  },
+  {
+    title: "Phone Case",
+    status: "Accessory range",
+    src: "https://res.cloudinary.com/dhlqooyuk/image/upload/c_fill,g_auto,ar_4:5,w_640,h_800,f_auto,q_auto/v1777835859/product_imagery/RainDropz/Phone%20Case/phone-case-front-mockup-default-perspective-front-perspective-default-moq5kfvn.png",
+  },
+  {
+    title: "Water Bottle",
+    status: "UV printed",
+    src: "https://res.cloudinary.com/dhlqooyuk/image/upload/c_fill,g_auto,ar_4:5,w_640,h_800,f_auto,q_auto/v1771162528/product_imagery/Jammy/Metal%20Water%20Bottle/product-10622686822727-image-72072151302471.jpg",
+  },
+];
+
 const heroSystems = [
   {
     title: "Storefront",
@@ -162,11 +180,13 @@ export default function GoodGameApparelPage() {
               <p>Creator stores, subscriptions and made-to-order fulfilment in one public storefront.</p>
             </div>
             <div className="good-game-product-board">
-              {["Creator hoodie", "Oversized tee", "Custom canvas"].map((item, index) => (
-                <article key={item}>
-                  <div className={`good-game-product-thumb good-game-product-thumb-${index + 1}`} />
-                  <strong>{item}</strong>
-                  <span>{index === 0 ? "Made to order" : index === 1 ? "Creator range" : "UV printed"}</span>
+              {productTemplateImages.map((item) => (
+                <article key={item.title}>
+                  <div className="good-game-product-image">
+                    <Image alt="" height={800} src={item.src} width={640} />
+                  </div>
+                  <strong>{item.title}</strong>
+                  <span>{item.status}</span>
                 </article>
               ))}
             </div>
@@ -276,7 +296,7 @@ export default function GoodGameApparelPage() {
               <strong>Product creator</strong>
               <label>
                 Template
-                <span>Creator hoodie - front print</span>
+                <span>Premium T-Shirt - front print</span>
               </label>
               <label>
                 Artwork
@@ -290,8 +310,8 @@ export default function GoodGameApparelPage() {
               </div>
             </div>
             <div className="good-game-creator-canvas">
-              <div className="good-game-shirt-shape">
-                <div>GG</div>
+              <div className="good-game-creator-template-image">
+                <Image alt="" height={800} src={productTemplateImages[0].src} width={640} />
               </div>
               <span>Print placement preview</span>
             </div>

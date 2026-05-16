@@ -83,6 +83,8 @@ The Good Game Apparel page presents Brandd-owned creator-commerce platform work 
 - The storefront service section uses the Create Your Merch and live creator-store language to explain public creator stores, subscription tiers, made-to-order ordering, production, packing, fulfilment and delivery, with a browser-style storefront mockup.
 - The creator dashboard service section explains the Creator Hub account, creator earnings, coins, XP, payout state, Discord support, product setup, order activity and store performance, with a dashboard UI mockup.
 - The product creator service section explains Product Creator and Logo Generator workflows for artwork, product previews, product details, print methods and storefront publishing, with a product creator workspace mockup.
+- The dashboard and product creator mockups use responsive internal grids so metric tiles, row states and queue labels stay readable on desktop, tablet and mobile widths.
+- The storefront and product creator mockups use live Good Game product imagery hosted on Cloudinary instead of CSS-drawn product placeholders.
 - A connected-platform section shows design, print, shipping and earning as the shared data flow behind the creator account, product records and storefront output.
 - The page ends with a dark creator-commerce CTA linking to Contact.
 
@@ -154,6 +156,7 @@ The Contact page collects project enquiries.
 - The Projects hero uses the same wider, capped heading treatment as the homepage hero.
 - Mobile hero headings share a capped scale across homepage, Projects, MVPs, Services, Contact, and project pages so large uppercase titles fit cleanly on phone screens.
 - Mobile buttons wrap their labels safely, and browser-style visual bars truncate long URL labels instead of creating horizontal page overflow.
+- Mobile card and tile grids use two columns with compact card typography so repeated service, project, proof, product, highlight, and metric cards remain grid-based on phone widths.
 - The Ace Hits TCG project page has its own black retail visual system with purple, magenta, yellow and cyan accents, a wider homepage-style hero heading, product cards, category chips and Shopify-derived imagery.
 - The MVP pages use CSS variables scoped by product slug:
   - `.mvp-beatify` uses green accent variables.
