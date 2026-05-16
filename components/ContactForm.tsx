@@ -90,6 +90,10 @@ export function ContactForm() {
           <option>Backend services and APIs</option>
           <option>Database structure and reporting</option>
           <option>Ecommerce and product systems</option>
+          <option>Shopify app build</option>
+          <option>Discord bot build</option>
+          <option>Customer portal or dashboard</option>
+          <option>AI workflow assistant</option>
           <option>MVP design and build</option>
           <option>Monday.com and business integrations</option>
           <option>Warehouse, stock and QR tracking systems</option>

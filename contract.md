@@ -29,6 +29,10 @@ The current service offerings are:
 - Backend Services.
 - Database Management.
 - Ecommerce & Creator Commerce.
+- Shopify App Building.
+- Discord Bot Building.
+- Customer Portals & Dashboards.
+- AI Tools & Workflow Assistants.
 - Integrations & Automation.
 - MVP Design & Build.
 
@@ -104,8 +108,14 @@ The MVPs page explains version-one product delivery.
 The Services page describes practical digital services for businesses that need more than a simple website.
 
 - The hero is light, text-only, and uses a single-sentence headline with a short lede.
-- The service areas section renders the shared `services` array in a dark grid as the primary service breakdown.
-- The delivery section lists engagement types for website/frontend sprints, backend/database/dashboard clean-up, ecommerce and creator commerce, integrations, and MVP builds.
+- The service areas section renders the shared `services` array in a dark grid as the primary service breakdown. Service cards use accent-specific icon and top-bar gradients.
+- The page has four themed service spotlight sections after the grid:
+  - Shopify App Building uses a green ecommerce operations theme for private apps, storefront extensions, product and order logic, and webhook automations.
+  - Discord Bot Building uses a purple community operations theme for role automation, slash commands, store alerts, and creator rewards.
+  - Customer Portals & Dashboards uses a light cyan and amber dashboard theme for self-serve accounts, admin controls, reports, and status views.
+  - AI Tools & Workflow Assistants uses a coral and cyan workflow theme for quote assistants, support triage, product content helpers, and admin workflow support.
+- Each themed service spotlight includes a service icon, feature chips, a contact CTA, a build-map visual, workflow steps, highlight tiles, and service-fit metrics.
+- The delivery section lists engagement types for website/frontend sprints, Shopify apps and store extensions, Discord bots, customer portals and dashboards, AI workflow assistants, and MVP builds.
 - The page ends with a dark CTA.
 
 ### Contact `/contact`
@@ -115,6 +125,7 @@ The Contact page collects project enquiries.
 - The page starts with a dark contact section that places `ContactForm` before the project enquiry, planning session, and UK-based online-first cards.
 - The light hero section follows the form section and describes projects that may involve websites, customer portals, MVPs, backend systems, database clean-up, ecommerce workflows, or custom integrations.
 - `ContactForm` renders name, email, service focus, and message fields.
+- Service focus options include website/frontend, backend APIs, database/reporting, ecommerce/product systems, Shopify apps, Discord bots, customer portals or dashboards, AI workflow assistants, MVPs, Monday.com/integrations, warehouse/QR systems, and custom dashboards/internal tools.
 - On desktop layouts, focusing the project brief textarea expands the form across the contact grid and animates the supporting contact cards out of view so the user has more space to write.
 - Submitting the form posts to `POST /api/contact`, disables the form while sending, resets the form after a successful save, and shows success or error feedback.
 - The API validates the payload, creates the `contact_submissions` table if needed, and stores each enquiry with `status`, `email_status`, timestamps, and the request user agent. Email sending is not connected yet; `email_status` is prepared for the planned SendGrid step.
@@ -143,6 +154,11 @@ The Contact page collects project enquiries.
 - The MVP pages use CSS variables scoped by product slug:
   - `.mvp-beatify` uses green accent variables.
   - `.mvp-dtf-gang-designer` uses purple accent variables.
+- The Services page uses CSS variables scoped by service spotlight slug:
+  - `.service-theme-shopify` uses a green operations theme.
+  - `.service-theme-discord` uses a purple community theme.
+  - `.service-theme-portals` uses a light cyan and amber dashboard theme.
+  - `.service-theme-ai` uses a coral and cyan workflow theme.
 - The Good Game project sections use a separate dark/gold visual system based around `#f2c653`, dark navy-black backgrounds, glassy panels, the Good Game logo, and a video-backed visual.
 - Responsive rules collapse grids at tablet sizes and simplify hero/section layouts at mobile sizes.
 

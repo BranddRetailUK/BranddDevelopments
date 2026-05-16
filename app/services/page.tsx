@@ -1,15 +1,123 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { HiArrowLongRight } from "react-icons/hi2";
+import {
+  HiArrowLongRight,
+  HiOutlineChartBarSquare,
+  HiOutlineCpuChip,
+} from "react-icons/hi2";
+import { SiDiscord, SiShopify } from "react-icons/si";
+import type { IconType } from "react-icons";
 import { MotionReveal } from "@/components/MotionReveal";
 import { ScrollAccent } from "@/components/ScrollAccent";
 import { ServiceGrid } from "@/components/ServiceGrid";
 import { services } from "@/content/site";
 
+type ServiceSpotlight = {
+  slug: string;
+  navTone: "light" | "dark";
+  eyebrow: string;
+  title: string;
+  copy: string;
+  icon: IconType;
+  highlights: string[];
+  workflow: string[];
+  metrics: Array<{
+    label: string;
+    value: string;
+  }>;
+};
+
+const serviceSpotlights: ServiceSpotlight[] = [
+  {
+    slug: "shopify",
+    navTone: "dark",
+    eyebrow: "Shopify app building",
+    title: "Shopify apps that handle the operation behind the store.",
+    copy:
+      "Private apps and store extensions for the jobs theme code cannot cover alone: product rules, fulfilment flows, creator products, admin actions, and external services.",
+    icon: SiShopify,
+    highlights: [
+      "Private admin apps",
+      "Storefront extensions",
+      "Product and order logic",
+      "Webhook automations",
+    ],
+    workflow: ["Store event", "App logic", "Admin action", "Customer outcome"],
+    metrics: [
+      { label: "Connects", value: "Products, orders, customers" },
+      { label: "Built for", value: "Shopify operations" },
+      { label: "Useful when", value: "Theme code is not enough" },
+    ],
+  },
+  {
+    slug: "discord",
+    navTone: "dark",
+    eyebrow: "Discord bot building",
+    title: "Discord bots for communities, support, and commerce flows.",
+    copy:
+      "Custom bots for role automation, support queues, store alerts, creator rewards, slash commands, moderation workflows, and dashboard-connected community tools.",
+    icon: SiDiscord,
+    highlights: [
+      "Role automation",
+      "Slash commands",
+      "Store and order alerts",
+      "Creator rewards",
+    ],
+    workflow: ["Member action", "Bot command", "Store or dashboard", "Role, alert, or report"],
+    metrics: [
+      { label: "Connects", value: "Discord, Shopify, Stripe, data" },
+      { label: "Built for", value: "Communities and support" },
+      { label: "Useful when", value: "Manual server work grows" },
+    ],
+  },
+  {
+    slug: "portals",
+    navTone: "light",
+    eyebrow: "Customer portals & dashboards",
+    title: "Portals and dashboards that give users the right control.",
+    copy:
+      "Account areas for customers, creators, staff, or clients with order history, downloads, project status, subscriptions, reports, permissions, and admin controls.",
+    icon: HiOutlineChartBarSquare,
+    highlights: [
+      "Customer accounts",
+      "Admin dashboards",
+      "Reports and exports",
+      "Order and project status",
+    ],
+    workflow: ["Sign in", "View status", "Take action", "Track outcome"],
+    metrics: [
+      { label: "Connects", value: "Users, orders, jobs, reports" },
+      { label: "Built for", value: "Self-serve workflows" },
+      { label: "Useful when", value: "Support needs structure" },
+    ],
+  },
+  {
+    slug: "ai",
+    navTone: "dark",
+    eyebrow: "AI tools & workflow assistants",
+    title: "AI assistants that sit inside real business workflows.",
+    copy:
+      "Practical AI features for quote support, product content, support triage, internal admin tasks, structured summaries, and repetitive business process automation.",
+    icon: HiOutlineCpuChip,
+    highlights: [
+      "Quote assistants",
+      "Support triage",
+      "Product content helpers",
+      "Admin workflow support",
+    ],
+    workflow: ["Business input", "AI draft", "Human review", "Saved action"],
+    metrics: [
+      { label: "Connects", value: "Forms, data, content, tickets" },
+      { label: "Built for", value: "Repeatable decisions" },
+      { label: "Useful when", value: "Teams lose time to admin" },
+    ],
+  },
+];
+
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "UI/UX, frontend development, backend services, databases, ecommerce systems, MVP delivery, and business integrations from Brandd.",
+    "UI/UX, frontend development, backend services, databases, ecommerce systems, Shopify apps, Discord bots, AI tools, MVP delivery, and business integrations from Brandd.",
 };
 
 export default function ServicesPage() {
@@ -45,6 +153,67 @@ export default function ServicesPage() {
         </div>
       </section>
 
+      {serviceSpotlights.map((spotlight, index) => {
+        const Icon = spotlight.icon;
+
+        return (
+          <section
+            className={`section service-theme-section service-theme-${spotlight.slug}${
+              index % 2 === 1 ? " service-theme-reverse" : ""
+            }`}
+            data-nav-tone={spotlight.navTone}
+            key={spotlight.slug}
+          >
+            <div className="section-inner service-theme-layout">
+              <MotionReveal className="service-theme-copy">
+                <span className="service-theme-icon">
+                  <Icon aria-hidden="true" />
+                </span>
+                <p className="eyebrow service-theme-eyebrow">{spotlight.eyebrow}</p>
+                <h2>{spotlight.title}</h2>
+                <p>{spotlight.copy}</p>
+                <ul className="service-theme-pill-list">
+                  {spotlight.highlights.map((highlight) => (
+                    <li key={highlight}>{highlight}</li>
+                  ))}
+                </ul>
+                <Link className="service-theme-link" href="/contact">
+                  Brief this service <HiArrowLongRight aria-hidden="true" />
+                </Link>
+              </MotionReveal>
+
+              <MotionReveal className="service-theme-panel" delay={0.08}>
+                <div className="service-theme-panel-top">
+                  <span>{spotlight.eyebrow}</span>
+                  <strong>Build map</strong>
+                </div>
+                <div className="service-theme-flow">
+                  {spotlight.workflow.map((step, stepIndex) => (
+                    <span key={step}>
+                      <small>{String(stepIndex + 1).padStart(2, "0")}</small>
+                      {step}
+                    </span>
+                  ))}
+                </div>
+                <div className="service-theme-feature-grid">
+                  {spotlight.highlights.map((highlight) => (
+                    <span key={highlight}>{highlight}</span>
+                  ))}
+                </div>
+                <div className="service-theme-metrics">
+                  {spotlight.metrics.map((metric) => (
+                    <div key={metric.label}>
+                      <span>{metric.label}</span>
+                      <strong>{metric.value}</strong>
+                    </div>
+                  ))}
+                </div>
+              </MotionReveal>
+            </div>
+          </section>
+        );
+      })}
+
       <section className="section light-section" data-nav-tone="light">
         <div className="section-inner two-column">
           <MotionReveal>
@@ -54,9 +223,10 @@ export default function ServicesPage() {
           <div className="engagement-list">
             {[
               "A focused website, UI/UX, or frontend sprint for a launch date.",
-              "A backend, database, or dashboard clean-up for systems that need structure.",
-              "An ecommerce or creator-commerce build with product, checkout, and fulfilment logic.",
-              "A business integration for Monday.com, Shopify, Discord, Stripe, QR tracking, or label printing.",
+              "A Shopify app or store extension for operational work that has outgrown theme code.",
+              "A Discord bot for community operations, support, alerts, roles, or creator rewards.",
+              "A customer portal or dashboard for self-serve accounts, admin controls, and reporting.",
+              "An AI workflow assistant for quoting, support triage, product content, or internal admin.",
               "An MVP team to turn the first version into a real product.",
             ].map((item, index) => (
               <MotionReveal delay={index * 0.06} key={item}>

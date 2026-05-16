@@ -1,12 +1,15 @@
 import {
+  HiOutlineChartBarSquare,
   HiOutlineCircleStack,
   HiOutlineCodeBracketSquare,
   HiOutlineComputerDesktop,
+  HiOutlineCpuChip,
   HiOutlineCubeTransparent,
   HiOutlineRocketLaunch,
   HiOutlineShoppingBag,
   HiOutlineWrenchScrewdriver,
 } from "react-icons/hi2";
+import { SiDiscord, SiShopify } from "react-icons/si";
 import type { IconType } from "react-icons";
 
 export const darkLogo =
@@ -85,6 +88,30 @@ export const services: Service[] = [
     copy: "Product catalogues, collection systems, product creators, checkout flows, subscriptions, revenue share, and fulfilment logic.",
     icon: HiOutlineShoppingBag,
     accent: "rose",
+  },
+  {
+    title: "Shopify App Building",
+    copy: "Private Shopify apps, admin workflows, storefront extensions, product logic, subscriptions, and fulfilment connections.",
+    icon: SiShopify,
+    accent: "green",
+  },
+  {
+    title: "Discord Bot Building",
+    copy: "Custom Discord bots for communities, support, alerts, role flows, creator rewards, and store or dashboard integrations.",
+    icon: SiDiscord,
+    accent: "purple",
+  },
+  {
+    title: "Customer Portals & Dashboards",
+    copy: "Account areas for customers, creators, staff, or clients with order history, downloads, reports, status views, and admin controls.",
+    icon: HiOutlineChartBarSquare,
+    accent: "amber",
+  },
+  {
+    title: "AI Tools & Workflow Assistants",
+    copy: "Practical AI features for quoting, support triage, product content, internal workflows, and business process automation.",
+    icon: HiOutlineCpuChip,
+    accent: "coral",
   },
   {
     title: "Integrations & Automation",
