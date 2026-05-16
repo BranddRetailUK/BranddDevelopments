@@ -18,7 +18,7 @@ This file describes the current feature shape of the Brandd website. It is a pro
 
 - Brandd logo URLs. Both header tones use the no-strap Cloudinary logo, with CSS inversion on light headers so the white mark remains visible.
 - Top-level navigation items and the Projects dropdown children.
-- Per-route default header tone through `routeTones`; the Services route defaults to dark because it starts on a dark section.
+- Per-route default header tone through `routeTones`; Services and project detail routes default to dark because they start on dark sections.
 - Service offerings used by the homepage and as the source for the Services page service-area grid.
 - MVP showcase data used by the homepage and MVPs page.
 
@@ -47,7 +47,7 @@ The current MVP showcases are:
 
 - The header is fixed and uses a centered no-strap Brandd logo with left and right navigation groups.
 - The Brandd logo links to the homepage; Home is not repeated as a text navigation item.
-- Desktop navigation is split around the logo with large uppercase tab labels. The Projects item has dropdown sub-tabs for Good Game Apparel and Ace Hits TCG.
+- Desktop navigation is split around the logo with large uppercase tab labels. The Projects item has dropdown sub-tabs for the standalone Good Game Apparel and Ace Hits TCG project pages.
 - Mobile navigation keeps the Brandd logo centered in the header while the menu button sits on the right, and opens top-level links plus child subnav links.
 - Header colour is controlled by route defaults and visible section tone. Sections expose `data-nav-tone="light"` or `data-nav-tone="dark"` so the shell can choose the correct logo and text colour while scrolling.
 - Route transitions use Framer Motion with a page fade/blur movement and a route-wash overlay.
@@ -71,15 +71,20 @@ The homepage presents Brandd as a studio for sharp, functional websites and digi
 The Projects page frames Brandd builds as connected websites, products, and systems.
 
 - The hero is dark and includes a stacked project-type visual for creator commerce, operational dashboards, and MVP platforms.
-- The Good Game Apparel section is the flagship project section and has the `id="good-game-apparel"` anchor.
-- Good Game Apparel is presented as Brandd-owned creator-commerce platform work covering public creator storefronts, creator dashboard services, product creator tools, subscriptions, revenue tracking, fulfilment logic, and account management.
-- The Good Game section uses dark storefront-inspired styling, gold accents, the gold Good Game Apparel logo, the `www.goodgameapparel.co.uk` public link, and a Cloudinary-hosted banner video.
-- Good Game has additional dark/gold sections for the platform layers: storefront, creator dashboard, and product creator.
-- The Good Game storefront service panel explains creator collection routes, product pages, discovery, cart and checkout flows, customer accounts, subscriptions, packages, and SEO landing pages.
-- The Good Game creator dashboard service panel explains profile control, storefront status, product listings, order history, earnings, coins, payout state, support conversations, saved assets, and subscriptions.
-- The Good Game product creator service panel explains artwork validation and uploads, template selection, colour previews, print placement, render jobs, and DB-native product, variant, image, and artwork records.
 - The Project Types section lists creator-commerce platforms, operational dashboards, MVP platforms, ecommerce systems, and business process tools.
 - The page ends with a dark CTA linking to Contact.
+
+### Good Game Apparel `/projects/good-game-apparel`
+
+The Good Game Apparel page presents Brandd-owned creator-commerce platform work as a standalone project page.
+
+- The hero is dark/gold, uses the main Good Game Apparel logo centered at the top, links externally to `https://www.goodgameapparel.co.uk/`, includes a Back to Projects action, and uses a Cloudinary-hosted video backdrop.
+- The hero summary cards introduce the three connected services: storefront, creator dashboard, and product creator.
+- The storefront service section explains creator collection routes, product pages, discovery, cart and checkout flows, customer accounts, subscriptions and SEO pages, with a browser-style storefront mockup.
+- The creator dashboard service section explains profile control, storefront status, product listings, order history, earnings, coins, payout state, support conversations, saved assets and subscriptions, with a dashboard UI mockup.
+- The product creator service section explains artwork validation and uploads, template selection, colour previews, print placement, render jobs, and DB-native product, variant, image and artwork records, with a product creator workspace mockup.
+- A connected-platform section shows the creator account, product records and storefront output as the shared data flow behind the public site and account tools.
+- The page ends with a dark creator-commerce CTA linking to Contact.
 
 ### Ace Hits TCG `/projects/ace-hits-tcg`
 
@@ -158,12 +163,12 @@ The Contact page collects project enquiries.
   - `.service-theme-discord` uses a purple community theme.
   - `.service-theme-portals` uses a light cyan and amber dashboard theme.
   - `.service-theme-ai` uses a coral and cyan workflow theme.
-- The Good Game project sections use a separate dark/gold visual system based around `#f2c653`, dark navy-black backgrounds, glassy panels, the Good Game logo, and a video-backed visual.
+- The Good Game Apparel project page uses a separate dark/gold visual system based around `#f2c653`, dark navy-black backgrounds, glassy panels, the Good Game logo, a video-backed hero, and animated storefront/dashboard/product-creator mockups.
 - Responsive rules collapse grids at tablet sizes and simplify hero/section layouts at mobile sizes.
 
 ## Interaction Logic
 
-- Navigation active state is derived from the current pathname and supports child links with hash anchors.
+- Navigation active state is derived from the current pathname and supports dropdown child project links.
 - External project links open in a new tab and use `rel="noreferrer"`.
 - Header tone is recalculated on scroll and resize by sampling the section under the top-middle of the viewport.
 - Route and reveal animations use Framer Motion and fall back cleanly when reduced motion is preferred.

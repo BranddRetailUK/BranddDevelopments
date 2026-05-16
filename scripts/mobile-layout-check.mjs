@@ -11,7 +11,7 @@ const browserChannel = process.env.PLAYWRIGHT_CHANNEL || "chrome";
 const routes = [
   { name: "home", path: "/" },
   { name: "projects", path: "/projects" },
-  { name: "good-game", path: "/projects#good-game-apparel" },
+  { name: "good-game", path: "/projects/good-game-apparel" },
   { name: "ace-hits", path: "/projects/ace-hits-tcg" },
   { name: "mvps", path: "/mvps" },
   { name: "services", path: "/services" },

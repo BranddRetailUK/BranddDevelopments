@@ -24,9 +24,9 @@ export const navItems = [
     label: "Projects",
     children: [
       {
-        href: "/projects#good-game-apparel",
+        href: "/projects/good-game-apparel",
         label: "Good Game Apparel",
-        description: "Brandd-owned creator-commerce flagship project.",
+        description: "Creator-commerce platform with storefront, dashboard, and product creator.",
       },
       {
         href: "/projects/ace-hits-tcg",
@@ -45,6 +45,7 @@ export type RouteTone = "light" | "dark";
 export const routeTones: Record<string, RouteTone> = {
   "/": "light",
   "/projects": "dark",
+  "/projects/good-game-apparel": "dark",
   "/projects/ace-hits-tcg": "dark",
   "/mvps": "dark",
   "/services": "dark",
