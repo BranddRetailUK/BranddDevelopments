@@ -18,7 +18,7 @@ This file describes the current feature shape of the Brandd website. It is a pro
 
 - Brandd logo URLs. Both header tones use the no-strap Cloudinary logo, with CSS inversion on light headers so the white mark remains visible.
 - Top-level navigation items and the Projects dropdown children.
-- Per-route default header tone through `routeTones`.
+- Per-route default header tone through `routeTones`; the Services route defaults to dark because it starts on a dark section.
 - Service offerings used by the homepage and as the source for the Services page service-area grid.
 - MVP showcase data used by the homepage and MVPs page.
 
@@ -106,8 +106,8 @@ The MVPs page explains version-one product delivery.
 
 The Services page describes practical digital services for businesses that need more than a simple website.
 
-- The hero is light, text-only, and uses a single-sentence headline with a short lede.
-- The service areas section renders a nine-card subset of the shared `services` array in a dark 3x3 grid as the primary service breakdown: Web Design & UI/UX, Backend Services, Database Management, Ecommerce & Creator Commerce, Shopify App Building, Discord Bot Building, Customer Portals & Dashboards, AI Tools & Workflow Assistants, and Integrations & Automation. Service cards use accent-specific icon and top-bar gradients.
+- The page starts on a dark service areas section using the main Services headline and lede: "Digital services for websites that need to do more." and the short Brandd design/frontend/backend/data/commerce/integrations summary.
+- The service areas section renders a nine-card subset of the shared `services` array in a dark 3x3 grid as the primary service breakdown without an eyebrow label: Web Design & UI/UX, Backend Services, Database Management, Ecommerce & Creator Commerce, Shopify App Building, Discord Bot Building, Customer Portals & Dashboards, AI Tools & Workflow Assistants, and Integrations & Automation. Service cards use accent-specific icon and top-bar gradients.
 - The page has four themed service spotlight sections after the grid:
   - Shopify App Building uses a green ecommerce operations theme for private apps, storefront extensions, product and order logic, and webhook automations.
   - Discord Bot Building uses a purple community operations theme for role automation, slash commands, store alerts, and creator rewards.

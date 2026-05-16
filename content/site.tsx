@@ -47,7 +47,7 @@ export const routeTones: Record<string, RouteTone> = {
   "/projects": "dark",
   "/projects/ace-hits-tcg": "dark",
   "/mvps": "dark",
-  "/services": "light",
+  "/services": "dark",
   "/contact": "light",
 };
 

@@ -126,18 +126,7 @@ export const metadata: Metadata = {
 export default function ServicesPage() {
   return (
     <>
-      <section className="page-hero page-hero-light services-hero" data-nav-tone="light">
-        <MotionReveal className="page-hero-copy">
-          <p className="eyebrow">Services</p>
-          <h1>Digital services for websites that need to do more.</h1>
-          <p>
-            Brandd brings together design, frontend, backend, data, commerce
-            and integrations so the site works as part of the business.
-          </p>
-        </MotionReveal>
-      </section>
-
-      <section className="section dark-section" data-nav-tone="dark">
+      <section className="section dark-section services-service-area-section" data-nav-tone="dark">
         <div className="section-inner">
           <ScrollAccent
             className="section-accent section-accent-services"
@@ -149,8 +138,11 @@ export default function ServicesPage() {
             yTo="5%"
           />
           <MotionReveal className="section-heading">
-            <p className="eyebrow eyebrow-light">Service areas</p>
-            <h2>Specialist work that stays connected to the customer journey and the business underneath it.</h2>
+            <h1>Digital services for websites that need to do more.</h1>
+            <p className="section-copy">
+              Brandd brings together design, frontend, backend, data, commerce
+              and integrations so the site works as part of the business.
+            </p>
           </MotionReveal>
           <ServiceGrid items={serviceAreaServices} />
         </div>

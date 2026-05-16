@@ -810,6 +810,10 @@ h3 {
   overflow: hidden;
 }
 
+.services-service-area-section {
+  padding-top: calc(var(--header-height) + clamp(52px, 7vw, 96px));
+}
+
 .section-inner {
   width: min(100%, var(--max-width));
   margin: 0 auto;
