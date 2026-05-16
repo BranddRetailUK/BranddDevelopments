@@ -114,6 +114,9 @@ const serviceSpotlights: ServiceSpotlight[] = [
   },
 ];
 
+const hiddenServiceAreaTitles = new Set(["Frontend Development", "MVP Design & Build"]);
+const serviceAreaServices = services.filter((service) => !hiddenServiceAreaTitles.has(service.title));
+
 export const metadata: Metadata = {
   title: "Services",
   description:
@@ -149,7 +152,7 @@ export default function ServicesPage() {
             <p className="eyebrow eyebrow-light">Service areas</p>
             <h2>Specialist work that stays connected to the customer journey and the business underneath it.</h2>
           </MotionReveal>
-          <ServiceGrid items={services} />
+          <ServiceGrid items={serviceAreaServices} />
         </div>
       </section>
 

@@ -4,8 +4,6 @@ import {
   HiArrowLongRight,
   HiArrowTopRightOnSquare,
   HiOutlineCheckBadge,
-  HiOutlineCursorArrowRays,
-  HiOutlineRocketLaunch,
   HiOutlineSquares2X2,
 } from "react-icons/hi2";
 import { MotionReveal } from "@/components/MotionReveal";
@@ -31,40 +29,10 @@ const buildStages = [
     imageTitle: "Scope map",
     imageItems: ["Audience", "Core flow", "Feature boundary"],
   },
-  {
-    title: "Prototype to product",
-    eyebrow: "Stage 02",
-    headline: "Move from prototype screens into a usable version one.",
-    copy: "The first usable product needs proper frontend, backend, and database foundations, even when the feature set is focused.",
-    detail:
-      "The build is structured so the MVP can onboard users, collect real data, support the first workflow, and be improved without throwing the first version away.",
-    icon: HiOutlineRocketLaunch,
-    imageTitle: "Product build",
-    imageItems: ["Frontend UI", "Backend logic", "Data layer"],
-  },
-  {
-    title: "Accounts and dashboards",
-    eyebrow: "Stage 03",
-    headline: "Add the account areas and dashboards the product depends on.",
-    copy: "Many MVPs need signup, login, saved data, customer profiles, creator accounts, order lists, and admin views from the start.",
-    detail:
-      "This layer is where user activity, uploads, pricing rules, purchase logic, profile data, and team management tools become visible and useful.",
-    icon: HiOutlineCursorArrowRays,
-    imageTitle: "Dashboard layer",
-    imageItems: ["User account", "Saved data", "Admin view"],
-  },
 ];
 
 const beatifyShowcase = mvpShowcases[0];
 const dtfShowcase = mvpShowcases[1];
-
-const deliverySteps = [
-  "Define the outcome, audience, offer, and must-have feature set.",
-  "Design the user journey and interface around the first commercial test.",
-  "Build the frontend, backend, data structure, and integrations needed for launch.",
-  "Add the account, upload, pricing, payment, dashboard, or purchase logic the MVP depends on.",
-  "Release a version-one product with a practical improvement path.",
-];
 
 function MvpStageSection({
   item,
@@ -110,7 +78,7 @@ function MvpStageSection({
 }
 
 export default function MvpsPage() {
-  const [productScopingStage, prototypeStage, dashboardStage] = buildStages;
+  const [productScopingStage] = buildStages;
 
   return (
     <>
@@ -211,39 +179,6 @@ export default function MvpsPage() {
               ))}
             </ul>
           </MotionReveal>
-        </div>
-      </section>
-
-      <ScrollBridge
-        tone="dark"
-        label="MVP build stages"
-        variant="sweep-left"
-      />
-
-      {[prototypeStage, dashboardStage].map((item, index) => (
-        <MvpStageSection item={item} index={index + 1} key={item.title} />
-      ))}
-
-      <ScrollBridge
-        tone="light"
-        label="Launchable version one"
-        variant="sweep-right"
-      />
-
-      <section className="section light-section delivery-section" data-nav-tone="light">
-        <div className="section-inner two-column">
-          <MotionReveal>
-            <p className="eyebrow">Delivery shape</p>
-            <h2>A direct path from idea to usable version one.</h2>
-          </MotionReveal>
-          <div className="engagement-list">
-            {deliverySteps.map((item, index) => (
-              <MotionReveal delay={index * 0.06} key={item}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <p>{item}</p>
-              </MotionReveal>
-            ))}
-          </div>
         </div>
       </section>
 

@@ -19,7 +19,7 @@ This file describes the current feature shape of the Brandd website. It is a pro
 - Brandd logo URLs. Both header tones use the no-strap Cloudinary logo, with CSS inversion on light headers so the white mark remains visible.
 - Top-level navigation items and the Projects dropdown children.
 - Per-route default header tone through `routeTones`.
-- Service offerings used by the homepage and Services page.
+- Service offerings used by the homepage and as the source for the Services page service-area grid.
 - MVP showcase data used by the homepage and MVPs page.
 
 The current service offerings are:
@@ -99,8 +99,6 @@ The MVPs page explains version-one product delivery.
 - Beatify appears after the hero and uses a dark section with the Beatify green accent and an animated listener-dashboard visual based on the Beatify music platform UI.
 - Product scoping appears after Beatify as Stage 01.
 - DTF Designer appears after Product scoping and uses a light section with the DTF purple accent and an animated 560mm x 1000mm gang-sheet upload/layout workspace visual based on the DTF Uploader UI.
-- Prototype to product and Accounts and dashboards appear after DTF as Stage 02 and Stage 03.
-- The delivery section lists the first-release path from outcome definition through release and improvement.
 - The page ends with a dark CTA linking to Contact.
 
 ### Services `/services`
@@ -108,7 +106,7 @@ The MVPs page explains version-one product delivery.
 The Services page describes practical digital services for businesses that need more than a simple website.
 
 - The hero is light, text-only, and uses a single-sentence headline with a short lede.
-- The service areas section renders the shared `services` array in a dark grid as the primary service breakdown. Service cards use accent-specific icon and top-bar gradients.
+- The service areas section renders a nine-card subset of the shared `services` array in a dark 3x3 grid as the primary service breakdown: Web Design & UI/UX, Backend Services, Database Management, Ecommerce & Creator Commerce, Shopify App Building, Discord Bot Building, Customer Portals & Dashboards, AI Tools & Workflow Assistants, and Integrations & Automation. Service cards use accent-specific icon and top-bar gradients.
 - The page has four themed service spotlight sections after the grid:
   - Shopify App Building uses a green ecommerce operations theme for private apps, storefront extensions, product and order logic, and webhook automations.
   - Discord Bot Building uses a purple community operations theme for role automation, slash commands, store alerts, and creator rewards.
