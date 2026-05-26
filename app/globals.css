@@ -1566,6 +1566,402 @@ h3 {
   --mvp-accent-copy: #f4ebff;
 }
 
+.sonacrate-breakdown-section {
+  position: relative;
+  overflow: hidden;
+}
+
+.sonacrate-breakdown-panel {
+  align-items: center;
+}
+
+.sonacrate-copy h2,
+.sonacrate-green-copy h2 {
+  margin-bottom: 20px;
+}
+
+.sonacrate-green-copy p:not(.eyebrow),
+.sonacrate-copy p:not(.eyebrow) {
+  max-width: 720px;
+  font-size: clamp(1rem, 1.22vw, 1.12rem);
+  font-weight: 700;
+  line-height: 1.58;
+}
+
+.sonacrate-green-copy p:not(.eyebrow) {
+  color: rgba(4, 20, 10, 0.72);
+}
+
+.sonacrate-feature-wrap {
+  position: relative;
+  z-index: 2;
+  margin-top: clamp(28px, 5vw, 64px);
+}
+
+.sonacrate-feature-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+}
+
+.sonacrate-feature-grid-green {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
+.sonacrate-feature-card {
+  display: grid;
+  gap: 12px;
+  min-height: 228px;
+  padding: 22px;
+  border: 1px solid rgba(30, 215, 96, 0.24);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(30, 215, 96, 0.11), rgba(255, 255, 255, 0.035)),
+    rgba(255, 255, 255, 0.045);
+}
+
+.sonacrate-feature-card svg {
+  width: 30px;
+  height: 30px;
+  color: var(--mvp-accent, #1ed760);
+}
+
+.sonacrate-feature-card strong {
+  color: var(--white);
+  font-size: clamp(1rem, 1.2vw, 1.18rem);
+  font-weight: 950;
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+.sonacrate-feature-card p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.92rem;
+  font-weight: 700;
+  line-height: 1.48;
+}
+
+.sonacrate-feature-grid-green .sonacrate-feature-card {
+  border-color: rgba(4, 20, 10, 0.18);
+  background:
+    linear-gradient(145deg, rgba(255, 255, 255, 0.48), rgba(255, 255, 255, 0.18)),
+    rgba(4, 20, 10, 0.05);
+}
+
+.sonacrate-feature-grid-green .sonacrate-feature-card svg,
+.sonacrate-feature-grid-green .sonacrate-feature-card strong {
+  color: #04140a;
+}
+
+.sonacrate-feature-grid-green .sonacrate-feature-card p {
+  color: rgba(4, 20, 10, 0.68);
+}
+
+.sonacrate-green-section {
+  margin-top: -1px;
+  background:
+    radial-gradient(circle at 78% 16%, rgba(255, 255, 255, 0.55), transparent 28%),
+    radial-gradient(circle at 12% 84%, rgba(4, 20, 10, 0.18), transparent 30%),
+    linear-gradient(135deg, #2aff78, #1ed760 48%, #93ffb7);
+  color: #04140a;
+}
+
+.sonacrate-split-panel {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(340px, 0.86fr);
+  gap: clamp(24px, 6vw, 86px);
+  align-items: center;
+}
+
+.sonacrate-split-panel-reverse {
+  grid-template-columns: minmax(340px, 0.86fr) minmax(0, 0.9fr);
+}
+
+.sonacrate-creator-ui,
+.sonacrate-model-ui {
+  position: relative;
+  border: 1px solid rgba(4, 20, 10, 0.16);
+  border-radius: 8px;
+  background:
+    radial-gradient(circle at 78% 18%, rgba(30, 215, 96, 0.16), transparent 34%),
+    linear-gradient(145deg, rgba(22, 26, 24, 0.96), rgba(3, 6, 5, 0.98));
+  box-shadow: 0 28px 90px rgba(4, 20, 10, 0.28);
+  overflow: hidden;
+}
+
+.sonacrate-creator-ui {
+  min-height: 520px;
+}
+
+.sonacrate-creator-top {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto auto;
+  align-items: center;
+  gap: 12px;
+  min-height: 62px;
+  padding: 0 18px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.sonacrate-creator-top strong,
+.sonacrate-creator-top span,
+.sonacrate-upload-card span,
+.sonacrate-model-track span {
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.74rem;
+  font-weight: 850;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.sonacrate-creator-top strong {
+  color: #fff;
+  font-size: 0.95rem;
+  font-weight: 950;
+}
+
+.sonacrate-creator-body {
+  display: grid;
+  grid-template-columns: 112px minmax(0, 1fr);
+  grid-template-rows: minmax(0, 1fr) auto;
+  min-height: 458px;
+}
+
+.sonacrate-creator-nav {
+  grid-row: 1 / 3;
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 14px;
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.sonacrate-creator-nav span {
+  min-height: 34px;
+  padding: 9px;
+  border-radius: 7px;
+  color: rgba(255, 255, 255, 0.58);
+  font-size: 0.7rem;
+  font-weight: 850;
+  line-height: 1.15;
+  letter-spacing: 0;
+}
+
+.sonacrate-creator-nav span.is-active {
+  background: rgba(30, 215, 96, 0.15);
+  color: #2aff78;
+}
+
+.sonacrate-release-workspace {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(130px, 0.58fr);
+  gap: 12px;
+  padding: 14px;
+}
+
+.sonacrate-upload-card,
+.sonacrate-rights-card,
+.sonacrate-analytics-row div {
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.sonacrate-upload-card {
+  display: grid;
+  align-content: end;
+  gap: 14px;
+  min-height: 268px;
+  padding: 18px;
+}
+
+.sonacrate-upload-card strong,
+.sonacrate-rights-card strong,
+.sonacrate-model-track strong {
+  color: #fff;
+  font-size: clamp(1.05rem, 1.8vw, 1.5rem);
+  font-weight: 950;
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.sonacrate-upload-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.sonacrate-upload-grid em,
+.sonacrate-rights-card span {
+  display: flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 10px;
+  border-left: 3px solid #1ed760;
+  background: rgba(30, 215, 96, 0.08);
+  color: rgba(255, 255, 255, 0.72);
+  font-size: 0.72rem;
+  font-style: normal;
+  font-weight: 800;
+  line-height: 1.2;
+  letter-spacing: 0;
+}
+
+.sonacrate-rights-card {
+  display: grid;
+  align-content: start;
+  gap: 8px;
+  padding: 14px;
+}
+
+.sonacrate-analytics-row {
+  display: grid;
+  grid-column: 2;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 10px;
+  padding: 0 14px 14px;
+}
+
+.sonacrate-analytics-row div {
+  display: grid;
+  gap: 5px;
+  min-height: 78px;
+  padding: 12px;
+}
+
+.sonacrate-analytics-row span {
+  color: rgba(255, 255, 255, 0.56);
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.sonacrate-analytics-row strong {
+  color: #2aff78;
+  font-size: clamp(1rem, 1.8vw, 1.4rem);
+  font-weight: 950;
+  letter-spacing: 0;
+}
+
+.sonacrate-model-ui {
+  display: grid;
+  gap: 14px;
+  min-height: 460px;
+  padding: 18px;
+}
+
+.sonacrate-model-search {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-height: 48px;
+  padding: 0 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.055);
+  color: rgba(255, 255, 255, 0.64);
+  font-size: 0.78rem;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.sonacrate-model-search svg {
+  width: 19px;
+  height: 19px;
+  color: #1ed760;
+}
+
+.sonacrate-model-flow {
+  display: grid;
+  gap: 10px;
+}
+
+.sonacrate-model-flow span {
+  display: grid;
+  grid-template-columns: 34px minmax(0, 1fr);
+  align-items: center;
+  gap: 10px;
+  min-height: 54px;
+  padding: 0 14px;
+  border: 1px solid rgba(30, 215, 96, 0.16);
+  border-radius: 8px;
+  background: rgba(30, 215, 96, 0.08);
+  color: rgba(255, 255, 255, 0.82);
+  font-size: 0.86rem;
+  font-weight: 850;
+  letter-spacing: 0;
+}
+
+.sonacrate-model-flow em {
+  color: #2aff78;
+  font-style: normal;
+  font-weight: 950;
+}
+
+.sonacrate-model-track {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(150px, 0.55fr);
+  gap: 12px;
+  margin-top: auto;
+}
+
+.sonacrate-model-track div {
+  display: grid;
+  gap: 8px;
+  min-height: 108px;
+  padding: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.055);
+}
+
+.sonacrate-comparison-grid {
+  position: relative;
+  z-index: 2;
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 14px;
+  margin-top: clamp(28px, 5vw, 64px);
+}
+
+.sonacrate-comparison-card {
+  display: grid;
+  gap: 12px;
+  min-height: 244px;
+  padding: 22px;
+  border: 1px solid rgba(30, 215, 96, 0.22);
+  border-radius: 8px;
+  background:
+    linear-gradient(145deg, rgba(30, 215, 96, 0.1), rgba(255, 255, 255, 0.035)),
+    rgba(255, 255, 255, 0.045);
+}
+
+.sonacrate-comparison-card svg {
+  width: 30px;
+  height: 30px;
+  color: #1ed760;
+}
+
+.sonacrate-comparison-card strong {
+  color: #fff;
+  font-size: clamp(1.05rem, 1.35vw, 1.28rem);
+  font-weight: 950;
+  line-height: 1.08;
+  letter-spacing: 0;
+}
+
+.sonacrate-comparison-card p {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.68);
+  font-size: 0.94rem;
+  font-weight: 700;
+  line-height: 1.48;
+}
+
 .mvp-showcase-section .section-inner,
 .mvp-detail-section .section-inner,
 .mvp-project-section .section-inner {
@@ -1856,7 +2252,7 @@ h3 {
 
 .sonacrate-visual-shell {
   display: grid;
-  grid-template-columns: 86px minmax(0, 1fr);
+  grid-template-columns: 108px minmax(0, 1fr);
   grid-template-rows: minmax(0, 1fr) 76px;
   gap: 10px;
   min-height: 0;
@@ -4042,6 +4438,8 @@ h3 {
   .service-theme-layout,
   .mvp-stage-panel,
   .mvp-project-panel,
+  .sonacrate-split-panel,
+  .sonacrate-split-panel-reverse,
   .mvp-showcase-card,
   .mvp-detail-panel,
   .contact-layout {
@@ -4091,6 +4489,17 @@ h3 {
 
   .service-grid {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sonacrate-feature-grid,
+  .sonacrate-feature-grid-green,
+  .sonacrate-comparison-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sonacrate-creator-ui,
+  .sonacrate-model-ui {
+    width: min(100%, 780px);
   }
 
   .site-footer {
@@ -4233,6 +4642,46 @@ h3 {
   .mvp-stage-media-body,
   .about-mark {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .sonacrate-feature-grid,
+  .sonacrate-feature-grid-green,
+  .sonacrate-comparison-grid,
+  .sonacrate-release-workspace,
+  .sonacrate-analytics-row,
+  .sonacrate-model-track {
+    grid-template-columns: 1fr;
+  }
+
+  .sonacrate-feature-card,
+  .sonacrate-comparison-card {
+    min-height: auto;
+    padding: 18px;
+  }
+
+  .sonacrate-creator-body {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto auto;
+  }
+
+  .sonacrate-creator-nav {
+    grid-row: auto;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    border-right: 0;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  }
+
+  .sonacrate-analytics-row {
+    grid-column: auto;
+  }
+
+  .sonacrate-creator-top {
+    grid-template-columns: 1fr;
+    padding: 14px;
+  }
+
+  .sonacrate-model-flow span {
+    min-height: 48px;
   }
 
   .service-card,
@@ -4498,12 +4947,20 @@ h3 {
 
   .sonacrate-visual-rail {
     grid-row: auto;
-    flex-direction: row;
-    overflow: hidden;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    overflow: visible;
+  }
+
+  .sonacrate-brand-dot {
+    display: none;
   }
 
   .sonacrate-visual-rail > span {
-    flex: 0 0 auto;
+    justify-content: center;
+    min-height: 34px;
+    padding: 6px;
+    text-align: center;
   }
 
   .sonacrate-player {

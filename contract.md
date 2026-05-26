@@ -101,12 +101,14 @@ The Ace Hits TCG page presents a standalone collector retail storefront project.
 
 ### Projects `/mvps`
 
-The Projects page explains version-one product delivery.
+The Projects page is a detailed project-breakdown surface. It currently focuses on SonaCrate first, with DTF Designer retained as the next project summary.
 
-- The hero is dark with design/build/launch/learn messaging, a short Projects headline, and a single-sentence lede about focused first versions.
-- SonaCrate appears after the hero and uses a dark section with the SonaCrate green accent and an animated listener-dashboard visual based on the SonaCrate music platform UI.
-- Product scoping appears after SonaCrate as Stage 01.
-- DTF Designer appears after Product scoping and uses a light section with the DTF purple accent and an animated 560mm x 1000mm gang-sheet upload/layout workspace visual based on the DTF Uploader UI.
+- The hero is dark and positions project pages as deeper build breakdowns, with SonaCrate-led copy, a SonaCrate external CTA, a Contact CTA, and Stream/Upload/Discover/Download visual markers.
+- SonaCrate starts with a dark overview section using the SonaCrate green accent, real listener-shell labels, and details about the Next.js frontend, Fastify API, Prisma data, BullMQ worker jobs, storage, signed playback URLs, release processing, carts, and download ownership.
+- A green artist-and-label section explains the creator side of SonaCrate: Creator Studio, Overview, Releases, Upload, Analytics, Profile, audio/artwork/ZIP uploads, release and track genres, identity checks, rights confirmation, copyright scans, media processing, and analytics.
+- A dark stream-and-own section compares Spotify-style streaming, Beatport-style downloads, and SonaCrate's combined stream, browse, save, cart, checkout, and 320 kbps download model.
+- The old Stage 01 product-scoping section is not rendered on the Projects page.
+- DTF Designer follows the SonaCrate breakdown and uses a light section with the DTF purple accent and an animated 560mm x 1000mm gang-sheet upload/layout workspace visual based on the DTF Uploader UI.
 - The page ends with a dark CTA linking to Contact.
 
 ### Services `/services`
@@ -139,11 +141,11 @@ The Contact page collects project enquiries.
 
 ## Reusable Components
 
-- `MotionReveal` is a client component using Framer Motion to reveal content on scroll. It respects reduced motion.
+- `MotionReveal` is a client component using Framer Motion to reveal content on scroll. It respects reduced motion and supports one-time or repeated reveal behavior through its `once` prop.
 - `ScrollAccent` is a client component that animates decorative accent rails using scroll progress. It respects reduced motion.
 - `ScrollBridge` is a client component for animated transitions between dark and light page sections. It supports multiple movement variants and uses an accessible `aria-label`.
 - `ServiceGrid` maps shared service data into icon cards.
-- `MvpProductVisual` renders product-specific animated interface visuals for SonaCrate and DTF Designer.
+- `MvpProductVisual` renders product-specific animated interface visuals for SonaCrate and DTF Designer. The SonaCrate visual reflects the listener shell with Home, New Releases, My Tracks, Playlists, Genres, and Tracks labels.
 - `ContactForm` is a client component that submits project enquiries to the contact API and renders pending, success, and error states.
 
 ## Styling Contract
@@ -162,6 +164,7 @@ The Contact page collects project enquiries.
 - The Projects page product sections use CSS variables scoped by product slug:
   - `.mvp-sonacrate` uses green accent variables.
   - `.mvp-dtf-gang-designer` uses purple accent variables.
+- The Projects page has additional SonaCrate breakdown styling for dark sections, green sections, feature cards, creator-studio mockups, and stream/download comparison cards.
 - The Services page uses CSS variables scoped by service spotlight slug:
   - `.service-theme-shopify` uses a green operations theme.
   - `.service-theme-discord` uses a purple community theme.
@@ -175,7 +178,7 @@ The Contact page collects project enquiries.
 - Navigation active state is derived from the current pathname and supports dropdown child website links.
 - External project links open in a new tab and use `rel="noreferrer"`.
 - Header tone is recalculated on scroll and resize by sampling the section under the top-middle of the viewport.
-- Route and reveal animations use Framer Motion and fall back cleanly when reduced motion is preferred.
+- Route and reveal animations use Framer Motion and fall back cleanly when reduced motion is preferred. The Projects page SonaCrate sections use repeated reveal animations so elements move and fade in again when re-entering the viewport.
 - Contact form submission is handled by `POST /api/contact`, which stores validated enquiries in Postgres and optionally sends a WhatsApp notification through Meta WhatsApp Cloud API.
 
 ## Maintenance Expectations

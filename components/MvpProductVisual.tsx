@@ -9,7 +9,7 @@ function SonaCrateVisual() {
         <span />
         <span />
         <span />
-        <strong>SonaCrate listener dashboard</strong>
+        <strong>SonaCrate listener shell</strong>
       </div>
       <div className="sonacrate-visual-shell">
         <aside className="sonacrate-visual-rail">
@@ -18,7 +18,7 @@ function SonaCrateVisual() {
             <span />
             <span />
           </div>
-          {["Home", "Tracks", "My Tracks", "Creator"].map((item, index) => (
+          {["Home", "New Releases", "My Tracks", "Playlists", "Genres", "Tracks"].map((item, index) => (
             <span className={index === 0 ? "is-active" : ""} key={item}>
               {item}
             </span>
@@ -28,7 +28,7 @@ function SonaCrateVisual() {
         <div className="sonacrate-visual-main">
           <div className="sonacrate-search">What do you want to play?</div>
           <div className="sonacrate-quick-grid">
-            {["New Releases", "Tracks", "My Tracks", "Artists"].map((item) => (
+            {["New Releases", "My Tracks", "Artists", "Tracks"].map((item) => (
               <span key={item}>{item}</span>
             ))}
           </div>
