@@ -279,7 +279,7 @@ function SiteFooter() {
     <footer className="site-footer" data-nav-tone="dark">
       <div>
         <Image src={whiteLogo} width={886} height={205} alt="Brandd" />
-        <p>Websites, product platforms, backend systems, databases, MVPs, ecommerce, integrations, and operational tools.</p>
+        <p>Websites, product platforms, backend systems, databases, projects, ecommerce, integrations, and operational tools.</p>
       </div>
       <div className="footer-links">
         {navItems.map((item) => (

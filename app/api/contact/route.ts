@@ -1,5 +1,9 @@
 import { NextResponse } from "next/server";
-import { createContactSubmission } from "@/lib/contactSubmissions";
+import {
+  createContactSubmission,
+  updateContactSubmissionWhatsAppStatus,
+} from "@/lib/contactSubmissions";
+import { sendContactWhatsAppNotification } from "@/lib/whatsappNotifications";
 
 export const runtime = "nodejs";
 
@@ -55,6 +59,48 @@ function validatePayload(body: unknown): {
   return { input };
 }
 
+function getErrorMessage(error: unknown) {
+  return error instanceof Error ? error.message : "Unknown WhatsApp notification error.";
+}
+
+async function notifyByWhatsApp(
+  submission: {
+    id: string;
+    createdAt: string;
+  },
+  input: ContactPayload,
+) {
+  try {
+    const result = await sendContactWhatsAppNotification({
+      ...input,
+      id: submission.id,
+      createdAt: submission.createdAt,
+    });
+
+    if (result.status === "sent") {
+      await updateContactSubmissionWhatsAppStatus({
+        id: submission.id,
+        status: "sent",
+        messageId: result.messageId,
+      });
+    }
+  } catch (error) {
+    const message = getErrorMessage(error);
+
+    console.error("WhatsApp contact notification failed", error);
+
+    try {
+      await updateContactSubmissionWhatsAppStatus({
+        id: submission.id,
+        status: "failed",
+        error: message.slice(0, 1000),
+      });
+    } catch (statusError) {
+      console.error("WhatsApp status update failed", statusError);
+    }
+  }
+}
+
 export async function POST(request: Request) {
   let body: unknown;
 
@@ -80,10 +126,12 @@ export async function POST(request: Request) {
   }
 
   try {
-    await createContactSubmission({
+    const submission = await createContactSubmission({
       ...validation.input,
       userAgent: request.headers.get("user-agent"),
     });
+
+    await notifyByWhatsApp(submission, validation.input);
 
     return NextResponse.json(
       {

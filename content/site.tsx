@@ -21,12 +21,12 @@ export const whiteLogo =
 export const navItems = [
   {
     href: "/projects",
-    label: "Projects",
+    label: "Websites",
     children: [
       {
         href: "/projects/good-game-apparel",
         label: "Good Game Apparel",
-        description: "Made-for-creators merch platform with storefronts, dashboard tracking, and UK fulfilment.",
+        description: "Made-for-creators merch website with storefronts, dashboard tracking, and UK fulfilment.",
       },
       {
         href: "/projects/ace-hits-tcg",
@@ -35,7 +35,7 @@ export const navItems = [
       },
     ],
   },
-  { href: "/mvps", label: "MVPs" },
+  { href: "/mvps", label: "Projects" },
   { href: "/services", label: "Services" },
   { href: "/contact", label: "Contact" },
 ];
@@ -145,13 +145,13 @@ export type MvpShowcase = {
 
 export const mvpShowcases: MvpShowcase[] = [
   {
-    name: "Beatify",
-    slug: "beatify",
-    eyebrow: "Music platform MVP",
-    href: "https://web-production-359db.up.railway.app/",
+    name: "SonaCrate",
+    slug: "sonacrate",
+    eyebrow: "Music platform project",
+    href: "https://www.sonacreate.com/",
     headline: "Music uploads, streaming, and paid downloads.",
     shortCopy:
-      "Beatify is a music platform MVP for listeners, artists, and labels: stream tracks, manage releases, and sell high-quality downloads.",
+      "SonaCrate is a music platform project for listeners, artists, and labels: stream tracks, manage releases, and sell high-quality downloads.",
     expandedCopy:
       "Creators can upload releases, artwork, and tracks, import batches, view activity, and manage their profile. Listeners can browse music, play streams, and unlock 320 kbps downloads after purchase.",
     features: [
@@ -177,11 +177,11 @@ export const mvpShowcases: MvpShowcase[] = [
   {
     name: "DTF Designer",
     slug: "dtf-gang-designer",
-    eyebrow: "Print workflow MVP",
+    eyebrow: "Print workflow project",
     href: "https://dtf-uploader-production.up.railway.app/",
     headline: "Gang sheet uploads, layout design, and bulk pricing.",
     shortCopy:
-      "DTF Designer is a customer upload MVP for DTF print orders, built around 560mm x 1000mm gang sheets and combined-quantity pricing.",
+      "DTF Designer is a customer upload project for DTF print orders, built around 560mm x 1000mm gang sheets and combined-quantity pricing.",
     expandedCopy:
       "Customers can upload multiple gang sheets, set quantities, preview files, create a layout, and send an order. Profiles keep order history while admins can review files and update production status.",
     features: [

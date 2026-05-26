@@ -8,7 +8,7 @@ export const metadata: Metadata = {
     template: "%s | Brandd",
   },
   description:
-    "Brandd designs and builds websites, product platforms, backend systems, databases, MVPs, ecommerce workflows, integrations, and operational tools.",
+    "Brandd designs and builds websites, product platforms, backend systems, databases, projects, ecommerce workflows, integrations, and operational tools.",
   icons: {
     icon: [{ url: "/icon", sizes: "128x128", type: "image/png" }],
     apple: [{ url: "/icon", sizes: "128x128", type: "image/png" }],

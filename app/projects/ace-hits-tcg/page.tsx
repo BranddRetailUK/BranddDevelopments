@@ -112,7 +112,7 @@ export default function AceHitsTcgPage() {
                 View Ace Hits TCG <HiArrowTopRightOnSquare aria-hidden="true" />
               </a>
               <Link className="button button-light ace-secondary-button" href="/projects">
-                Back to projects <HiArrowLongRight aria-hidden="true" />
+                Back to websites <HiArrowLongRight aria-hidden="true" />
               </Link>
             </div>
           </MotionReveal>

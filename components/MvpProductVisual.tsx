@@ -2,18 +2,18 @@ type MvpProductVisualProps = {
   slug: string;
 };
 
-function BeatifyVisual() {
+function SonaCrateVisual() {
   return (
-    <div className="mvp-product-visual mvp-product-visual-real mvp-product-visual-beatify" aria-hidden="true">
+    <div className="mvp-product-visual mvp-product-visual-real mvp-product-visual-sonacrate" aria-hidden="true">
       <div className="mvp-browser-bar">
         <span />
         <span />
         <span />
-        <strong>Beatify listener dashboard</strong>
+        <strong>SonaCrate listener dashboard</strong>
       </div>
-      <div className="beatify-visual-shell">
-        <aside className="beatify-visual-rail">
-          <div className="beatify-brand-dot">
+      <div className="sonacrate-visual-shell">
+        <aside className="sonacrate-visual-rail">
+          <div className="sonacrate-brand-dot">
             <span />
             <span />
             <span />
@@ -25,16 +25,16 @@ function BeatifyVisual() {
           ))}
         </aside>
 
-        <div className="beatify-visual-main">
-          <div className="beatify-search">What do you want to play?</div>
-          <div className="beatify-quick-grid">
+        <div className="sonacrate-visual-main">
+          <div className="sonacrate-search">What do you want to play?</div>
+          <div className="sonacrate-quick-grid">
             {["New Releases", "Tracks", "My Tracks", "Artists"].map((item) => (
               <span key={item}>{item}</span>
             ))}
           </div>
-          <div className="beatify-release-card">
-            <div className="beatify-cover">
-              <span>BT</span>
+          <div className="sonacrate-release-card">
+            <div className="sonacrate-cover">
+              <span>SC</span>
             </div>
             <div>
               <span>Newest release</span>
@@ -42,13 +42,13 @@ function BeatifyVisual() {
               <p>Release ready, 4 tracks processed.</p>
             </div>
           </div>
-          <div className="beatify-track-list">
+          <div className="sonacrate-track-list">
             {[
               ["01", "City Lights", "READY"],
               ["02", "After Hours", "STREAM"],
               ["03", "Wide Awake", "320 KBPS"],
             ].map(([index, title, status]) => (
-              <div className="beatify-track-row" key={title}>
+              <div className="sonacrate-track-row" key={title}>
                 <span>{index}</span>
                 <strong>{title}</strong>
                 <em>{status}</em>
@@ -57,14 +57,14 @@ function BeatifyVisual() {
           </div>
         </div>
 
-        <div className="beatify-player">
-          <div className="beatify-eq">
+        <div className="sonacrate-player">
+          <div className="sonacrate-eq">
             <span />
             <span />
             <span />
           </div>
           <strong>City Lights</strong>
-          <div className="beatify-timeline" />
+          <div className="sonacrate-timeline" />
           <span>128 kbps stream</span>
         </div>
       </div>
@@ -143,5 +143,5 @@ export function MvpProductVisual({ slug }: MvpProductVisualProps) {
     return <DtfVisual />;
   }
 
-  return <BeatifyVisual />;
+  return <SonaCrateVisual />;
 }

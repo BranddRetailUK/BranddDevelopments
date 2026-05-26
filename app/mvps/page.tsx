@@ -12,9 +12,9 @@ import { ScrollBridge } from "@/components/ScrollBridge";
 import { mvpShowcases } from "@/content/site";
 
 export const metadata: Metadata = {
-  title: "MVPs",
+  title: "Projects",
   description:
-    "One-off project builds and version-one MVP design and development from Brandd.",
+    "One-off project builds and focused version-one product design and development from Brandd.",
 };
 
 const buildStages = [
@@ -31,7 +31,7 @@ const buildStages = [
   },
 ];
 
-const beatifyShowcase = mvpShowcases[0];
+const sonacrateShowcase = mvpShowcases[0];
 const dtfShowcase = mvpShowcases[1];
 
 function MvpStageSection({
@@ -84,18 +84,18 @@ export default function MvpsPage() {
     <>
       <section className="page-hero page-hero-dark section-grid" data-nav-tone="dark">
         <MotionReveal className="page-hero-copy">
-          <p className="eyebrow eyebrow-light">MVPs</p>
-          <h1>MVPs built to test the idea.</h1>
+          <p className="eyebrow eyebrow-light">Projects</p>
+          <h1>Projects built to test the idea.</h1>
           <p>
             Brandd builds focused first versions that launch quickly, onboard
             real users and give the next build clear direction.
           </p>
           <div className="hero-actions">
             <Link className="button button-dark" href="/contact">
-              Scope an MVP <HiArrowLongRight aria-hidden="true" />
+              Scope a project <HiArrowLongRight aria-hidden="true" />
             </Link>
             <Link className="button button-outline" href="/projects">
-              View project types
+              View website types
             </Link>
           </div>
         </MotionReveal>
@@ -114,26 +114,26 @@ export default function MvpsPage() {
         variant="rise"
       />
 
-      <section className="section dark-section mvp-project-section mvp-beatify" data-nav-tone="dark">
+      <section className="section dark-section mvp-project-section mvp-sonacrate" data-nav-tone="dark">
         <div className="section-inner mvp-project-panel">
           <MotionReveal className="mvp-detail-copy">
-            <p className="eyebrow eyebrow-light">{beatifyShowcase.eyebrow}</p>
-            <h2>{beatifyShowcase.name}</h2>
-            <p>{beatifyShowcase.shortCopy}</p>
-            <p>{beatifyShowcase.expandedCopy}</p>
+            <p className="eyebrow eyebrow-light">{sonacrateShowcase.eyebrow}</p>
+            <h2>{sonacrateShowcase.name}</h2>
+            <p>{sonacrateShowcase.shortCopy}</p>
+            <p>{sonacrateShowcase.expandedCopy}</p>
             <a
               className="button button-light button-mvp-accent"
-              href={beatifyShowcase.href}
+              href={sonacrateShowcase.href}
               rel="noreferrer"
               target="_blank"
             >
-              Open Beatify <HiArrowTopRightOnSquare aria-hidden="true" />
+              Open SonaCrate <HiArrowTopRightOnSquare aria-hidden="true" />
             </a>
           </MotionReveal>
           <MotionReveal className="mvp-project-media" delay={0.12}>
-            <MvpProductVisual slug={beatifyShowcase.slug} />
+            <MvpProductVisual slug={sonacrateShowcase.slug} />
             <ul className="mvp-feature-list mvp-feature-list-dark">
-              {beatifyShowcase.features.map((feature) => (
+              {sonacrateShowcase.features.map((feature) => (
                 <li key={feature.title}>
                   <strong>{feature.title}</strong>
                   <span>{feature.copy}</span>
@@ -148,7 +148,7 @@ export default function MvpsPage() {
 
       <ScrollBridge
         tone="light"
-        label="Print workflow MVP"
+        label="Print workflow project"
         variant="snap-cross"
       />
 
@@ -189,7 +189,7 @@ export default function MvpsPage() {
             <h2>Bring the idea, the deadline, or the first customer problem.</h2>
           </MotionReveal>
           <Link className="button button-light" href="/contact">
-            Start the build <HiOutlineCheckBadge aria-hidden="true" />
+            Start the project <HiOutlineCheckBadge aria-hidden="true" />
           </Link>
         </div>
       </section>

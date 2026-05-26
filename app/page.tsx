@@ -132,7 +132,7 @@ export default function Home() {
 
       <ScrollBridge
         tone="dark"
-        label="MVPs built for real users and workflows"
+        label="Projects built for real users and workflows"
         variant="rise"
       />
 
@@ -148,7 +148,7 @@ export default function Home() {
             yTo="5%"
           />
           <MotionReveal className="section-heading">
-            <p className="eyebrow eyebrow-light">MVP showcase</p>
+            <p className="eyebrow eyebrow-light">Project showcase</p>
             <h2>Version-one products with account logic, upload flows, pricing rules, and real operational shape.</h2>
           </MotionReveal>
           <div className="mvp-showcase-grid">

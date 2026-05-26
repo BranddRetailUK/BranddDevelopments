@@ -13,6 +13,11 @@ export type ContactSubmissionRecord = {
   createdAt: string;
 };
 
+export type ContactSubmissionWhatsAppStatus =
+  | "not_configured"
+  | "sent"
+  | "failed";
+
 let tableReady: Promise<void> | null = null;
 
 function ensureContactSubmissionTable() {
@@ -30,10 +35,26 @@ function ensureContactSubmissionTable() {
           email_status TEXT NOT NULL DEFAULT 'pending',
           email_error TEXT,
           emailed_at TIMESTAMPTZ,
+          whatsapp_status TEXT NOT NULL DEFAULT 'not_configured',
+          whatsapp_error TEXT,
+          whatsapp_message_id TEXT,
+          whatsapp_sent_at TIMESTAMPTZ,
           user_agent TEXT,
           created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
           updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
         );
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS whatsapp_status TEXT NOT NULL DEFAULT 'not_configured';
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS whatsapp_error TEXT;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS whatsapp_message_id TEXT;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS whatsapp_sent_at TIMESTAMPTZ;
 
         CREATE INDEX IF NOT EXISTS contact_submissions_created_at_idx
           ON contact_submissions (created_at DESC);
@@ -43,6 +64,9 @@ function ensureContactSubmissionTable() {
 
         CREATE INDEX IF NOT EXISTS contact_submissions_email_status_idx
           ON contact_submissions (email_status);
+
+        CREATE INDEX IF NOT EXISTS contact_submissions_whatsapp_status_idx
+          ON contact_submissions (whatsapp_status);
       `)
       .then(() => undefined)
       .catch((error) => {
@@ -73,4 +97,32 @@ export async function createContactSubmission(input: ContactSubmissionInput) {
   );
 
   return result.rows[0];
+}
+
+export async function updateContactSubmissionWhatsAppStatus({
+  id,
+  messageId,
+  status,
+  error,
+}: {
+  id: string;
+  status: ContactSubmissionWhatsAppStatus;
+  messageId?: string | null;
+  error?: string | null;
+}) {
+  await ensureContactSubmissionTable();
+
+  await getPostgresPool().query(
+    `
+      UPDATE contact_submissions
+      SET
+        whatsapp_status = $2,
+        whatsapp_message_id = $3,
+        whatsapp_error = $4,
+        whatsapp_sent_at = CASE WHEN $2 = 'sent' THEN NOW() ELSE whatsapp_sent_at END,
+        updated_at = NOW()
+      WHERE id = $1;
+    `,
+    [id, status, messageId ?? null, error ?? null],
+  );
 }

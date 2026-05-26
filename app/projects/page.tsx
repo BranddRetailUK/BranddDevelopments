@@ -12,9 +12,9 @@ import { MotionReveal } from "@/components/MotionReveal";
 import { ScrollAccent } from "@/components/ScrollAccent";
 
 export const metadata: Metadata = {
-  title: "Projects",
+  title: "Websites",
   description:
-    "Project formats from Brandd across ecommerce, campaign websites, dashboards, and MVP platforms.",
+    "Website formats from Brandd across ecommerce, campaign websites, dashboards, and product platforms.",
 };
 
 const projectTypes = [
@@ -29,8 +29,8 @@ const projectTypes = [
     icon: HiOutlineChartBarSquare,
   },
   {
-    title: "MVP platforms",
-    copy: "For ideas that need a working version one with real users, real data and a clear path to improvement.",
+    title: "Product platforms",
+    copy: "For ideas that need a working website with real users, real data and a clear path to improvement.",
     icon: HiOutlineCpuChip,
   },
   {
@@ -50,12 +50,12 @@ export default function ProjectsPage() {
     <>
       <section className="page-hero page-hero-dark section-grid projects-hero" data-nav-tone="dark">
         <MotionReveal className="page-hero-copy">
-          <p className="eyebrow eyebrow-light">Projects</p>
-          <h1>Real builds for brands that need the website, the product and the system behind it.</h1>
+          <p className="eyebrow eyebrow-light">Websites</p>
+          <h1>Real websites for brands that need the frontend, the product and the system behind it.</h1>
           <p>
-            Brandd works on digital projects where design, development and
+            Brandd works on websites where design, development and
             operations meet: public websites, ecommerce platforms, internal
-            dashboards, MVPs, backend services, database systems, upload tools,
+            dashboards, product platforms, backend services, database systems, upload tools,
             production workflows and integrations.
           </p>
         </MotionReveal>
@@ -84,8 +84,8 @@ export default function ProjectsPage() {
             yTo="-4%"
           />
           <MotionReveal className="section-heading">
-            <p className="eyebrow">Project types</p>
-            <h2>Every build is shaped around a commercial job, a user flow, and the system that has to support it.</h2>
+            <p className="eyebrow">Website types</p>
+            <h2>Every website is shaped around a commercial job, a user flow, and the system that has to support it.</h2>
           </MotionReveal>
           <div className="project-grid">
             {projectTypes.map((item, index) => {
@@ -115,7 +115,7 @@ export default function ProjectsPage() {
             <h2>Bring the idea, the target, or the messy system.</h2>
           </MotionReveal>
           <Link className="button button-light" href="/contact">
-            Plan a project <HiArrowLongRight aria-hidden="true" />
+            Plan a website <HiArrowLongRight aria-hidden="true" />
           </Link>
         </div>
       </section>

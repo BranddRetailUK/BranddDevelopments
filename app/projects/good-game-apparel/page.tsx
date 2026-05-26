@@ -118,7 +118,7 @@ export default function GoodGameApparelPage() {
                 View Good Game Apparel <HiArrowTopRightOnSquare aria-hidden="true" />
               </a>
               <Link className="button button-light good-game-secondary-button" href="/projects">
-                Back to projects <HiArrowLongRight aria-hidden="true" />
+                Back to websites <HiArrowLongRight aria-hidden="true" />
               </Link>
             </div>
           </MotionReveal>
