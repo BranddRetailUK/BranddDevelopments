@@ -117,10 +117,10 @@ The Projects page is a detailed project-breakdown surface. It currently focuses 
 The Legacy Systems page presents Brandd's focused service for rebuilding old internal tools as modern web apps without throwing away the working process.
 
 - The hero is dark and positions the offer around "Legacy systems rebuilt as modern web apps." and "Keep the workflow. Lose the lock-in.", aimed at businesses using Microsoft Access databases, old desktop software, spreadsheet-led admin, or unsupported internal tools.
-- The hero includes CTAs to Contact and Services plus a CSS-built anonymised dashboard visual that combines a modern browser shell with deliberately classic database-style screens, grey beveled buttons, a blue workspace, status counts, and a dark operations sidebar.
+- The hero includes CTAs to Contact and Services plus a CSS-built anonymised order-detail visual that combines a modern browser shell with deliberately classic database-style screens, grey beveled controls, a blue workspace, generic sample client details, and a dark operations sidebar.
 - A light "When this fits" section lists no admin rights, no source code, trapped data, fragile reporting, one-machine workflows, and the need for familiar staff-facing screens.
-- A dark anonymised project story explains an old Microsoft Access database and UI rebuilt into a browser-based production hub backed by Postgres, with before/after proof cards and the legacy-style visual.
-- A light process section explains the rebuild flow: audit the live workflow, map screens/data/rules, rebuild the interface, move core data to Postgres, test with staff, then launch, support and improve.
+- A dark anonymised project story explains an old Microsoft Access database and UI rebuilt into a browser-based production hub backed by Postgres, with before/after proof cards and the legacy-style order-detail visual.
+- A light process section groups the rebuild flow into three phase panels: Discover, Rebuild, and Launch.
 - A dark capability bridge links the legacy rebuild offer back to Services, Websites, and Projects so the wider Brandd offering remains part of the journey.
 - The page ends with a light CTA linking to Contact.
 
@@ -184,7 +184,7 @@ The Contact page collects project enquiries.
   - `.service-theme-discord` uses a purple community theme.
   - `.service-theme-portals` uses a light cyan and amber dashboard theme.
   - `.service-theme-ai` uses a coral and cyan workflow theme.
-- The Legacy Systems page uses scoped `.legacy-*` classes for its dark service hero, fit cards, anonymised Microsoft Access-inspired dashboard mockup, process list, and capability bridge. The proof visual keeps a classic database UI treatment inside a modern browser frame and uses responsive rules so the mockup collapses cleanly on mobile.
+- The Legacy Systems page uses scoped `.legacy-*` classes for its dark service hero, fit cards, anonymised Microsoft Access-inspired order-detail mockup, three-panel process map, and capability bridge. The proof visual keeps a classic database UI treatment inside a modern browser frame and uses responsive rules so the mockup collapses cleanly on mobile.
 - The Good Game Apparel project page uses a separate dark/gold visual system based around `#f2c653`, dark navy-black backgrounds, glassy panels, the Good Game logo, a video-backed hero, and animated storefront/dashboard/product-creator mockups.
 - Responsive rules collapse grids at tablet sizes and simplify hero/section layouts at mobile sizes.
 

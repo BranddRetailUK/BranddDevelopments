@@ -67,28 +67,25 @@ const fitSignals: LegacyCard[] = [
 
 const processSteps = [
   {
-    title: "Audit the live workflow",
-    copy: "Start with the real screens, reports, exceptions, and daily handoffs.",
+    phase: "Discover",
+    title: "Understand the live system",
+    copy: "Start with the screens, reports, exceptions, users, permissions, and daily handoffs that already keep the business moving.",
+    icon: HiOutlineDocumentMagnifyingGlass,
+    steps: ["Audit live workflow", "Map screens, data, and rules"],
   },
   {
-    title: "Map screens, data, and rules",
-    copy: "Turn the current database, fields, statuses, and permissions into a clean build map.",
+    phase: "Rebuild",
+    title: "Keep what works, replace the risk",
+    copy: "Recreate the familiar flow where it helps staff, then move the core records into a database the business can own and extend.",
+    icon: HiOutlineWrenchScrewdriver,
+    steps: ["Rebuild the interface", "Move core data to Postgres"],
   },
   {
-    title: "Rebuild the interface",
-    copy: "Keep the familiar flow where it reduces retraining, then improve the parts causing friction.",
-  },
-  {
-    title: "Move core data to Postgres",
-    copy: "Move the important records into a structure the business can own, back up, query, and extend.",
-  },
-  {
-    title: "Test with staff",
-    copy: "Run the rebuilt flow with the people who use it before switching over.",
-  },
-  {
-    title: "Launch, support, and improve",
-    copy: "Release the first controlled version, then add reporting, integrations, and automation as needed.",
+    phase: "Launch",
+    title: "Move over with control",
+    copy: "Test the rebuilt workflow with the people who use it, release the first stable version, then improve reporting and automation.",
+    icon: HiOutlineArrowPath,
+    steps: ["Test with staff", "Launch, support, and improve"],
   },
 ];
 
@@ -123,48 +120,98 @@ function LegacyDashboardVisual() {
         <strong>operations-hub.brandd</strong>
         <em>Postgres-backed web app</em>
       </div>
-      <div className="legacy-workspace">
+      <div className="legacy-workspace legacy-order-workspace">
         <aside className="legacy-sidebar">
           <strong>Operations Hub</strong>
           <span>Production</span>
-          {["Dashboard", "Database", "Reports"].map((item) => (
+          {["Dashboard", "Database", "Orders", "Reports"].map((item) => (
             <em className={item === "Database" ? "is-active" : ""} key={item}>
               {item}
             </em>
           ))}
         </aside>
-        <div className="legacy-access-panel">
-          <div className="legacy-tabs">
-            <span>Home</span>
-            <span>Outstanding Orders</span>
-          </div>
-          <div className="legacy-canvas">
-            <div className="legacy-button-bank">
-              {["New Order", "Open Orders", "All Orders", "Customers", "Styles", "Suppliers"].map((item) => (
-                <span key={item}>{item}</span>
-              ))}
-            </div>
-            <div className="legacy-order-card">
-              <strong>Open Orders</strong>
+        <div className="legacy-access-panel legacy-order-panel">
+          <div className="legacy-order-header">
+            <span className="legacy-back-button">Back</span>
+            <div className="legacy-job-fields">
               <div>
-                <span>
-                  <em>Printing</em>
-                  <b>36</b>
-                </span>
-                <span>
-                  <em>Embroidery</em>
-                  <b>18</b>
-                </span>
-                <span>
-                  <em>Business Gifts</em>
-                  <b>14</b>
-                </span>
+                <em>Job:</em>
+                <strong>Sample Client Workwear</strong>
+              </div>
+              <div>
+                <em>Order No:</em>
+                <strong>51128</strong>
+                <span>Order Ack.</span>
+                <span>Delivery Note</span>
+                <span>Invoice</span>
+                <span>Stock</span>
+                <span>Design</span>
               </div>
             </div>
-            <div className="legacy-button-bank">
-              {["Users", "Passwords", "Configuration", "Error log", "Reports", "To Invoice"].map((item) => (
-                <span key={item}>{item}</span>
+            <div className="legacy-meta-panel">
+              <span>
+                <em>Created:</em>
+                25/06/26 16:30
+              </span>
+              <span>
+                <em>Last edited:</em>
+                01/07/26 11:00
+              </span>
+              <span>
+                <em>By:</em>
+                Staff 24
+              </span>
+            </div>
+          </div>
+          <div className="legacy-order-tabs">
+            <span>Order details</span>
+            <span>Order items</span>
+            <span>Design</span>
+          </div>
+          <div className="legacy-order-detail">
+            <div className="legacy-form-panel legacy-client-panel">
+              {[
+                ["Customer:", "Sample Client Ltd", "SC04"],
+                ["Contact:", "Holly"],
+                ["Order type:", "Printing"],
+                ["Taken by:", "Staff 24"],
+                ["Delivery:", ""],
+                ["Order date:", "25/06/26"],
+                ["Delivery:", "09/07/26"],
+                ["Invoice date:", ""],
+                ["Completion:", ""],
+                ["Job status:", "NO STOCK"],
+                ["Approved:", ""],
+              ].map(([label, value, code]) => (
+                <div className="legacy-field-row" key={`${label}-${value}-${code ?? ""}`}>
+                  <span>{label}</span>
+                  <strong>{value || "\u00a0"}</strong>
+                  {code ? <em>{code}</em> : null}
+                </div>
               ))}
+            </div>
+            <div className="legacy-form-panel legacy-address-panel">
+              <div className="legacy-field-row legacy-wide-row">
+                <span>Invoice to:</span>
+                <strong>Unit 4, Example Estate, Bristol, BS1 1AA</strong>
+              </div>
+              <div className="legacy-field-row legacy-wide-row">
+                <span>Deliver to:</span>
+                <strong>Unit 4, Example Estate, Bristol, BS1 1AA</strong>
+              </div>
+              <div className="legacy-field-row legacy-wide-row">
+                <span>Payment:</span>
+                <strong>Account</strong>
+              </div>
+              <div className="legacy-field-row legacy-wide-row">
+                <span>Client ref:</span>
+                <strong>Holly</strong>
+              </div>
+              <div className="legacy-comments-box">
+                <span>Comments:</span>
+                <strong>Artwork approved. Awaiting stock confirmation.</strong>
+              </div>
+              <span className="legacy-close-button">Close Order</span>
             </div>
           </div>
         </div>
@@ -251,12 +298,6 @@ export default function LegacySystemsPage() {
               keeping familiar legacy styling where it helped staff move over
               confidently.
             </p>
-            <div className="legacy-proof-list">
-              <span>Familiar screen structure</span>
-              <span>Postgres data foundation</span>
-              <span>Browser-based access</span>
-              <span>Room for future features</span>
-            </div>
           </MotionReveal>
           <MotionReveal className="legacy-story-panel" delay={0.1}>
             <div className="legacy-before-after">
@@ -279,21 +320,34 @@ export default function LegacySystemsPage() {
       </section>
 
       <section className="section light-section legacy-process-section" data-nav-tone="light">
-        <div className="section-inner two-column">
-          <MotionReveal>
+        <div className="section-inner legacy-process-layout">
+          <MotionReveal className="section-heading">
             <p className="eyebrow">Process</p>
             <h2>Modernise the system without throwing away the way the team works.</h2>
           </MotionReveal>
-          <div className="legacy-process-list">
-            {processSteps.map((step, index) => (
-              <MotionReveal as="article" delay={index * 0.05} key={step.title}>
-                <span>{String(index + 1).padStart(2, "0")}</span>
-                <div>
-                  <strong>{step.title}</strong>
-                  <p>{step.copy}</p>
-                </div>
-              </MotionReveal>
-            ))}
+          <div className="legacy-process-map">
+            {processSteps.map((step, index) => {
+              const Icon = step.icon;
+
+              return (
+                <MotionReveal as="article" delay={index * 0.08} key={step.title}>
+                  <div className="legacy-process-card-top">
+                    <span>{String(index + 1).padStart(2, "0")}</span>
+                    <Icon aria-hidden="true" />
+                  </div>
+                  <p className="legacy-process-phase">{step.phase}</p>
+                  <div className="legacy-process-copy">
+                    <strong>{step.title}</strong>
+                    <p>{step.copy}</p>
+                  </div>
+                  <div className="legacy-process-steps">
+                    {step.steps.map((item) => (
+                      <span key={item}>{item}</span>
+                    ))}
+                  </div>
+                </MotionReveal>
+              );
+            })}
           </div>
         </div>
       </section>
