@@ -5,7 +5,24 @@ export type ContactSubmissionInput = {
   email: string;
   focus: string;
   message: string;
+  attribution: ContactSubmissionAttribution;
+  ipAddress: string | null;
   userAgent: string | null;
+};
+
+export type ContactSubmissionAttribution = {
+  landingPage: string | null;
+  pagePath: string | null;
+  referrer: string | null;
+  utmSource: string | null;
+  utmMedium: string | null;
+  utmCampaign: string | null;
+  utmTerm: string | null;
+  utmContent: string | null;
+  gclid: string | null;
+  gbraid: string | null;
+  wbraid: string | null;
+  consentChoice: string | null;
 };
 
 export type ContactSubmissionRecord = {
@@ -37,6 +54,26 @@ function ensureContactSubmissionTable() {
           message TEXT NOT NULL,
           status TEXT NOT NULL DEFAULT 'new',
           source TEXT NOT NULL DEFAULT 'contact_page',
+          landing_page TEXT,
+          page_path TEXT,
+          referrer TEXT,
+          utm_source TEXT,
+          utm_medium TEXT,
+          utm_campaign TEXT,
+          utm_term TEXT,
+          utm_content TEXT,
+          gclid TEXT,
+          gbraid TEXT,
+          wbraid TEXT,
+          consent_choice TEXT,
+          ip_address TEXT,
+          lead_value NUMERIC(12, 2),
+          qualified_at TIMESTAMPTZ,
+          won_at TIMESTAMPTZ,
+          lost_at TIMESTAMPTZ,
+          google_ads_conversion_status TEXT NOT NULL DEFAULT 'not_ready',
+          google_ads_conversion_error TEXT,
+          google_ads_conversion_uploaded_at TIMESTAMPTZ,
           email_status TEXT NOT NULL DEFAULT 'pending',
           email_error TEXT,
           emailed_at TIMESTAMPTZ,
@@ -51,6 +88,66 @@ function ensureContactSubmissionTable() {
 
         ALTER TABLE contact_submissions
           ADD COLUMN IF NOT EXISTS email_status TEXT NOT NULL DEFAULT 'pending';
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS landing_page TEXT;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS page_path TEXT;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS referrer TEXT;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS utm_source TEXT;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS utm_medium TEXT;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS utm_campaign TEXT;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS utm_term TEXT;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS utm_content TEXT;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS gclid TEXT;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS gbraid TEXT;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS wbraid TEXT;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS consent_choice TEXT;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS ip_address TEXT;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS lead_value NUMERIC(12, 2);
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS qualified_at TIMESTAMPTZ;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS won_at TIMESTAMPTZ;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS lost_at TIMESTAMPTZ;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS google_ads_conversion_status TEXT NOT NULL DEFAULT 'not_ready';
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS google_ads_conversion_error TEXT;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS google_ads_conversion_uploaded_at TIMESTAMPTZ;
 
         ALTER TABLE contact_submissions
           ADD COLUMN IF NOT EXISTS email_error TEXT;
@@ -81,6 +178,21 @@ function ensureContactSubmissionTable() {
 
         CREATE INDEX IF NOT EXISTS contact_submissions_whatsapp_status_idx
           ON contact_submissions (whatsapp_status);
+
+        CREATE INDEX IF NOT EXISTS contact_submissions_utm_source_idx
+          ON contact_submissions (utm_source);
+
+        CREATE INDEX IF NOT EXISTS contact_submissions_gclid_idx
+          ON contact_submissions (gclid);
+
+        CREATE INDEX IF NOT EXISTS contact_submissions_gbraid_idx
+          ON contact_submissions (gbraid);
+
+        CREATE INDEX IF NOT EXISTS contact_submissions_wbraid_idx
+          ON contact_submissions (wbraid);
+
+        CREATE INDEX IF NOT EXISTS contact_submissions_google_ads_conversion_status_idx
+          ON contact_submissions (google_ads_conversion_status);
       `)
       .then(() => undefined)
       .catch((error) => {
@@ -102,12 +214,44 @@ export async function createContactSubmission(input: ContactSubmissionInput) {
         email,
         focus,
         message,
+        landing_page,
+        page_path,
+        referrer,
+        utm_source,
+        utm_medium,
+        utm_campaign,
+        utm_term,
+        utm_content,
+        gclid,
+        gbraid,
+        wbraid,
+        consent_choice,
+        ip_address,
         user_agent
       )
-      VALUES ($1, $2, $3, $4, $5)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
       RETURNING id::text, created_at::text AS "createdAt";
     `,
-    [input.name, input.email, input.focus, input.message, input.userAgent],
+    [
+      input.name,
+      input.email,
+      input.focus,
+      input.message,
+      input.attribution.landingPage,
+      input.attribution.pagePath,
+      input.attribution.referrer,
+      input.attribution.utmSource,
+      input.attribution.utmMedium,
+      input.attribution.utmCampaign,
+      input.attribution.utmTerm,
+      input.attribution.utmContent,
+      input.attribution.gclid,
+      input.attribution.gbraid,
+      input.attribution.wbraid,
+      input.attribution.consentChoice,
+      input.ipAddress,
+      input.userAgent,
+    ],
   );
 
   return result.rows[0];

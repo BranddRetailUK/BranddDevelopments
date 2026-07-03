@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import {
   HiOutlineCalendarDays,
   HiOutlineEnvelope,
@@ -8,12 +7,16 @@ import { ContactForm } from "@/components/ContactForm";
 import { MotionReveal } from "@/components/MotionReveal";
 import { ScrollAccent } from "@/components/ScrollAccent";
 import { ScrollBridge } from "@/components/ScrollBridge";
+import { StructuredData } from "@/components/StructuredData";
+import { absoluteUrl, createBreadcrumbJsonLd, createPageMetadata, organizationId } from "@/content/seo";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Contact",
   description:
     "Start a project brief with Brandd for legacy system rebuilds, web design, development, backend, database, MVP, retail, and ecommerce services.",
-};
+  path: "/contact",
+  keywords: ["Brandd contact", "project enquiry", "web development quote", "legacy system rebuild quote"],
+});
 
 const contactCards = [
   {
@@ -36,6 +39,23 @@ const contactCards = [
 export default function ContactPage() {
   return (
     <>
+      <StructuredData
+        data={[
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Contact", path: "/contact" },
+          ]),
+          {
+            "@context": "https://schema.org",
+            "@type": "ContactPage",
+            name: "Contact Brandd",
+            url: absoluteUrl("/contact"),
+            about: {
+              "@id": organizationId,
+            },
+          },
+        ]}
+      />
       <section className="section dark-section contact-form-first" data-nav-tone="dark">
         <div className="section-inner contact-layout">
           <ScrollAccent

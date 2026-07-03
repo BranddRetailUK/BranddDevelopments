@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import {
   HiArrowLongRight,
@@ -10,7 +9,9 @@ import type { IconType } from "react-icons";
 import { MotionReveal } from "@/components/MotionReveal";
 import { ScrollAccent } from "@/components/ScrollAccent";
 import { ServiceGrid } from "@/components/ServiceGrid";
+import { StructuredData } from "@/components/StructuredData";
 import { services } from "@/content/site";
+import { createBreadcrumbJsonLd, createPageMetadata, servicesJsonLd } from "@/content/seo";
 
 type ServiceSpotlight = {
   slug: string;
@@ -117,15 +118,32 @@ const serviceSpotlights: ServiceSpotlight[] = [
 const hiddenServiceAreaTitles = new Set(["Frontend Development", "MVP Design & Build"]);
 const serviceAreaServices = services.filter((service) => !hiddenServiceAreaTitles.has(service.title));
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Services",
   description:
     "Legacy system rebuilds, UI/UX, frontend development, backend services, databases, ecommerce systems, Shopify apps, Discord bots, AI tools, MVP delivery, and business integrations from Brandd.",
-};
+  path: "/services",
+  keywords: [
+    "digital services",
+    "Shopify app development",
+    "customer portals",
+    "AI workflow assistants",
+    "business integrations",
+  ],
+});
 
 export default function ServicesPage() {
   return (
     <>
+      <StructuredData
+        data={[
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Services", path: "/services" },
+          ]),
+          servicesJsonLd,
+        ]}
+      />
       <section className="section dark-section services-service-area-section" data-nav-tone="dark">
         <div className="section-inner">
           <ScrollAccent

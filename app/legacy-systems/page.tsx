@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import {
   HiArrowLongRight,
@@ -19,12 +18,21 @@ import type { IconType } from "react-icons";
 import { MotionReveal } from "@/components/MotionReveal";
 import { ScrollAccent } from "@/components/ScrollAccent";
 import { ScrollBridge } from "@/components/ScrollBridge";
+import { StructuredData } from "@/components/StructuredData";
+import { createBreadcrumbJsonLd, createPageMetadata, legacyServiceJsonLd } from "@/content/seo";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Legacy Systems",
   description:
     "Legacy system rebuilds from Brandd for Microsoft Access databases, old desktop tools, spreadsheet workflows, internal dashboards, and Postgres-backed web apps.",
-};
+  path: "/legacy-systems",
+  keywords: [
+    "legacy system rebuilds",
+    "Microsoft Access database rebuild",
+    "old desktop software replacement",
+    "Postgres web app",
+  ],
+});
 
 type LegacyCard = {
   title: string;
@@ -201,6 +209,15 @@ function LegacyDashboardVisual() {
 export default function LegacySystemsPage() {
   return (
     <>
+      <StructuredData
+        data={[
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Legacy Systems", path: "/legacy-systems" },
+          ]),
+          legacyServiceJsonLd,
+        ]}
+      />
       <section className="page-hero page-hero-dark section-grid legacy-hero" data-nav-tone="dark">
         <MotionReveal className="page-hero-copy legacy-hero-copy">
           <p className="eyebrow eyebrow-light">Legacy Systems</p>

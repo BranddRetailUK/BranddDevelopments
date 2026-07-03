@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -12,12 +11,16 @@ import {
   HiOutlineSquares2X2,
 } from "react-icons/hi2";
 import { MotionReveal } from "@/components/MotionReveal";
+import { StructuredData } from "@/components/StructuredData";
+import { absoluteUrl, createBreadcrumbJsonLd, createPageMetadata, organizationId } from "@/content/seo";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Ace Hits TCG",
   description:
     "Ace Hits TCG project page for a high-energy collector retail storefront with drops, product navigation, cart, account, and trust-led shopping.",
-};
+  path: "/projects/ace-hits-tcg",
+  keywords: ["collector retail storefront", "TCG ecommerce", "Shopify storefront", "product navigation"],
+});
 
 const aceLogo =
   "https://www.acehitstcg.co.uk/cdn/shop/files/new_logo.png?v=1777271622&width=600";
@@ -83,6 +86,26 @@ const aceSignals = [
 export default function AceHitsTcgPage() {
   return (
     <>
+      <StructuredData
+        data={[
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Websites", path: "/projects" },
+            { name: "Ace Hits TCG", path: "/projects/ace-hits-tcg" },
+          ]),
+          {
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            name: "Ace Hits TCG",
+            description:
+              "Collector retail storefront work with product drops, category navigation, cart, account, trust cues, and mobile shopping.",
+            url: absoluteUrl("/projects/ace-hits-tcg"),
+            creator: {
+              "@id": organizationId,
+            },
+          },
+        ]}
+      />
       <section className="section dark-section ace-project-hero" data-nav-tone="dark">
         <div className="section-inner ace-hero-grid">
           <MotionReveal className="ace-hero-copy">

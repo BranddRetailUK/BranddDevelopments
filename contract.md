@@ -10,6 +10,9 @@ This file describes the current feature shape of the Brandd website. It is a pro
 - The site is primarily marketing/UI content with a server-side contact submission API. There are no authentication flows or broader server-side business workflows in this repo.
 - Contact enquiries use Postgres through `DATABASE_URL`. Optional SendGrid email notification, WhatsApp notification, and database pool settings are documented in `.env.example`.
 - Cloudinary and the Ace Hits Shopify CDN are the configured remote image hosts in `next.config.ts`.
+- SEO foundations are implemented through App Router metadata, `app/sitemap.ts`, `app/robots.ts`, `app/opengraph-image.tsx`, shared metadata helpers in `content/seo.ts`, and JSON-LD rendered by `StructuredData`.
+- Google measurement is environment-driven. `GoogleTag` loads Google Tag Manager or direct gtag only when public Google environment variables are configured, and defaults Google consent to denied until the visitor chooses a consent option.
+- `next.config.ts` disables the `X-Powered-By` header, redirects `www.brandd.co.uk` to `brandd.co.uk`, and sends basic security headers on all routes.
 - Playwright is available as a dev validation tool. `npm run check:mobile-layout` checks key routes at mobile widths against a running local site and writes screenshots to `/private/tmp/brandd-mobile-pass/playwright`.
 
 ## Shared Content
@@ -19,6 +22,7 @@ This file describes the current feature shape of the Brandd website. It is a pro
 - Brandd logo URLs. Both header tones use the no-strap Cloudinary logo, with CSS inversion on light headers so the white mark remains visible.
 - Top-level navigation items and the Websites dropdown children.
 - Per-route default header tone through `routeTones`; Legacy Systems, Services, and project detail routes default to dark because they start on dark sections.
+- SEO route metadata, canonical URLs, sitemap entries, Open Graph/Twitter defaults, and structured-data helpers live in `content/seo.ts`.
 - Service offerings used by the homepage and as the source for the Services page service-area grid.
 - Project showcase data used by the homepage and Projects page.
 
@@ -52,7 +56,7 @@ The current project showcases are:
 - Mobile navigation keeps the Brandd logo centered in the header while the menu button sits on the right, and opens top-level links plus child subnav links.
 - Header colour is controlled by route defaults and visible section tone. Sections expose `data-nav-tone="light"` or `data-nav-tone="dark"` so the shell can choose the correct logo and text colour while scrolling.
 - Route transitions use Framer Motion with a page fade/blur movement and a route-wash overlay.
-- The footer repeats the no-strap white logo and top-level navigation links.
+- The footer repeats the no-strap white logo, top-level navigation links, and a Privacy link.
 
 ## Pages
 
@@ -148,10 +152,20 @@ The Contact page collects project enquiries.
 - `ContactForm` renders name, email, service focus, and message fields.
 - Service focus options include website/frontend, legacy system rebuilds, backend APIs, database/reporting, ecommerce/product systems, Shopify apps, Discord bots, customer portals or dashboards, AI workflow assistants, MVPs, Monday.com/integrations, warehouse/QR systems, and custom dashboards/internal tools.
 - On desktop layouts, focusing the project brief textarea expands the form across the contact grid and animates the supporting contact cards out of view so the user has more space to write.
-- Submitting the form posts to `POST /api/contact`, disables the form while sending, resets the form after a successful save, and shows success or error feedback.
-- The API validates the payload, creates or migrates the `contact_submissions` table if needed, stores each enquiry with `status`, `email_status`, WhatsApp notification fields, timestamps, and the request user agent, then attempts a SendGrid email notification and an optional Meta WhatsApp Cloud API notification.
+- Submitting the form posts to `POST /api/contact`, disables the form while sending, resets the form after a successful save, fires a `generate_lead` data-layer/gtag event when Google measurement is available, and shows success or error feedback.
+- The form captures first-touch and current-page attribution in browser storage, including landing page, page path, referrer, UTM fields, Google click identifiers (`gclid`, `gbraid`, `wbraid`), and consent choice. The form also includes a hidden honeypot field for basic bot filtering.
+- The API validates the payload, applies an in-memory per-IP rate limit, ignores honeypot submissions with a generic success response, creates or migrates the `contact_submissions` table if needed, stores each enquiry with lead attribution, status, lead qualification/upload fields, `email_status`, WhatsApp notification fields, IP address, timestamps, and the request user agent, then attempts a SendGrid email notification and an optional Meta WhatsApp Cloud API notification.
 - SendGrid contact email notifications are controlled by `SENDGRID_API_KEY`, `CONTACT_EMAIL_TO`, and `CONTACT_EMAIL_FROM`. Emails are sent from the configured verified Brandd sender to the configured recipient, with the customer's submitted email set as the reply-to address. Form submissions still succeed when SendGrid is not configured or email delivery fails; failures are logged and recorded on the submission.
 - WhatsApp contact notifications are controlled by `WHATSAPP_CONTACT_NOTIFICATIONS` and the related Meta Cloud API environment variables. Form submissions still succeed when WhatsApp is disabled or a notification attempt fails; failures are logged and recorded on the submission.
+- SendGrid and WhatsApp notification requests use bounded timeouts so slow external services do not hold the form request indefinitely.
+
+### Privacy `/privacy`
+
+The Privacy page explains how Brandd handles project enquiries, lead attribution, optional Google measurement, notification services, and contact record retention.
+
+- The page starts on a dark hero with privacy-focused copy.
+- A light privacy content section explains contact enquiries, lead attribution, notifications, Google measurement, and retention/follow-up.
+- The page ends with a dark CTA linking to Contact.
 
 ## Reusable Components
 
@@ -161,6 +175,9 @@ The Contact page collects project enquiries.
 - `ServiceGrid` maps shared service data into icon cards.
 - `MvpProductVisual` renders product-specific animated interface visuals for SonaCrate and DTF Designer. The SonaCrate visual reflects the listener shell with Home, New Releases, My Tracks, Playlists, Genres, and Tracks labels.
 - `ContactForm` is a client component that submits project enquiries to the contact API and renders pending, success, and error states.
+- `StructuredData` renders escaped JSON-LD for organization, website, breadcrumb, service, contact, privacy, and project structured data.
+- `GoogleTag` conditionally loads Google Tag Manager or direct gtag from public environment variables and initializes Google consent defaults.
+- `ConsentBanner` lets visitors accept all optional measurement storage or keep essential-only storage, persists the choice locally, and updates Google consent/data-layer state.
 
 ## Styling Contract
 
@@ -186,6 +203,8 @@ The Contact page collects project enquiries.
   - `.service-theme-ai` uses a coral and cyan workflow theme.
 - The Legacy Systems page uses scoped `.legacy-*` classes for its dark service hero, fit cards, anonymised Microsoft Access-inspired order-detail mockup, three-panel process map, and capability bridge. The proof visual keeps a classic database UI treatment inside a modern browser frame, uses a reduced field set so values remain readable, and uses responsive rules so the mobile mockup hides secondary tabs, sidebar navigation, and non-essential fields to stay short.
 - The Good Game Apparel project page uses a separate dark/gold visual system based around `#f2c653`, dark navy-black backgrounds, glassy panels, the Good Game logo, a video-backed hero, and animated storefront/dashboard/product-creator mockups.
+- The Privacy page uses `.privacy-*` classes for the dark hero and light policy content rows.
+- The cookie preferences banner uses `.consent-*` classes and stays fixed above the page content until the visitor chooses a preference.
 - Responsive rules collapse grids at tablet sizes and simplify hero/section layouts at mobile sizes.
 
 ## Interaction Logic
@@ -194,7 +213,9 @@ The Contact page collects project enquiries.
 - External project links open in a new tab and use `rel="noreferrer"`.
 - Header tone is recalculated on scroll and resize by sampling the section under the top-middle of the viewport.
 - Route and reveal animations use Framer Motion and fall back cleanly when reduced motion is preferred. The Projects page SonaCrate sections use repeated reveal animations so elements move and fade in again when re-entering the viewport.
-- Contact form submission is handled by `POST /api/contact`, which stores validated enquiries in Postgres, sends contact email notifications through SendGrid when configured, and optionally sends a WhatsApp notification through Meta WhatsApp Cloud API.
+- Contact form submission is handled by `POST /api/contact`, which stores validated enquiries and advertising attribution in Postgres, sends contact email notifications through SendGrid when configured, optionally sends a WhatsApp notification through Meta WhatsApp Cloud API, and returns the submission id for client-side conversion events.
+- Consent choice is persisted in local storage and pushed to Google consent/data-layer state when Google measurement is configured.
+- First-touch lead attribution is persisted in local storage and sent with the contact form payload so Google click IDs and UTM values can be used for campaign reporting and future offline/enhanced lead upload workflows.
 
 ## Maintenance Expectations
 

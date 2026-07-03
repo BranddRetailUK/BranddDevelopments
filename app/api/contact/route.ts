@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import {
   createContactSubmission,
+  type ContactSubmissionAttribution,
   updateContactSubmissionEmailStatus,
   updateContactSubmissionWhatsAppStatus,
 } from "@/lib/contactSubmissions";
@@ -14,12 +15,72 @@ type ContactPayload = {
   email: string;
   focus: string;
   message: string;
+  attribution: ContactSubmissionAttribution;
 };
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+const rateLimitWindowMs = 60_000;
+const rateLimitMaxRequests = 8;
+const requestBuckets = new Map<string, { count: number; resetAt: number }>();
 
 function readString(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
+}
+
+function readOptionalString(value: unknown, maxLength: number) {
+  const cleaned = readString(value);
+
+  if (!cleaned) {
+    return null;
+  }
+
+  return cleaned.slice(0, maxLength);
+}
+
+function readAttribution(value: unknown): ContactSubmissionAttribution {
+  const payload = value && typeof value === "object" ? (value as Record<string, unknown>) : {};
+
+  return {
+    landingPage: readOptionalString(payload.landingPage, 2000),
+    pagePath: readOptionalString(payload.pagePath, 1000),
+    referrer: readOptionalString(payload.referrer, 2000),
+    utmSource: readOptionalString(payload.utmSource, 300),
+    utmMedium: readOptionalString(payload.utmMedium, 300),
+    utmCampaign: readOptionalString(payload.utmCampaign, 300),
+    utmTerm: readOptionalString(payload.utmTerm, 300),
+    utmContent: readOptionalString(payload.utmContent, 300),
+    gclid: readOptionalString(payload.gclid, 500),
+    gbraid: readOptionalString(payload.gbraid, 500),
+    wbraid: readOptionalString(payload.wbraid, 500),
+    consentChoice: readOptionalString(payload.consentChoice, 80),
+  };
+}
+
+function getClientIp(request: Request) {
+  const forwardedFor = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
+  const realIp = request.headers.get("x-real-ip")?.trim();
+  const connectingIp = request.headers.get("cf-connecting-ip")?.trim();
+
+  return forwardedFor || realIp || connectingIp || "unknown";
+}
+
+function isRateLimited(request: Request) {
+  const key = getClientIp(request);
+  const now = Date.now();
+  const currentBucket = requestBuckets.get(key);
+
+  if (!currentBucket || currentBucket.resetAt <= now) {
+    requestBuckets.set(key, {
+      count: 1,
+      resetAt: now + rateLimitWindowMs,
+    });
+
+    return false;
+  }
+
+  currentBucket.count += 1;
+
+  return currentBucket.count > rateLimitMaxRequests;
 }
 
 function validatePayload(body: unknown): {
@@ -36,6 +97,7 @@ function validatePayload(body: unknown): {
     email: readString(payload.email).toLowerCase(),
     focus: readString(payload.focus),
     message: readString(payload.message),
+    attribution: readAttribution(payload.attribution),
   };
 
   if (input.name.length < 2 || input.name.length > 120) {
@@ -149,6 +211,13 @@ async function notifyByWhatsApp(
 }
 
 export async function POST(request: Request) {
+  if (isRateLimited(request)) {
+    return NextResponse.json(
+      { ok: false, message: "Too many attempts. Please wait a moment and try again." },
+      { status: 429 },
+    );
+  }
+
   let body: unknown;
 
   try {
@@ -158,6 +227,20 @@ export async function POST(request: Request) {
       { ok: false, message: "Please complete the form and try again." },
       { status: 400 },
     );
+  }
+
+  if (body && typeof body === "object") {
+    const payload = body as Record<string, unknown>;
+
+    if (readString(payload.companyWebsite)) {
+      return NextResponse.json(
+        {
+          ok: true,
+          message: "Thanks. Your enquiry has been received.",
+        },
+        { status: 201 },
+      );
+    }
   }
 
   const validation = validatePayload(body);
@@ -175,6 +258,7 @@ export async function POST(request: Request) {
   try {
     const submission = await createContactSubmission({
       ...validation.input,
+      ipAddress: getClientIp(request),
       userAgent: request.headers.get("user-agent"),
     });
 
@@ -185,6 +269,7 @@ export async function POST(request: Request) {
       {
         ok: true,
         message: "Thanks. Your enquiry has been received.",
+        submissionId: submission.id,
       },
       { status: 201 },
     );

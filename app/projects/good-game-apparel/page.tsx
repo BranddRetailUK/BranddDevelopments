@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -11,12 +10,16 @@ import {
   HiOutlineSquares2X2,
 } from "react-icons/hi2";
 import { MotionReveal } from "@/components/MotionReveal";
+import { StructuredData } from "@/components/StructuredData";
+import { absoluteUrl, createBreadcrumbJsonLd, createPageMetadata, organizationId } from "@/content/seo";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Good Game Apparel | Made for Creators",
   description:
     "Good Game Apparel helps creators launch made-to-order apparel and merch with creator tools, storefronts, UK fulfilment, dashboard tracking, and subscription options.",
-};
+  path: "/projects/good-game-apparel",
+  keywords: ["creator commerce", "merch storefront", "product creator", "creator dashboard"],
+});
 
 const goodGameLogo =
   "https://res.cloudinary.com/dhlqooyuk/image/upload/v1778143541/Good_Game_Apparel_Gold_Logo_nlmdt2.png";
@@ -81,6 +84,26 @@ const creatorDetails = [
 export default function GoodGameApparelPage() {
   return (
     <>
+      <StructuredData
+        data={[
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Websites", path: "/projects" },
+            { name: "Good Game Apparel", path: "/projects/good-game-apparel" },
+          ]),
+          {
+            "@context": "https://schema.org",
+            "@type": "CreativeWork",
+            name: "Good Game Apparel",
+            description:
+              "Creator-commerce platform work with storefronts, dashboard tracking, product creation, subscriptions, and UK fulfilment.",
+            url: absoluteUrl("/projects/good-game-apparel"),
+            creator: {
+              "@id": organizationId,
+            },
+          },
+        ]}
+      />
       <section className="section dark-section good-game-page-hero" data-nav-tone="dark">
         <video className="good-game-hero-video" autoPlay loop muted playsInline preload="metadata">
           <source src={goodGameVideo} type="video/mp4" />

@@ -11,7 +11,28 @@ import { MvpProductVisual } from "@/components/MvpProductVisual";
 import { ScrollAccent } from "@/components/ScrollAccent";
 import { ScrollBridge } from "@/components/ScrollBridge";
 import { ServiceGrid } from "@/components/ServiceGrid";
+import { StructuredData } from "@/components/StructuredData";
 import { mvpShowcases, services } from "@/content/site";
+import {
+  createBreadcrumbJsonLd,
+  createPageMetadata,
+  defaultDescription,
+  projectShowcaseJsonLd,
+  servicesJsonLd,
+} from "@/content/seo";
+
+export const metadata = createPageMetadata({
+  title: "Websites, Product Platforms & Business Systems",
+  description: defaultDescription,
+  path: "/",
+  keywords: [
+    "web design UK",
+    "business systems",
+    "product platforms",
+    "backend development",
+    "ecommerce systems",
+  ],
+});
 
 const proofPoints = [
   "Brand-led frontend UI/UX",
@@ -41,6 +62,13 @@ const workflow = [
 export default function Home() {
   return (
     <>
+      <StructuredData
+        data={[
+          createBreadcrumbJsonLd([{ name: "Home", path: "/" }]),
+          servicesJsonLd,
+          projectShowcaseJsonLd,
+        ]}
+      />
       <section className="hero hero-light" data-nav-tone="light">
         <div className="hero-copy">
           <MotionReveal>

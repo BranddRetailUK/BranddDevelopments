@@ -1,19 +1,11 @@
-import type { Metadata } from "next";
 import "./globals.css";
+import { ConsentBanner } from "@/components/ConsentBanner";
+import { GoogleTag } from "@/components/GoogleTag";
 import { SiteShell } from "@/components/SiteShell";
+import { StructuredData } from "@/components/StructuredData";
+import { organizationJsonLd, rootMetadata, websiteJsonLd } from "@/content/seo";
 
-export const metadata: Metadata = {
-  title: {
-    default: "Brandd | Websites, Product Platforms & Business Systems",
-    template: "%s | Brandd",
-  },
-  description:
-    "Brandd designs and builds websites, product platforms, backend systems, databases, projects, ecommerce workflows, integrations, and operational tools.",
-  icons: {
-    icon: [{ url: "/icon", sizes: "128x128", type: "image/png" }],
-    apple: [{ url: "/icon", sizes: "128x128", type: "image/png" }],
-  },
-};
+export const metadata = rootMetadata;
 
 export default function RootLayout({
   children,
@@ -23,7 +15,10 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body>
+        <GoogleTag />
+        <StructuredData data={[organizationJsonLd, websiteJsonLd]} />
         <SiteShell>{children}</SiteShell>
+        <ConsentBanner />
       </body>
     </html>
   );

@@ -1,3 +1,5 @@
+import type { ContactSubmissionAttribution } from "@/lib/contactSubmissions";
+
 type ContactWhatsAppNotificationInput = {
   id: string;
   name: string;
@@ -5,6 +7,7 @@ type ContactWhatsAppNotificationInput = {
   focus: string;
   message: string;
   createdAt: string;
+  attribution?: ContactSubmissionAttribution;
 };
 
 type WhatsAppNotificationResult =
@@ -42,6 +45,8 @@ type WhatsAppApiResponse = {
     type?: string;
   };
 };
+
+const whatsAppTimeoutMs = 8_000;
 
 function readEnv(name: string) {
   return process.env[name]?.trim() ?? "";
@@ -111,6 +116,17 @@ function limitText(value: string, maxLength: number) {
 }
 
 function buildNotificationText(input: ContactWhatsAppNotificationInput) {
+  const attributionLines = input.attribution
+    ? [
+        "",
+        "Attribution:",
+        `Landing page: ${input.attribution.landingPage ?? "Not captured"}`,
+        `UTM source: ${input.attribution.utmSource ?? "Not captured"}`,
+        `UTM campaign: ${input.attribution.utmCampaign ?? "Not captured"}`,
+        `Google click ID: ${input.attribution.gclid ?? input.attribution.gbraid ?? input.attribution.wbraid ?? "Not captured"}`,
+      ]
+    : [];
+
   return limitText(
     [
       `New Brandd contact enquiry #${input.id}`,
@@ -122,6 +138,7 @@ function buildNotificationText(input: ContactWhatsAppNotificationInput) {
       "",
       "Message:",
       input.message,
+      ...attributionLines,
     ].join("\n"),
     3900,
   );
@@ -209,28 +226,36 @@ export async function sendContactWhatsAppNotification(
     };
   }
 
-  const response = await fetch(
-    `https://graph.facebook.com/${config.apiVersion}/${config.phoneNumberId}/messages`,
-    {
-      method: "POST",
-      headers: {
-        Authorization: `Bearer ${config.accessToken}`,
-        "Content-Type": "application/json",
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), whatsAppTimeoutMs);
+
+  try {
+    const response = await fetch(
+      `https://graph.facebook.com/${config.apiVersion}/${config.phoneNumberId}/messages`,
+      {
+        method: "POST",
+        signal: controller.signal,
+        headers: {
+          Authorization: `Bearer ${config.accessToken}`,
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(buildWhatsAppPayload(input, config)),
       },
-      body: JSON.stringify(buildWhatsAppPayload(input, config)),
-    },
-  );
-
-  const payload = (await response.json().catch(() => null)) as WhatsAppApiResponse | null;
-
-  if (!response.ok) {
-    throw new Error(
-      getWhatsAppErrorMessage(payload, `WhatsApp API request failed with ${response.status}.`),
     );
-  }
 
-  return {
-    status: "sent",
-    messageId: payload?.messages?.[0]?.id ?? null,
-  };
+    const payload = (await response.json().catch(() => null)) as WhatsAppApiResponse | null;
+
+    if (!response.ok) {
+      throw new Error(
+        getWhatsAppErrorMessage(payload, `WhatsApp API request failed with ${response.status}.`),
+      );
+    }
+
+    return {
+      status: "sent",
+      messageId: payload?.messages?.[0]?.id ?? null,
+    };
+  } finally {
+    clearTimeout(timeout);
+  }
 }

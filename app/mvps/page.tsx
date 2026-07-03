@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import {
   HiArrowTopRightOnSquare,
@@ -17,13 +16,17 @@ import {
 import { MotionReveal } from "@/components/MotionReveal";
 import { MvpProductVisual } from "@/components/MvpProductVisual";
 import { ScrollBridge } from "@/components/ScrollBridge";
+import { StructuredData } from "@/components/StructuredData";
 import { mvpShowcases } from "@/content/site";
+import { createBreadcrumbJsonLd, createPageMetadata, projectShowcaseJsonLd } from "@/content/seo";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Projects",
   description:
     "Detailed Brandd project breakdowns for SonaCrate, DTF Designer, and focused version-one product builds.",
-};
+  path: "/mvps",
+  keywords: ["MVP builds", "product development", "SonaCrate", "DTF Designer", "version one products"],
+});
 
 const sonacrateShowcase = mvpShowcases[0];
 const dtfShowcase = mvpShowcases[1];
@@ -208,6 +211,15 @@ function FeatureGrid({
 export default function MvpsPage() {
   return (
     <>
+      <StructuredData
+        data={[
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Projects", path: "/mvps" },
+          ]),
+          projectShowcaseJsonLd,
+        ]}
+      />
       <section className="page-hero page-hero-dark section-grid" data-nav-tone="dark">
         <MotionReveal className="page-hero-copy" once={false}>
           <p className="eyebrow eyebrow-light">Projects</p>

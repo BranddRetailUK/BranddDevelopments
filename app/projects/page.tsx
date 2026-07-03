@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import Link from "next/link";
 import {
   HiArrowLongRight,
@@ -10,12 +9,16 @@ import {
 } from "react-icons/hi2";
 import { MotionReveal } from "@/components/MotionReveal";
 import { ScrollAccent } from "@/components/ScrollAccent";
+import { StructuredData } from "@/components/StructuredData";
+import { absoluteUrl, createBreadcrumbJsonLd, createPageMetadata, organizationId } from "@/content/seo";
 
-export const metadata: Metadata = {
+export const metadata = createPageMetadata({
   title: "Websites",
   description:
     "Website formats from Brandd across ecommerce, campaign websites, dashboards, and product platforms.",
-};
+  path: "/projects",
+  keywords: ["website design", "ecommerce websites", "operational dashboards", "product platforms"],
+});
 
 const projectTypes = [
   {
@@ -48,6 +51,26 @@ const projectTypes = [
 export default function ProjectsPage() {
   return (
     <>
+      <StructuredData
+        data={[
+          createBreadcrumbJsonLd([
+            { name: "Home", path: "/" },
+            { name: "Websites", path: "/projects" },
+          ]),
+          {
+            "@context": "https://schema.org",
+            "@type": "Service",
+            name: "Websites and product platforms",
+            description:
+              "Connected websites, ecommerce systems, operational dashboards, and product platforms built by Brandd.",
+            provider: {
+              "@id": organizationId,
+            },
+            areaServed: "GB",
+            url: absoluteUrl("/projects"),
+          },
+        ]}
+      />
       <section className="page-hero page-hero-dark section-grid projects-hero" data-nav-tone="dark">
         <MotionReveal className="page-hero-copy">
           <p className="eyebrow eyebrow-light">Websites</p>

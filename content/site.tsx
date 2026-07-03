@@ -52,6 +52,7 @@ export const routeTones: Record<string, RouteTone> = {
   "/legacy-systems": "dark",
   "/services": "dark",
   "/contact": "light",
+  "/privacy": "dark",
 };
 
 export type Service = {

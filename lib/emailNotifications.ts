@@ -1,3 +1,5 @@
+import type { ContactSubmissionAttribution } from "@/lib/contactSubmissions";
+
 type ContactEmailNotificationInput = {
   id: string;
   name: string;
@@ -5,6 +7,7 @@ type ContactEmailNotificationInput = {
   focus: string;
   message: string;
   createdAt: string;
+  attribution?: ContactSubmissionAttribution;
 };
 
 type EmailAddress = {
@@ -43,6 +46,7 @@ type SendGridApiError = {
 };
 
 const emailPattern = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/;
+const sendGridTimeoutMs = 8_000;
 
 function readEnv(name: string) {
   return process.env[name]?.trim() ?? "";
@@ -137,6 +141,19 @@ function buildSubject(input: ContactEmailNotificationInput) {
 }
 
 function buildPlainText(input: ContactEmailNotificationInput) {
+  const attributionLines = input.attribution
+    ? [
+        "",
+        "Attribution:",
+        `Landing page: ${input.attribution.landingPage ?? "Not captured"}`,
+        `Referrer: ${input.attribution.referrer ?? "Not captured"}`,
+        `UTM source: ${input.attribution.utmSource ?? "Not captured"}`,
+        `UTM campaign: ${input.attribution.utmCampaign ?? "Not captured"}`,
+        `Google click ID: ${input.attribution.gclid ?? input.attribution.gbraid ?? input.attribution.wbraid ?? "Not captured"}`,
+        `Consent choice: ${input.attribution.consentChoice ?? "Not captured"}`,
+      ]
+    : [];
+
   return [
     `New Brandd contact enquiry #${input.id}`,
     `Received: ${input.createdAt}`,
@@ -147,6 +164,7 @@ function buildPlainText(input: ContactEmailNotificationInput) {
     "",
     "Message:",
     input.message,
+    ...attributionLines,
   ].join("\n");
 }
 
@@ -157,6 +175,18 @@ function buildHtml(input: ContactEmailNotificationInput) {
     ["Name", input.name],
     ["Email", input.email],
     ["Service focus", input.focus],
+    ["Landing page", input.attribution?.landingPage ?? "Not captured"],
+    ["Referrer", input.attribution?.referrer ?? "Not captured"],
+    ["UTM source", input.attribution?.utmSource ?? "Not captured"],
+    ["UTM campaign", input.attribution?.utmCampaign ?? "Not captured"],
+    [
+      "Google click ID",
+      input.attribution?.gclid ??
+        input.attribution?.gbraid ??
+        input.attribution?.wbraid ??
+        "Not captured",
+    ],
+    ["Consent choice", input.attribution?.consentChoice ?? "Not captured"],
   ];
 
   return `
@@ -204,50 +234,58 @@ export async function sendContactEmailNotification(
     };
   }
 
-  const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${config.apiKey}`,
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      personalizations: [
-        {
-          to: config.to,
-          custom_args: {
-            contact_submission_id: input.id,
-          },
-        },
-      ],
-      from: config.from,
-      reply_to: {
-        email: input.email,
-        name: input.name,
+  const controller = new AbortController();
+  const timeout = setTimeout(() => controller.abort(), sendGridTimeoutMs);
+
+  try {
+    const response = await fetch("https://api.sendgrid.com/v3/mail/send", {
+      method: "POST",
+      signal: controller.signal,
+      headers: {
+        Authorization: `Bearer ${config.apiKey}`,
+        "Content-Type": "application/json",
       },
-      subject: buildSubject(input),
-      content: [
-        {
-          type: "text/plain",
-          value: buildPlainText(input),
+      body: JSON.stringify({
+        personalizations: [
+          {
+            to: config.to,
+            custom_args: {
+              contact_submission_id: input.id,
+            },
+          },
+        ],
+        from: config.from,
+        reply_to: {
+          email: input.email,
+          name: input.name,
         },
-        {
-          type: "text/html",
-          value: buildHtml(input),
-        },
-      ],
-    }),
-  });
+        subject: buildSubject(input),
+        content: [
+          {
+            type: "text/plain",
+            value: buildPlainText(input),
+          },
+          {
+            type: "text/html",
+            value: buildHtml(input),
+          },
+        ],
+      }),
+    });
 
-  if (!response.ok) {
-    const payload = (await response.json().catch(() => null)) as SendGridApiError | null;
+    if (!response.ok) {
+      const payload = (await response.json().catch(() => null)) as SendGridApiError | null;
 
-    throw new Error(
-      getSendGridErrorMessage(payload, `SendGrid API request failed with ${response.status}.`),
-    );
+      throw new Error(
+        getSendGridErrorMessage(payload, `SendGrid API request failed with ${response.status}.`),
+      );
+    }
+
+    return {
+      status: "sent",
+      messageId: response.headers.get("x-message-id"),
+    };
+  } finally {
+    clearTimeout(timeout);
   }
-
-  return {
-    status: "sent",
-    messageId: response.headers.get("x-message-id"),
-  };
 }

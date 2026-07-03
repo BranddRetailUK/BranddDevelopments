@@ -287,6 +287,7 @@ function SiteFooter() {
             {item.label}
           </Link>
         ))}
+        <Link href="/privacy">Privacy</Link>
       </div>
     </footer>
   );
