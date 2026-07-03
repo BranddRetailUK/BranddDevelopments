@@ -136,31 +136,14 @@ function LegacyDashboardVisual() {
             <div className="legacy-job-fields">
               <div>
                 <em>Job:</em>
-                <strong>Sample Client Workwear</strong>
+                <strong>Sample Workwear Order</strong>
               </div>
               <div>
                 <em>Order No:</em>
                 <strong>51128</strong>
-                <span>Order Ack.</span>
-                <span>Delivery Note</span>
                 <span>Invoice</span>
                 <span>Stock</span>
-                <span>Design</span>
               </div>
-            </div>
-            <div className="legacy-meta-panel">
-              <span>
-                <em>Created:</em>
-                25/06/26 16:30
-              </span>
-              <span>
-                <em>Last edited:</em>
-                01/07/26 11:00
-              </span>
-              <span>
-                <em>By:</em>
-                Staff 24
-              </span>
             </div>
           </div>
           <div className="legacy-order-tabs">
@@ -171,45 +154,40 @@ function LegacyDashboardVisual() {
           <div className="legacy-order-detail">
             <div className="legacy-form-panel legacy-client-panel">
               {[
-                ["Customer:", "Sample Client Ltd", "SC04"],
-                ["Contact:", "Holly"],
-                ["Order type:", "Printing"],
-                ["Taken by:", "Staff 24"],
-                ["Delivery:", ""],
-                ["Order date:", "25/06/26"],
-                ["Delivery:", "09/07/26"],
-                ["Invoice date:", ""],
-                ["Completion:", ""],
-                ["Job status:", "NO STOCK"],
-                ["Approved:", ""],
-              ].map(([label, value, code]) => (
-                <div className="legacy-field-row" key={`${label}-${value}-${code ?? ""}`}>
+                { label: "Customer:", value: "Sample Client" },
+                { label: "Contact:", value: "Holly", mobileSecondary: true },
+                { label: "Order type:", value: "Printing", mobileSecondary: true },
+                { label: "Delivery:", value: "09/07/26" },
+              ].map(({ label, value, mobileSecondary }) => (
+                <div
+                  className={`legacy-field-row${mobileSecondary ? " is-mobile-secondary" : ""}`}
+                  key={`${label}-${value}`}
+                >
                   <span>{label}</span>
-                  <strong>{value || "\u00a0"}</strong>
-                  {code ? <em>{code}</em> : null}
+                  <strong>{value}</strong>
                 </div>
               ))}
             </div>
             <div className="legacy-form-panel legacy-address-panel">
               <div className="legacy-field-row legacy-wide-row">
                 <span>Invoice to:</span>
-                <strong>Unit 4, Example Estate, Bristol, BS1 1AA</strong>
+                <strong>Example Estate</strong>
               </div>
-              <div className="legacy-field-row legacy-wide-row">
+              <div className="legacy-field-row legacy-wide-row is-mobile-secondary">
                 <span>Deliver to:</span>
-                <strong>Unit 4, Example Estate, Bristol, BS1 1AA</strong>
+                <strong>Main Warehouse</strong>
               </div>
               <div className="legacy-field-row legacy-wide-row">
                 <span>Payment:</span>
                 <strong>Account</strong>
               </div>
-              <div className="legacy-field-row legacy-wide-row">
+              <div className="legacy-field-row legacy-wide-row is-mobile-secondary">
                 <span>Client ref:</span>
                 <strong>Holly</strong>
               </div>
               <div className="legacy-comments-box">
                 <span>Comments:</span>
-                <strong>Artwork approved. Awaiting stock confirmation.</strong>
+                <strong>Artwork approved. Stock check pending.</strong>
               </div>
               <span className="legacy-close-button">Close Order</span>
             </div>

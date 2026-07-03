@@ -1448,23 +1448,23 @@ h3 {
 
 .legacy-workspace {
   display: grid;
-  grid-template-columns: 128px minmax(0, 1fr);
-  min-height: 450px;
+  grid-template-columns: 106px minmax(0, 1fr);
+  min-height: 372px;
   background: #8fcfe3;
 }
 
 .legacy-sidebar {
   display: grid;
   align-content: start;
-  gap: 10px;
-  padding: 18px 12px;
+  gap: 8px;
+  padding: 16px 10px;
   background: #101114;
   color: rgba(255, 255, 255, 0.76);
 }
 
 .legacy-sidebar strong {
   color: var(--white);
-  font-size: 0.9rem;
+  font-size: 0.78rem;
   line-height: 1.05;
 }
 
@@ -1476,11 +1476,11 @@ h3 {
 }
 
 .legacy-sidebar em {
-  min-height: 34px;
-  padding: 10px;
+  min-height: 30px;
+  padding: 8px;
   border: 1px solid transparent;
   border-radius: 8px;
-  font-size: 0.66rem;
+  font-size: 0.58rem;
   font-style: normal;
   font-weight: 900;
   letter-spacing: 0.04em;
@@ -1496,7 +1496,7 @@ h3 {
 
 .legacy-access-panel {
   min-width: 0;
-  padding: clamp(12px, 2vw, 22px);
+  padding: clamp(10px, 1.5vw, 16px);
 }
 
 .legacy-order-panel {
@@ -1507,8 +1507,8 @@ h3 {
 
 .legacy-order-header {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr) minmax(172px, 0.42fr);
-  gap: 10px;
+  grid-template-columns: 48px minmax(0, 1fr);
+  gap: 8px;
   align-items: start;
 }
 
@@ -1518,30 +1518,30 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 34px;
+  min-height: 28px;
   border: 2px outset #ffffff;
   background: #eeeeee;
   color: #0b0b0b;
-  font-size: 0.62rem;
+  font-size: 0.54rem;
   font-weight: 800;
   line-height: 1.08;
   text-align: center;
 }
 
 .legacy-back-button {
-  min-width: 56px;
+  min-width: 48px;
 }
 
 .legacy-job-fields {
   display: grid;
-  gap: 7px;
+  gap: 6px;
   min-width: 0;
 }
 
 .legacy-job-fields div {
   display: grid;
-  grid-template-columns: 64px minmax(116px, 1fr) repeat(5, minmax(38px, 0.2fr));
-  gap: 5px;
+  grid-template-columns: 56px minmax(0, 1fr) repeat(2, minmax(44px, 0.24fr));
+  gap: 6px;
   align-items: center;
   min-width: 0;
 }
@@ -1551,7 +1551,7 @@ h3 {
 .legacy-field-row span,
 .legacy-comments-box span {
   color: #001078;
-  font-size: 0.72rem;
+  font-size: 0.64rem;
   font-style: normal;
   font-weight: 750;
 }
@@ -1563,28 +1563,29 @@ h3 {
   border: 2px inset #dddddd;
   background: #ffffff;
   color: #f00606;
-  font-size: 0.94rem;
+  font-size: 0.7rem;
   font-weight: 700;
   line-height: 1.1;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  text-overflow: clip;
+  white-space: normal;
 }
 
 .legacy-meta-panel {
   display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: 4px;
-  padding: 8px;
+  grid-template-columns: 1fr;
+  gap: 3px;
+  padding: 7px;
   border: 2px outset #777777;
   background: #777773;
 }
 
 .legacy-meta-panel span {
   display: grid;
+  grid-template-columns: 58px minmax(0, 1fr);
   gap: 4px;
   min-width: 0;
   color: #0000ee;
-  font-size: 0.58rem;
+  font-size: 0.55rem;
   font-weight: 750;
   line-height: 1.1;
 }
@@ -1603,36 +1604,36 @@ h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 34px;
+  min-height: 28px;
   border: 1px solid #e4e4e4;
   background: #f4f4f4;
   color: #171717;
-  font-size: 0.66rem;
+  font-size: 0.62rem;
   font-weight: 750;
 }
 
 .legacy-order-detail {
   display: grid;
-  grid-template-columns: minmax(230px, 0.9fr) minmax(270px, 1.1fr);
-  gap: 14px;
-  min-height: 300px;
-  padding: clamp(12px, 1.8vw, 18px);
+  grid-template-columns: minmax(176px, 0.9fr) minmax(200px, 1.1fr);
+  gap: 12px;
+  min-height: 232px;
+  padding: clamp(12px, 1.5vw, 16px);
   border: 1px solid rgba(255, 255, 255, 0.78);
   background: #8fcfe3;
 }
 
 .legacy-form-panel {
   display: grid;
-  gap: 8px;
+  gap: 9px;
   align-content: start;
-  padding: 14px;
+  padding: 12px;
   border: 1px solid rgba(255, 255, 255, 0.82);
 }
 
 .legacy-field-row {
   display: grid;
-  grid-template-columns: 86px minmax(0, 1fr) 58px;
-  gap: 7px;
+  grid-template-columns: 58px minmax(0, 1fr);
+  gap: 6px;
   align-items: center;
   min-width: 0;
 }
@@ -1641,17 +1642,17 @@ h3 {
 .legacy-field-row em,
 .legacy-comments-box strong {
   overflow: hidden;
-  min-height: 24px;
-  padding: 3px 6px;
+  min-height: 26px;
+  padding: 4px 7px;
   border: 2px inset #dddddd;
   background: #ffffff;
   color: #171717;
-  font-size: 0.62rem;
+  font-size: 0.6rem;
   font-style: normal;
   font-weight: 700;
   line-height: 1.15;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  text-overflow: clip;
+  white-space: normal;
 }
 
 .legacy-field-row em {
@@ -1659,26 +1660,26 @@ h3 {
 }
 
 .legacy-wide-row {
-  grid-template-columns: 76px minmax(0, 1fr);
+  grid-template-columns: 68px minmax(0, 1fr);
 }
 
 .legacy-comments-box {
   display: grid;
-  grid-template-columns: 76px minmax(0, 1fr);
-  gap: 7px;
+  grid-template-columns: 68px minmax(0, 1fr);
+  gap: 6px;
   align-items: start;
   min-width: 0;
 }
 
 .legacy-comments-box strong {
-  min-height: 72px;
+  min-height: 52px;
   white-space: normal;
 }
 
 .legacy-close-button {
   justify-self: end;
-  min-width: 104px;
-  margin-top: -2px;
+  min-width: 88px;
+  margin-top: 0;
 }
 
 .legacy-fit-section {
@@ -1744,18 +1745,27 @@ h3 {
 
 .legacy-story-layout {
   display: grid;
-  grid-template-columns: minmax(0, 0.72fr) minmax(460px, 1.28fr);
-  gap: clamp(30px, 5vw, 70px);
+  grid-template-columns: minmax(0, 1fr) minmax(540px, 0.98fr);
+  gap: clamp(30px, 4vw, 56px);
   align-items: center;
 }
 
+.legacy-story-copy h2 {
+  max-width: 720px;
+  padding-bottom: 0.08em;
+  font-size: clamp(2rem, 2.65vw, 3.2rem);
+  line-height: 1.08;
+}
+
 .legacy-story-copy p:not(.eyebrow) {
-  max-width: 650px;
+  max-width: 680px;
 }
 
 .legacy-story-panel {
   display: grid;
+  justify-self: end;
   gap: 16px;
+  width: min(100%, 620px);
   min-width: 0;
 }
 
@@ -5408,28 +5418,29 @@ h3 {
   }
 
   .legacy-sidebar {
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 8px;
-    padding: 14px;
-  }
-
-  .legacy-sidebar strong,
-  .legacy-sidebar span {
-    grid-column: 1 / -1;
-  }
-
-  .legacy-sidebar span {
-    margin-bottom: 4px;
+    display: none;
   }
 
   .legacy-access-panel {
-    padding: 12px;
+    padding: 10px;
+  }
+
+  .legacy-order-panel {
+    gap: 8px;
+  }
+
+  .legacy-order-tabs {
+    grid-template-columns: 1fr;
+  }
+
+  .legacy-order-tabs span:not(:first-child) {
+    display: none;
   }
 
   .legacy-order-header,
   .legacy-order-detail {
     grid-template-columns: 1fr;
-    gap: 12px;
+    gap: 10px;
   }
 
   .legacy-back-button {
@@ -5441,6 +5452,12 @@ h3 {
   }
 
   .legacy-job-fields div:nth-child(2) span {
+    display: none;
+  }
+
+  .legacy-field-row.is-mobile-secondary,
+  .legacy-comments-box,
+  .legacy-close-button {
     display: none;
   }
 
@@ -5460,10 +5477,12 @@ h3 {
   }
 
   .legacy-form-panel {
+    gap: 8px;
     padding: 10px;
   }
 
   .legacy-order-detail {
+    gap: 8px;
     padding: 10px;
   }
 
