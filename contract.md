@@ -8,7 +8,7 @@ This file describes the current feature shape of the Brandd website. It is a pro
 - Routes live under `app/`. Shared components live under `components/`. Shared content and navigation data live in `content/site.tsx`.
 - Styling is handled through `app/globals.css` with global design tokens, page section classes, component classes, and responsive breakpoints.
 - The site is primarily marketing/UI content with a server-side contact submission API. There are no authentication flows or broader server-side business workflows in this repo.
-- Contact enquiries use Postgres through `DATABASE_URL`. Optional database and WhatsApp notification settings are documented in `.env.example`.
+- Contact enquiries use Postgres through `DATABASE_URL`. Optional SendGrid email notification, WhatsApp notification, and database pool settings are documented in `.env.example`.
 - Cloudinary and the Ace Hits Shopify CDN are the configured remote image hosts in `next.config.ts`.
 - Playwright is available as a dev validation tool. `npm run check:mobile-layout` checks key routes at mobile widths against a running local site and writes screenshots to `/private/tmp/brandd-mobile-pass/playwright`.
 
@@ -18,7 +18,7 @@ This file describes the current feature shape of the Brandd website. It is a pro
 
 - Brandd logo URLs. Both header tones use the no-strap Cloudinary logo, with CSS inversion on light headers so the white mark remains visible.
 - Top-level navigation items and the Websites dropdown children.
-- Per-route default header tone through `routeTones`; Services and project detail routes default to dark because they start on dark sections.
+- Per-route default header tone through `routeTones`; Legacy Systems, Services, and project detail routes default to dark because they start on dark sections.
 - Service offerings used by the homepage and as the source for the Services page service-area grid.
 - Project showcase data used by the homepage and Projects page.
 
@@ -28,6 +28,7 @@ The current service offerings are:
 - Frontend Development.
 - Backend Services.
 - Database Management.
+- Legacy System Rebuilds.
 - Ecommerce & Creator Commerce.
 - Shopify App Building.
 - Discord Bot Building.
@@ -47,7 +48,7 @@ The current project showcases are:
 
 - The header is fixed and uses a centered no-strap Brandd logo with left and right navigation groups.
 - The Brandd logo links to the homepage; Home is not repeated as a text navigation item.
-- Desktop navigation is split around the logo with large uppercase tab labels. The Websites item has dropdown sub-tabs for the standalone Good Game Apparel and Ace Hits TCG website pages, and the Projects item links to focused version-one product work.
+- Desktop navigation is split around the logo with large uppercase tab labels. Websites and Projects sit on the left of the logo, while Legacy Systems, Services, and Contact sit on the right. The Websites item has dropdown sub-tabs for the standalone Good Game Apparel and Ace Hits TCG website pages, and the Projects item links to focused version-one product work.
 - Mobile navigation keeps the Brandd logo centered in the header while the menu button sits on the right, and opens top-level links plus child subnav links.
 - Header colour is controlled by route defaults and visible section tone. Sections expose `data-nav-tone="light"` or `data-nav-tone="dark"` so the shell can choose the correct logo and text colour while scrolling.
 - Route transitions use Framer Motion with a page fade/blur movement and a route-wash overlay.
@@ -111,19 +112,31 @@ The Projects page is a detailed project-breakdown surface. It currently focuses 
 - DTF Designer follows the SonaCrate breakdown and uses a light section with the DTF purple accent and an animated 560mm x 1000mm gang-sheet upload/layout workspace visual based on the DTF Uploader UI.
 - The page ends with a dark CTA linking to Contact.
 
+### Legacy Systems `/legacy-systems`
+
+The Legacy Systems page presents Brandd's focused service for rebuilding old internal tools as modern web apps without throwing away the working process.
+
+- The hero is dark and positions the offer around "Legacy systems rebuilt as modern web apps." and "Keep the workflow. Lose the lock-in.", aimed at businesses using Microsoft Access databases, old desktop software, spreadsheet-led admin, or unsupported internal tools.
+- The hero includes CTAs to Contact and Services plus a CSS-built anonymised dashboard visual that combines a modern browser shell with deliberately classic database-style screens, grey beveled buttons, a blue workspace, status counts, and a dark operations sidebar.
+- A light "When this fits" section lists no admin rights, no source code, trapped data, fragile reporting, one-machine workflows, and the need for familiar staff-facing screens.
+- A dark anonymised project story explains an old Microsoft Access database and UI rebuilt into a browser-based production hub backed by Postgres, with before/after proof cards and the legacy-style visual.
+- A light process section explains the rebuild flow: audit the live workflow, map screens/data/rules, rebuild the interface, move core data to Postgres, test with staff, then launch, support and improve.
+- A dark capability bridge links the legacy rebuild offer back to Services, Websites, and Projects so the wider Brandd offering remains part of the journey.
+- The page ends with a light CTA linking to Contact.
+
 ### Services `/services`
 
 The Services page describes practical digital services for businesses that need more than a simple website.
 
 - The page starts on a dark service areas section using the main Services headline and lede: "Digital services for websites that need to do more." and the short Brandd design/frontend/backend/data/commerce/integrations summary.
-- The service areas section renders a nine-card subset of the shared `services` array in a dark 3x3 grid as the primary service breakdown without an eyebrow label: Web Design & UI/UX, Backend Services, Database Management, Ecommerce & Creator Commerce, Shopify App Building, Discord Bot Building, Customer Portals & Dashboards, AI Tools & Workflow Assistants, and Integrations & Automation. Service cards use accent-specific icon and top-bar gradients.
+- The service areas section renders a ten-card subset of the shared `services` array as the primary service breakdown without an eyebrow label: Web Design & UI/UX, Backend Services, Database Management, Legacy System Rebuilds, Ecommerce & Creator Commerce, Shopify App Building, Discord Bot Building, Customer Portals & Dashboards, AI Tools & Workflow Assistants, and Integrations & Automation. Service cards use accent-specific icon and top-bar gradients.
 - The page has four themed service spotlight sections after the grid:
   - Shopify App Building uses a green ecommerce operations theme for private apps, storefront extensions, product and order logic, and webhook automations.
   - Discord Bot Building uses a purple community operations theme for role automation, slash commands, store alerts, and creator rewards.
   - Customer Portals & Dashboards uses a light cyan and amber dashboard theme for self-serve accounts, admin controls, reports, and status views.
   - AI Tools & Workflow Assistants uses a coral and cyan workflow theme for quote assistants, support triage, product content helpers, and admin workflow support.
 - Each themed service spotlight includes a service icon, customer-facing contact CTA, a build-map visual, workflow steps, highlight tiles, and service-fit metrics.
-- The delivery section lists engagement types for website/frontend sprints, Shopify apps and store extensions, Discord bots, customer portals and dashboards, AI workflow assistants, and MVP builds.
+- The delivery section lists engagement types for legacy system rebuilds, website/frontend sprints, Shopify apps and store extensions, Discord bots, customer portals and dashboards, AI workflow assistants, and MVP builds.
 - The page ends with a dark CTA.
 
 ### Contact `/contact`
@@ -131,12 +144,13 @@ The Services page describes practical digital services for businesses that need 
 The Contact page collects project enquiries.
 
 - The page starts with a dark contact section that places `ContactForm` before the project enquiry, planning session, and UK-based online-first cards.
-- The light hero section follows the form section and describes projects that may involve websites, customer portals, MVPs, backend systems, database clean-up, ecommerce workflows, or custom integrations.
+- The light hero section follows the form section and describes projects that may involve legacy database rebuilds, old internal dashboards, websites, customer portals, MVPs, backend data, ecommerce workflows, or custom integrations.
 - `ContactForm` renders name, email, service focus, and message fields.
-- Service focus options include website/frontend, backend APIs, database/reporting, ecommerce/product systems, Shopify apps, Discord bots, customer portals or dashboards, AI workflow assistants, MVPs, Monday.com/integrations, warehouse/QR systems, and custom dashboards/internal tools.
+- Service focus options include website/frontend, legacy system rebuilds, backend APIs, database/reporting, ecommerce/product systems, Shopify apps, Discord bots, customer portals or dashboards, AI workflow assistants, MVPs, Monday.com/integrations, warehouse/QR systems, and custom dashboards/internal tools.
 - On desktop layouts, focusing the project brief textarea expands the form across the contact grid and animates the supporting contact cards out of view so the user has more space to write.
 - Submitting the form posts to `POST /api/contact`, disables the form while sending, resets the form after a successful save, and shows success or error feedback.
-- The API validates the payload, creates or migrates the `contact_submissions` table if needed, stores each enquiry with `status`, `email_status`, WhatsApp notification fields, timestamps, and the request user agent, then attempts an optional Meta WhatsApp Cloud API notification to the configured recipient phone.
+- The API validates the payload, creates or migrates the `contact_submissions` table if needed, stores each enquiry with `status`, `email_status`, WhatsApp notification fields, timestamps, and the request user agent, then attempts a SendGrid email notification and an optional Meta WhatsApp Cloud API notification.
+- SendGrid contact email notifications are controlled by `SENDGRID_API_KEY`, `CONTACT_EMAIL_TO`, and `CONTACT_EMAIL_FROM`. Emails are sent from the configured verified Brandd sender to the configured recipient, with the customer's submitted email set as the reply-to address. Form submissions still succeed when SendGrid is not configured or email delivery fails; failures are logged and recorded on the submission.
 - WhatsApp contact notifications are controlled by `WHATSAPP_CONTACT_NOTIFICATIONS` and the related Meta Cloud API environment variables. Form submissions still succeed when WhatsApp is disabled or a notification attempt fails; failures are logged and recorded on the submission.
 
 ## Reusable Components
@@ -170,6 +184,7 @@ The Contact page collects project enquiries.
   - `.service-theme-discord` uses a purple community theme.
   - `.service-theme-portals` uses a light cyan and amber dashboard theme.
   - `.service-theme-ai` uses a coral and cyan workflow theme.
+- The Legacy Systems page uses scoped `.legacy-*` classes for its dark service hero, fit cards, anonymised Microsoft Access-inspired dashboard mockup, process list, and capability bridge. The proof visual keeps a classic database UI treatment inside a modern browser frame and uses responsive rules so the mockup collapses cleanly on mobile.
 - The Good Game Apparel project page uses a separate dark/gold visual system based around `#f2c653`, dark navy-black backgrounds, glassy panels, the Good Game logo, a video-backed hero, and animated storefront/dashboard/product-creator mockups.
 - Responsive rules collapse grids at tablet sizes and simplify hero/section layouts at mobile sizes.
 
@@ -179,7 +194,7 @@ The Contact page collects project enquiries.
 - External project links open in a new tab and use `rel="noreferrer"`.
 - Header tone is recalculated on scroll and resize by sampling the section under the top-middle of the viewport.
 - Route and reveal animations use Framer Motion and fall back cleanly when reduced motion is preferred. The Projects page SonaCrate sections use repeated reveal animations so elements move and fade in again when re-entering the viewport.
-- Contact form submission is handled by `POST /api/contact`, which stores validated enquiries in Postgres and optionally sends a WhatsApp notification through Meta WhatsApp Cloud API.
+- Contact form submission is handled by `POST /api/contact`, which stores validated enquiries in Postgres, sends contact email notifications through SendGrid when configured, and optionally sends a WhatsApp notification through Meta WhatsApp Cloud API.
 
 ## Maintenance Expectations
 

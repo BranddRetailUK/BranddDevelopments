@@ -36,6 +36,7 @@ export const navItems = [
     ],
   },
   { href: "/mvps", label: "Projects" },
+  { href: "/legacy-systems", label: "Legacy Systems" },
   { href: "/services", label: "Services" },
   { href: "/contact", label: "Contact" },
 ];
@@ -48,6 +49,7 @@ export const routeTones: Record<string, RouteTone> = {
   "/projects/good-game-apparel": "dark",
   "/projects/ace-hits-tcg": "dark",
   "/mvps": "dark",
+  "/legacy-systems": "dark",
   "/services": "dark",
   "/contact": "light",
 };
@@ -83,6 +85,12 @@ export const services: Service[] = [
     copy: "PostgreSQL structures for products, customers, orders, jobs, users, subscriptions, reporting, and dashboards.",
     icon: HiOutlineCircleStack,
     accent: "cyan",
+  },
+  {
+    title: "Legacy System Rebuilds",
+    copy: "Microsoft Access databases, old desktop tools, and spreadsheet workflows rebuilt as owned web apps with Postgres data.",
+    icon: HiOutlineComputerDesktop,
+    accent: "blue",
   },
   {
     title: "Ecommerce & Creator Commerce",

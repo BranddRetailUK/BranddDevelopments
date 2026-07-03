@@ -14,6 +14,7 @@ const routes = [
   { name: "good-game", path: "/projects/good-game-apparel" },
   { name: "ace-hits", path: "/projects/ace-hits-tcg" },
   { name: "mvps", path: "/mvps" },
+  { name: "legacy-systems", path: "/legacy-systems" },
   { name: "services", path: "/services" },
   { name: "contact", path: "/contact" },
 ];

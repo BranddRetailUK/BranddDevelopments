@@ -1,8 +1,10 @@
 import { NextResponse } from "next/server";
 import {
   createContactSubmission,
+  updateContactSubmissionEmailStatus,
   updateContactSubmissionWhatsAppStatus,
 } from "@/lib/contactSubmissions";
+import { sendContactEmailNotification } from "@/lib/emailNotifications";
 import { sendContactWhatsAppNotification } from "@/lib/whatsappNotifications";
 
 export const runtime = "nodejs";
@@ -60,7 +62,52 @@ function validatePayload(body: unknown): {
 }
 
 function getErrorMessage(error: unknown) {
-  return error instanceof Error ? error.message : "Unknown WhatsApp notification error.";
+  return error instanceof Error ? error.message : "Unknown notification error.";
+}
+
+async function notifyByEmail(
+  submission: {
+    id: string;
+    createdAt: string;
+  },
+  input: ContactPayload,
+) {
+  try {
+    const result = await sendContactEmailNotification({
+      ...input,
+      id: submission.id,
+      createdAt: submission.createdAt,
+    });
+
+    if (result.status === "sent") {
+      await updateContactSubmissionEmailStatus({
+        id: submission.id,
+        status: "sent",
+      });
+
+      return;
+    }
+
+    await updateContactSubmissionEmailStatus({
+      id: submission.id,
+      status: "not_configured",
+      error: result.reason.slice(0, 1000),
+    });
+  } catch (error) {
+    const message = getErrorMessage(error);
+
+    console.error("SendGrid contact email notification failed", error);
+
+    try {
+      await updateContactSubmissionEmailStatus({
+        id: submission.id,
+        status: "failed",
+        error: message.slice(0, 1000),
+      });
+    } catch (statusError) {
+      console.error("Email status update failed", statusError);
+    }
+  }
 }
 
 async function notifyByWhatsApp(
@@ -131,6 +178,7 @@ export async function POST(request: Request) {
       userAgent: request.headers.get("user-agent"),
     });
 
+    await notifyByEmail(submission, validation.input);
     await notifyByWhatsApp(submission, validation.input);
 
     return NextResponse.json(

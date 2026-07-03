@@ -12,7 +12,7 @@ import { ScrollBridge } from "@/components/ScrollBridge";
 export const metadata: Metadata = {
   title: "Contact",
   description:
-    "Start a project brief with Brandd for web design, development, backend, database, MVP, retail, and ecommerce services.",
+    "Start a project brief with Brandd for legacy system rebuilds, web design, development, backend, database, MVP, retail, and ecommerce services.",
 };
 
 const contactCards = [
@@ -76,9 +76,10 @@ export default function ContactPage() {
           <p className="eyebrow">Contact</p>
           <h1>Tell us what you are building, improving or trying to fix.</h1>
           <p>
-            Whether you need a new website, a customer portal, an MVP, a backend
-            system, a database clean-up, an ecommerce workflow or a custom
-            business integration, Brandd can help shape the next step.
+            Whether you need to rebuild a legacy database, replace an old
+            internal dashboard, launch a new website, create a customer portal,
+            shape an MVP, clean up backend data, or connect an ecommerce
+            workflow, Brandd can help shape the next step.
           </p>
         </MotionReveal>
       </section>

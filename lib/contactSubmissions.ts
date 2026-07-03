@@ -18,6 +18,11 @@ export type ContactSubmissionWhatsAppStatus =
   | "sent"
   | "failed";
 
+export type ContactSubmissionEmailStatus =
+  | "not_configured"
+  | "sent"
+  | "failed";
+
 let tableReady: Promise<void> | null = null;
 
 function ensureContactSubmissionTable() {
@@ -43,6 +48,15 @@ function ensureContactSubmissionTable() {
           created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
           updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
         );
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS email_status TEXT NOT NULL DEFAULT 'pending';
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS email_error TEXT;
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS emailed_at TIMESTAMPTZ;
 
         ALTER TABLE contact_submissions
           ADD COLUMN IF NOT EXISTS whatsapp_status TEXT NOT NULL DEFAULT 'not_configured';
@@ -97,6 +111,31 @@ export async function createContactSubmission(input: ContactSubmissionInput) {
   );
 
   return result.rows[0];
+}
+
+export async function updateContactSubmissionEmailStatus({
+  id,
+  status,
+  error,
+}: {
+  id: string;
+  status: ContactSubmissionEmailStatus;
+  error?: string | null;
+}) {
+  await ensureContactSubmissionTable();
+
+  await getPostgresPool().query(
+    `
+      UPDATE contact_submissions
+      SET
+        email_status = $2,
+        email_error = $3,
+        emailed_at = CASE WHEN $2 = 'sent' THEN NOW() ELSE emailed_at END,
+        updated_at = NOW()
+      WHERE id = $1;
+    `,
+    [id, status, error ?? null],
+  );
 }
 
 export async function updateContactSubmissionWhatsAppStatus({

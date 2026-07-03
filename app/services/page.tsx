@@ -120,7 +120,7 @@ const serviceAreaServices = services.filter((service) => !hiddenServiceAreaTitle
 export const metadata: Metadata = {
   title: "Services",
   description:
-    "UI/UX, frontend development, backend services, databases, ecommerce systems, Shopify apps, Discord bots, AI tools, MVP delivery, and business integrations from Brandd.",
+    "Legacy system rebuilds, UI/UX, frontend development, backend services, databases, ecommerce systems, Shopify apps, Discord bots, AI tools, MVP delivery, and business integrations from Brandd.",
 };
 
 export default function ServicesPage() {
@@ -212,6 +212,7 @@ export default function ServicesPage() {
           </MotionReveal>
           <div className="engagement-list">
             {[
+              "A legacy system rebuild for Microsoft Access databases, old internal dashboards, or spreadsheet-led operations.",
               "A focused website, UI/UX, or frontend sprint for a launch date.",
               "A Shopify app or store extension for operational work that has outgrown theme code.",
               "A Discord bot for community operations, support, alerts, roles, or creator rewards.",

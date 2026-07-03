@@ -87,6 +87,7 @@ export function ContactForm() {
           disabled={isSending}
         >
           <option>Website design and frontend build</option>
+          <option>Legacy system rebuild</option>
           <option>Backend services and APIs</option>
           <option>Database structure and reporting</option>
           <option>Ecommerce and product systems</option>

@@ -20,7 +20,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const headerTone = visibleTone ?? (pathname === "/" ? (isScrolled ? "dark" : "light") : routeTone);
 
   const splitNav = useMemo(() => {
-    const splitAt = Math.ceil(navItems.length / 2);
+    const splitAt = Math.max(1, Math.floor(navItems.length / 2));
 
     return {
       left: navItems.slice(0, splitAt),
