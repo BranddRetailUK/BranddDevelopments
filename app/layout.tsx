@@ -1,6 +1,6 @@
 import "./globals.css";
 import { ConsentBanner } from "@/components/ConsentBanner";
-import { GoogleTag } from "@/components/GoogleTag";
+import { GoogleTag, GoogleTagManagerNoScript } from "@/components/GoogleTag";
 import { SiteShell } from "@/components/SiteShell";
 import { StructuredData } from "@/components/StructuredData";
 import { organizationJsonLd, rootMetadata, websiteJsonLd } from "@/content/seo";
@@ -14,8 +14,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body>
+      <head>
         <GoogleTag />
+      </head>
+      <body>
+        <GoogleTagManagerNoScript />
         <StructuredData data={[organizationJsonLd, websiteJsonLd]} />
         <SiteShell>{children}</SiteShell>
         <ConsentBanner />

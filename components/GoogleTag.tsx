@@ -1,4 +1,4 @@
-import Script from "next/script";
+/* eslint-disable @next/next/next-script-for-ga -- Google Ads installer needs the raw tag in the initial head HTML. */
 
 function readPublicEnv(name: string) {
   return process.env[name]?.trim() ?? "";
@@ -22,6 +22,7 @@ export function GoogleTag() {
     <>
       <script
         id="google-consent-default"
+        data-cfasync="false"
         dangerouslySetInnerHTML={{
           __html: `
           window.dataLayer = window.dataLayer || [];
@@ -40,34 +41,31 @@ export function GoogleTag() {
       />
 
       {tagManagerId ? (
-        <>
-          <Script id="google-tag-manager" strategy="afterInteractive">
-            {`
+        <script
+          id="google-tag-manager"
+          data-cfasync="false"
+          dangerouslySetInnerHTML={{
+            __html: `
               (function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
               new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
               j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
               'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
               })(window,document,'script','dataLayer',${jsonString(tagManagerId)});
-            `}
-          </Script>
-          <noscript>
-            <iframe
-              src={`https://www.googletagmanager.com/ns.html?id=${tagManagerId}`}
-              height="0"
-              width="0"
-              style={{ display: "none", visibility: "hidden" }}
-              title="Google Tag Manager"
-            />
-          </noscript>
-        </>
+            `,
+          }}
+        />
       ) : (
         <>
-          <Script
+          <script
+            data-cfasync="false"
+            async
             src={`https://www.googletagmanager.com/gtag/js?id=${encodeURIComponent(tagId)}`}
-            strategy="afterInteractive"
           />
-          <Script id="google-tag-config" strategy="afterInteractive">
-            {`
+          <script
+            id="google-tag-config"
+            data-cfasync="false"
+            dangerouslySetInnerHTML={{
+              __html: `
               window.dataLayer = window.dataLayer || [];
               function gtag(){window.dataLayer.push(arguments);}
               gtag('js', new Date());
@@ -81,10 +79,31 @@ export function GoogleTag() {
                   ? `gtag('config', ${jsonString(googleAdsId)});`
                   : ""
               }
-            `}
-          </Script>
+            `,
+            }}
+          />
         </>
       )}
     </>
+  );
+}
+
+export function GoogleTagManagerNoScript() {
+  const tagManagerId = readPublicEnv("NEXT_PUBLIC_GOOGLE_TAG_MANAGER_ID");
+
+  if (!tagManagerId) {
+    return null;
+  }
+
+  return (
+    <noscript>
+      <iframe
+        src={`https://www.googletagmanager.com/ns.html?id=${tagManagerId}`}
+        height="0"
+        width="0"
+        style={{ display: "none", visibility: "hidden" }}
+        title="Google Tag Manager"
+      />
+    </noscript>
   );
 }

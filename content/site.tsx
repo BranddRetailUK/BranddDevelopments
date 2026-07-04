@@ -3,7 +3,6 @@ import {
   HiOutlineCircleStack,
   HiOutlineCodeBracketSquare,
   HiOutlineComputerDesktop,
-  HiOutlineCpuChip,
   HiOutlineCubeTransparent,
   HiOutlineRocketLaunch,
   HiOutlineShoppingBag,
@@ -19,6 +18,7 @@ export const whiteLogo =
   "https://res.cloudinary.com/dhlqooyuk/image/upload/v1778265380/NEW_LOGO_WHT_NO_STRAP_heexb3.png";
 
 export const navItems = [
+  { href: "/services", label: "Services" },
   {
     href: "/projects",
     label: "Websites",
@@ -37,7 +37,6 @@ export const navItems = [
   },
   { href: "/mvps", label: "Projects" },
   { href: "/legacy-systems", label: "Legacy Systems" },
-  { href: "/services", label: "Services" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -116,12 +115,6 @@ export const services: Service[] = [
     copy: "Account areas for customers, creators, staff, or clients with order history, downloads, reports, status views, and admin controls.",
     icon: HiOutlineChartBarSquare,
     accent: "amber",
-  },
-  {
-    title: "AI Tools & Workflow Assistants",
-    copy: "Practical AI features for quoting, support triage, product content, internal workflows, and business process automation.",
-    icon: HiOutlineCpuChip,
-    accent: "coral",
   },
   {
     title: "Integrations & Automation",

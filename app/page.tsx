@@ -81,11 +81,11 @@ export default function Home() {
               now within reach at a sensible price.
             </p>
             <div className="hero-actions">
-              <Link className="button button-dark" href="/contact">
+              <Link className="button button-dark" href="/services">
                 Start a project <HiArrowLongRight aria-hidden="true" />
               </Link>
-              <Link className="button button-outline" href="/services">
-                View what we build
+              <Link className="button button-outline" href="/legacy-systems">
+                Legacy system rebuilds
               </Link>
             </div>
           </MotionReveal>

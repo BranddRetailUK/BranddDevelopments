@@ -11,7 +11,7 @@ This file describes the current feature shape of the Brandd website. It is a pro
 - Contact enquiries use Postgres through `DATABASE_URL`. Optional SendGrid email notification, WhatsApp notification, and database pool settings are documented in `.env.example`.
 - Cloudinary and the Ace Hits Shopify CDN are the configured remote image hosts in `next.config.ts`.
 - SEO foundations are implemented through App Router metadata, `app/sitemap.ts`, `app/robots.ts`, `app/opengraph-image.tsx`, shared metadata helpers in `content/seo.ts`, and JSON-LD rendered by `StructuredData`.
-- Google measurement is environment-driven. `GoogleTag` loads Google Tag Manager or direct gtag only when public Google environment variables are configured, and defaults Google consent to denied until the visitor chooses a consent option.
+- Google measurement is environment-driven. `GoogleTag` renders Google Tag Manager or direct gtag in the document head only when public Google environment variables are configured, opts Google scripts out of Cloudflare Rocket Loader, defaults Google consent to denied until the visitor chooses a consent option, and supports Google Ads conversion events through the public Ads ID and conversion-label environment variables.
 - `next.config.ts` disables the `X-Powered-By` header, redirects `www.brandd.co.uk` to `brandd.co.uk`, and sends basic security headers on all routes.
 - Playwright is available as a dev validation tool. `npm run check:mobile-layout` checks key routes at mobile widths against a running local site and writes screenshots to `/private/tmp/brandd-mobile-pass/playwright`.
 
@@ -37,7 +37,6 @@ The current service offerings are:
 - Shopify App Building.
 - Discord Bot Building.
 - Customer Portals & Dashboards.
-- AI Tools & Workflow Assistants.
 - Integrations & Automation.
 - MVP Design & Build.
 
@@ -52,7 +51,7 @@ The current project showcases are:
 
 - The header is fixed and uses a centered no-strap Brandd logo with left and right navigation groups.
 - The Brandd logo links to the homepage; Home is not repeated as a text navigation item.
-- Desktop navigation is split around the logo with large uppercase tab labels. Websites and Projects sit on the left of the logo, while Legacy Systems, Services, and Contact sit on the right. The Websites item has dropdown sub-tabs for the standalone Good Game Apparel and Ace Hits TCG website pages, and the Projects item links to focused version-one product work.
+- Desktop navigation is split around the logo with large uppercase tab labels. Services and Websites sit on the left of the logo, while Projects, Legacy Systems, and Contact sit on the right. The Websites item has dropdown sub-tabs for the standalone Good Game Apparel and Ace Hits TCG website pages, and the Projects item links to focused version-one product work.
 - Mobile navigation keeps the Brandd logo centered in the header while the menu button sits on the right, and opens top-level links plus child subnav links.
 - Header colour is controlled by route defaults and visible section tone. Sections expose `data-nav-tone="light"` or `data-nav-tone="dark"` so the shell can choose the correct logo and text colour while scrolling.
 - Route transitions use Framer Motion with a page fade/blur movement and a route-wash overlay.
@@ -64,7 +63,7 @@ The current project showcases are:
 
 The homepage presents Brandd as a studio for sharp, functional websites and digital services, with modern animated web experiences made accessible at sensible prices.
 
-- The hero is a light, copy-led section with a large but capped headline, a wider text column, a lede about modern websites, ecommerce experiences, business tools, and sensible pricing, and primary and secondary calls to action.
+- The hero is a light, copy-led section with a large but capped headline, a wider text column, a lede about modern websites, ecommerce experiences, business tools, and sensible pricing, a primary Start a project CTA linking to Services, and a secondary CTA linking to Legacy Systems.
 - Scroll accent rails animate across the hero.
 - A dark development-studio section explains that websites can include accounts, product data, order flows, stock logic, payments, dashboards, API integrations, reporting, and internal processes.
 - A services section renders the shared `services` array through `ServiceGrid`.
@@ -133,14 +132,16 @@ The Legacy Systems page presents Brandd's focused service for rebuilding old int
 The Services page describes practical digital services for businesses that need more than a simple website.
 
 - The page starts on a dark service areas section using the main Services headline and lede: "Digital services for websites that need to do more." and the short Brandd design/frontend/backend/data/commerce/integrations summary.
-- The service areas section renders a ten-card subset of the shared `services` array as the primary service breakdown without an eyebrow label: Web Design & UI/UX, Backend Services, Database Management, Legacy System Rebuilds, Ecommerce & Creator Commerce, Shopify App Building, Discord Bot Building, Customer Portals & Dashboards, AI Tools & Workflow Assistants, and Integrations & Automation. Service cards use accent-specific icon and top-bar gradients.
-- The page has four themed service spotlight sections after the grid:
+- The service areas section renders a nine-card subset of the shared `services` array as the primary service breakdown without an eyebrow label: Web Design & UI/UX, Backend Services, Database Management, Legacy System Rebuilds, Ecommerce & Creator Commerce, Shopify App Building, Discord Bot Building, Customer Portals & Dashboards, and Integrations & Automation. Service cards use accent-specific icon and top-bar gradients.
+- On mobile, the service areas section is hidden so the Services route opens directly on the legacy systems priority section.
+- A dark priority legacy systems section follows the service grid, using the shared legacy order-detail visual, before/after proof cards, Microsoft Access and old-desktop-tool service cues, and a link to the Legacy Systems page.
+- A light website design and development section follows the legacy priority section and explains UI/UX, frontend development, backend/data support, and the website build sequence.
+- The first Contact CTA on the Services page appears after the website design and development section as a dark "Discuss your requirements" prompt linking to Contact.
+- The page has three themed service spotlight sections after the first Contact CTA:
   - Shopify App Building uses a green ecommerce operations theme for private apps, storefront extensions, product and order logic, and webhook automations.
   - Discord Bot Building uses a purple community operations theme for role automation, slash commands, store alerts, and creator rewards.
   - Customer Portals & Dashboards uses a light cyan and amber dashboard theme for self-serve accounts, admin controls, reports, and status views.
-  - AI Tools & Workflow Assistants uses a coral and cyan workflow theme for quote assistants, support triage, product content helpers, and admin workflow support.
 - Each themed service spotlight includes a service icon, customer-facing contact CTA, a build-map visual, workflow steps, highlight tiles, and service-fit metrics.
-- The delivery section lists engagement types for legacy system rebuilds, website/frontend sprints, Shopify apps and store extensions, Discord bots, customer portals and dashboards, AI workflow assistants, and MVP builds.
 - The page ends with a dark CTA.
 
 ### Contact `/contact`
@@ -150,11 +151,11 @@ The Contact page collects project enquiries.
 - The page starts with a dark contact section that places `ContactForm` before the project enquiry, planning session, and UK-based online-first cards.
 - The light hero section follows the form section and describes projects that may involve legacy database rebuilds, old internal dashboards, websites, customer portals, MVPs, backend data, ecommerce workflows, or custom integrations.
 - `ContactForm` renders name, email, service focus, and message fields.
-- Service focus options include website/frontend, legacy system rebuilds, backend APIs, database/reporting, ecommerce/product systems, Shopify apps, Discord bots, customer portals or dashboards, AI workflow assistants, MVPs, Monday.com/integrations, warehouse/QR systems, and custom dashboards/internal tools.
+- Service focus options include website/frontend, legacy system rebuilds, backend APIs, database/reporting, ecommerce/product systems, Shopify apps, Discord bots, customer portals or dashboards, MVPs, Monday.com/integrations, warehouse/QR systems, and custom dashboards/internal tools.
 - On desktop layouts, focusing the project brief textarea expands the form across the contact grid and animates the supporting contact cards out of view so the user has more space to write.
-- Submitting the form posts to `POST /api/contact`, disables the form while sending, resets the form after a successful save, fires a `generate_lead` data-layer/gtag event when Google measurement is available, and shows success or error feedback.
+- Submitting the form posts to `POST /api/contact`, disables the form while sending, resets the form after a successful save, fires a `generate_lead` data-layer/gtag event when Google measurement is available, fires a Google Ads `conversion` event with `send_to` built from the public Ads ID and conversion-label environment variables when configured, and shows success or error feedback.
 - The form captures first-touch and current-page attribution in browser storage, including landing page, page path, referrer, UTM fields, Google click identifiers (`gclid`, `gbraid`, `wbraid`), and consent choice. The form also includes a hidden honeypot field for basic bot filtering.
-- The API validates the payload, applies an in-memory per-IP rate limit, ignores honeypot submissions with a generic success response, creates or migrates the `contact_submissions` table if needed, stores each enquiry with lead attribution, status, lead qualification/upload fields, `email_status`, WhatsApp notification fields, IP address, timestamps, and the request user agent, then attempts a SendGrid email notification and an optional Meta WhatsApp Cloud API notification.
+- The API validates the payload, applies an in-memory per-IP rate limit, ignores honeypot submissions with a generic success response, creates or migrates the `contact_submissions` table if needed, stores each enquiry with lead attribution, status, lead qualification/upload fields, `email_status`, WhatsApp notification fields, IP address, timestamps, and the request user agent, returns the submission id for client-side lead/conversion events, then attempts a SendGrid email notification and an optional Meta WhatsApp Cloud API notification.
 - SendGrid contact email notifications are controlled by `SENDGRID_API_KEY`, `CONTACT_EMAIL_TO`, and `CONTACT_EMAIL_FROM`. Emails are sent from the configured verified Brandd sender to the configured recipient, with the customer's submitted email set as the reply-to address. Form submissions still succeed when SendGrid is not configured or email delivery fails; failures are logged and recorded on the submission.
 - WhatsApp contact notifications are controlled by `WHATSAPP_CONTACT_NOTIFICATIONS` and the related Meta Cloud API environment variables. Form submissions still succeed when WhatsApp is disabled or a notification attempt fails; failures are logged and recorded on the submission.
 - SendGrid and WhatsApp notification requests use bounded timeouts so slow external services do not hold the form request indefinitely.
@@ -173,10 +174,11 @@ The Privacy page explains how Brandd handles project enquiries, lead attribution
 - `ScrollAccent` is a client component that animates decorative accent rails using scroll progress. It respects reduced motion.
 - `ScrollBridge` is a client component for animated transitions between dark and light page sections. It supports multiple movement variants and uses an accessible `aria-label`.
 - `ServiceGrid` maps shared service data into icon cards.
+- `LegacyDashboardVisual` renders the anonymised legacy order-detail browser mockup used by the Legacy Systems page and the Services page legacy priority section.
 - `MvpProductVisual` renders product-specific animated interface visuals for SonaCrate and DTF Designer. The SonaCrate visual reflects the listener shell with Home, New Releases, My Tracks, Playlists, Genres, and Tracks labels.
-- `ContactForm` is a client component that submits project enquiries to the contact API and renders pending, success, and error states.
+- `ContactForm` is a client component that submits project enquiries to the contact API, captures lead attribution, fires lead/conversion measurement events after successful saves, and renders pending, success, and error states.
 - `StructuredData` renders escaped JSON-LD for organization, website, breadcrumb, service, contact, privacy, and project structured data.
-- `GoogleTag` conditionally loads Google Tag Manager or direct gtag from public environment variables and initializes Google consent defaults.
+- `GoogleTag` conditionally renders Google Tag Manager or direct gtag from public environment variables in the document head and initializes Google consent defaults. `GoogleTagManagerNoScript` renders the GTM fallback iframe in the body when a GTM container is configured.
 - `ConsentBanner` lets visitors accept all optional measurement storage or keep essential-only storage, persists the choice locally, and updates Google consent/data-layer state.
 
 ## Styling Contract
@@ -200,7 +202,7 @@ The Privacy page explains how Brandd handles project enquiries, lead attribution
   - `.service-theme-shopify` uses a green operations theme.
   - `.service-theme-discord` uses a purple community theme.
   - `.service-theme-portals` uses a light cyan and amber dashboard theme.
-  - `.service-theme-ai` uses a coral and cyan workflow theme.
+- The Services page uses `.services-legacy-*`, `.services-websites-*`, and `.services-requirements-cta` classes for the legacy priority section, website design/development section, and first requirements CTA.
 - The Legacy Systems page uses scoped `.legacy-*` classes for its dark service hero, fit cards, anonymised Microsoft Access-inspired order-detail mockup, three-panel process map, and capability bridge. The proof visual keeps a classic database UI treatment inside a modern browser frame, uses a reduced field set so values remain readable, and uses responsive rules so the mobile mockup hides secondary tabs, sidebar navigation, and non-essential fields to stay short.
 - The Good Game Apparel project page uses a separate dark/gold visual system based around `#f2c653`, dark navy-black backgrounds, glassy panels, the Good Game logo, a video-backed hero, and animated storefront/dashboard/product-creator mockups.
 - The Privacy page uses `.privacy-*` classes for the dark hero and light policy content rows.
@@ -213,7 +215,8 @@ The Privacy page explains how Brandd handles project enquiries, lead attribution
 - External project links open in a new tab and use `rel="noreferrer"`.
 - Header tone is recalculated on scroll and resize by sampling the section under the top-middle of the viewport.
 - Route and reveal animations use Framer Motion and fall back cleanly when reduced motion is preferred. The Projects page SonaCrate sections use repeated reveal animations so elements move and fade in again when re-entering the viewport.
-- Contact form submission is handled by `POST /api/contact`, which stores validated enquiries and advertising attribution in Postgres, sends contact email notifications through SendGrid when configured, optionally sends a WhatsApp notification through Meta WhatsApp Cloud API, and returns the submission id for client-side conversion events.
+- Contact form submission is handled by `POST /api/contact`, which stores validated enquiries and advertising attribution in Postgres, sends contact email notifications through SendGrid when configured, optionally sends a WhatsApp notification through Meta WhatsApp Cloud API, and returns the submission id for client-side lead/conversion events.
+- Successful contact submissions push a `generate_lead` event to `dataLayer` and gtag, then send a Google Ads `conversion` event with the returned submission id as `transaction_id` when `NEXT_PUBLIC_GOOGLE_ADS_ID` and `NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL` are configured.
 - Consent choice is persisted in local storage and pushed to Google consent/data-layer state when Google measurement is configured.
 - First-touch lead attribution is persisted in local storage and sent with the contact form payload so Google click IDs and UTM values can be used for campaign reporting and future offline/enhanced lead upload workflows.
 
