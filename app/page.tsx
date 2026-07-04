@@ -34,13 +34,6 @@ export const metadata = createPageMetadata({
   ],
 });
 
-const proofPoints = [
-  "Brand-led frontend UI/UX",
-  "Database-backed product systems",
-  "Business integrations and automations",
-  "Ecommerce operations that connect cleanly",
-];
-
 const workflow = [
   {
     title: "Shape the offer",
@@ -58,6 +51,8 @@ const workflow = [
     icon: HiOutlineCubeTransparent,
   },
 ];
+
+const homepageServices = services.slice(0, 9);
 
 export default function Home() {
   return (
@@ -133,11 +128,6 @@ export default function Home() {
               integrations, reporting tools, and internal processes that need to
               work together.
             </p>
-            <div className="proof-list">
-              {proofPoints.map((point) => (
-                <span key={point}>{point}</span>
-              ))}
-            </div>
           </MotionReveal>
         </div>
       </section>
@@ -154,7 +144,7 @@ export default function Home() {
             <p className="eyebrow">What we build</p>
             <h2>Digital products with the front end, backend and operational thinking built in.</h2>
           </MotionReveal>
-          <ServiceGrid items={services} />
+          <ServiceGrid items={homepageServices} />
         </div>
       </section>
 
@@ -250,6 +240,24 @@ export default function Home() {
               })}
             </div>
           </div>
+        </div>
+      </section>
+
+      <ScrollBridge
+        tone="dark"
+        label="Start a practical build"
+        variant="rise"
+      />
+
+      <section className="section dark-section compact-cta home-contact-cta" data-nav-tone="dark">
+        <div className="section-inner cta-row">
+          <MotionReveal>
+            <p className="eyebrow eyebrow-light">Ready to start</p>
+            <h2>Bring the goal, workflow, or website problem and we will shape the build.</h2>
+          </MotionReveal>
+          <Link className="button button-light" href="/contact">
+            Contact Brandd <HiArrowLongRight aria-hidden="true" />
+          </Link>
         </div>
       </section>
     </>

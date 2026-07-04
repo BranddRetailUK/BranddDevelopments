@@ -33,13 +33,6 @@ type ServiceSpotlight = {
   }>;
 };
 
-const legacyServicePoints = [
-  "Microsoft Access databases",
-  "Old desktop software",
-  "Spreadsheet-led admin",
-  "Postgres-backed web apps",
-];
-
 const websiteServicePoints: Array<{
   title: string;
   copy: string;
@@ -193,11 +186,6 @@ export default function ServicesPage() {
               dashboards. Brandd keeps the workflow people understand and moves
               the risk into a maintainable web system with owned data.
             </p>
-            <div className="services-legacy-points">
-              {legacyServicePoints.map((point) => (
-                <span key={point}>{point}</span>
-              ))}
-            </div>
             <Link className="button button-light" href="/legacy-systems">
               Explore legacy rebuilds <HiArrowLongRight aria-hidden="true" />
             </Link>
@@ -261,14 +249,14 @@ export default function ServicesPage() {
               <span />
               <strong>brandd.co.uk/build-plan</strong>
             </div>
-            <div className="services-website-flow">
+            <ol className="services-website-flow">
               {websiteWorkflow.map((step, index) => (
-                <span key={step}>
+                <li key={step}>
                   <small>{String(index + 1).padStart(2, "0")}</small>
                   {step}
-                </span>
+                </li>
               ))}
-            </div>
+            </ol>
             <div className="services-website-preview">
               <div>
                 <span>Public site</span>
@@ -324,19 +312,19 @@ export default function ServicesPage() {
                   <span>{spotlight.eyebrow}</span>
                   <strong>Build map</strong>
                 </div>
-                <div className="service-theme-flow">
+                <ol className="service-theme-flow">
                   {spotlight.workflow.map((step, stepIndex) => (
-                    <span key={step}>
+                    <li key={step}>
                       <small>{String(stepIndex + 1).padStart(2, "0")}</small>
                       {step}
-                    </span>
+                    </li>
                   ))}
-                </div>
-                <div className="service-theme-feature-grid">
+                </ol>
+                <ul className="service-theme-feature-list">
                   {spotlight.highlights.map((highlight) => (
-                    <span key={highlight}>{highlight}</span>
+                    <li key={highlight}>{highlight}</li>
                   ))}
-                </div>
+                </ul>
                 <div className="service-theme-metrics">
                   {spotlight.metrics.map((metric) => (
                     <div key={metric.label}>

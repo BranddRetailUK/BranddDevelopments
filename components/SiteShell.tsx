@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
-import { HiChevronDown, HiOutlineBars3, HiOutlineXMark } from "react-icons/hi2";
+import { HiOutlineBars3, HiOutlineXMark } from "react-icons/hi2";
 import { darkLogo, navItems, routeTones, whiteLogo } from "@/content/site";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
@@ -14,7 +14,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const [isScrolled, setIsScrolled] = useState(false);
   const [visibleTone, setVisibleTone] = useState<"light" | "dark" | null>(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [openDropdown, setOpenDropdown] = useState<string | null>(null);
 
   const routeTone = routeTones[pathname] ?? "light";
   const headerTone = visibleTone ?? (pathname === "/" ? (isScrolled ? "dark" : "light") : routeTone);
@@ -61,7 +60,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
   useEffect(() => {
     setMenuOpen(false);
-    setOpenDropdown(null);
   }, [pathname]);
 
   useEffect(() => {
@@ -78,9 +76,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 key={item.href}
                 item={item}
                 pathname={pathname}
-                openDropdown={openDropdown}
-                setOpenDropdown={setOpenDropdown}
-                prefersReducedMotion={prefersReducedMotion}
               />
             ))}
           </div>
@@ -101,9 +96,6 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 key={item.href}
                 item={item}
                 pathname={pathname}
-                openDropdown={openDropdown}
-                setOpenDropdown={setOpenDropdown}
-                prefersReducedMotion={prefersReducedMotion}
               />
             ))}
           </div>
@@ -133,20 +125,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                   <NavLink
                     item={item}
                     pathname={pathname}
-                    openDropdown={null}
-                    setOpenDropdown={setOpenDropdown}
-                    prefersReducedMotion={prefersReducedMotion}
-                    mobile
                   />
-                  {"children" in item && item.children ? (
-                    <div className="mobile-subnav">
-                      {item.children.map((child) => (
-                        <Link key={child.href} href={child.href}>
-                          {child.label}
-                        </Link>
-                      ))}
-                    </div>
-                  ) : null}
                 </div>
               ))}
             </motion.div>
@@ -183,89 +162,11 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 function NavLink({
   item,
   pathname,
-  openDropdown,
-  setOpenDropdown,
-  prefersReducedMotion,
-  mobile = false,
 }: {
   item: (typeof navItems)[number];
   pathname: string;
-  openDropdown: string | null;
-  setOpenDropdown: (value: string | null) => void;
-  prefersReducedMotion: boolean | null;
-  mobile?: boolean;
 }) {
-  const children = "children" in item ? item.children : undefined;
-  const hrefPath = (href: string) => href.split("#")[0] || href;
-  const active =
-    item.href === "/"
-      ? pathname === "/"
-      : pathname.startsWith(item.href) ||
-        Boolean(children?.some((child) => pathname.startsWith(hrefPath(child.href))));
-  const isOpen = openDropdown === item.href;
-
-  if (children && !mobile) {
-    return (
-      <div
-        className="nav-dropdown-wrap"
-        onMouseEnter={() => setOpenDropdown(item.href)}
-        onMouseLeave={() => setOpenDropdown(null)}
-        onFocus={() => setOpenDropdown(item.href)}
-      >
-        <Link
-          className={active ? "nav-link nav-link-menu active" : "nav-link nav-link-menu"}
-          href={item.href}
-          aria-haspopup="menu"
-          aria-expanded={isOpen}
-        >
-          {item.label}
-          <HiChevronDown aria-hidden="true" />
-        </Link>
-
-        <AnimatePresence>
-          {isOpen ? (
-            <motion.div
-              className="nav-dropdown"
-              role="menu"
-              initial={
-                prefersReducedMotion
-                  ? false
-                  : { opacity: 0, y: -10, rotateX: -72, rotateZ: -1.8, scaleY: 0.88 }
-              }
-              animate={{ opacity: 1, y: 0, rotateX: 0, rotateZ: 0, scaleY: 1 }}
-              exit={
-                prefersReducedMotion
-                  ? { opacity: 0 }
-                  : { opacity: 0, y: -8, rotateX: -46, rotateZ: 1.2, scaleY: 0.92 }
-              }
-              transition={{
-                type: "spring",
-                stiffness: 360,
-                damping: 24,
-                mass: 0.82,
-              }}
-              style={{ transformOrigin: "top center" }}
-            >
-              <span className="dropdown-hinge" aria-hidden="true" />
-              <span className="dropdown-accent dropdown-accent-one" aria-hidden="true" />
-              <span className="dropdown-accent dropdown-accent-two" aria-hidden="true" />
-              {children.map((child) => (
-                <Link
-                  className={pathname === hrefPath(child.href) ? "dropdown-link active" : "dropdown-link"}
-                  href={child.href}
-                  key={child.href}
-                  role="menuitem"
-                >
-                  <strong>{child.label}</strong>
-                  <span>{child.description}</span>
-                </Link>
-              ))}
-            </motion.div>
-          ) : null}
-        </AnimatePresence>
-      </div>
-    );
-  }
+  const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
 
   return (
     <Link className={active ? "nav-link active" : "nav-link"} href={item.href}>

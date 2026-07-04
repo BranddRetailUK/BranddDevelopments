@@ -20,7 +20,7 @@ This file describes the current feature shape of the Brandd website. It is a pro
 `content/site.tsx` is the main shared content source for:
 
 - Brandd logo URLs. Both header tones use the no-strap Cloudinary logo, with CSS inversion on light headers so the white mark remains visible.
-- Top-level navigation items and the Websites dropdown children.
+- Top-level navigation items.
 - Per-route default header tone through `routeTones`; Legacy Systems, Services, and project detail routes default to dark because they start on dark sections.
 - SEO route metadata, canonical URLs, sitemap entries, Open Graph/Twitter defaults, and structured-data helpers live in `content/seo.ts`.
 - Service offerings used by the homepage and as the source for the Services page service-area grid.
@@ -51,8 +51,8 @@ The current project showcases are:
 
 - The header is fixed and uses a centered no-strap Brandd logo with left and right navigation groups.
 - The Brandd logo links to the homepage; Home is not repeated as a text navigation item.
-- Desktop navigation is split around the logo with large uppercase tab labels. Services and Websites sit on the left of the logo, while Projects, Legacy Systems, and Contact sit on the right. The Websites item has dropdown sub-tabs for the standalone Good Game Apparel and Ace Hits TCG website pages, and the Projects item links to focused version-one product work.
-- Mobile navigation keeps the Brandd logo centered in the header while the menu button sits on the right, and opens top-level links plus child subnav links.
+- Desktop navigation is split around the logo with large uppercase tab labels. Services and Websites sit on the left of the logo, while Projects, Legacy Systems, and Contact sit on the right. Websites is a plain text navigation link to the Websites page, and Projects links to focused version-one product work.
+- Mobile navigation keeps the Brandd logo centered in the header while the menu button sits on the right, and opens top-level links only.
 - Header colour is controlled by route defaults and visible section tone. Sections expose `data-nav-tone="light"` or `data-nav-tone="dark"` so the shell can choose the correct logo and text colour while scrolling.
 - Route transitions use Framer Motion with a page fade/blur movement and a route-wash overlay.
 - The footer repeats the no-strap white logo, top-level navigation links, and a Privacy link.
@@ -66,9 +66,10 @@ The homepage presents Brandd as a studio for sharp, functional websites and digi
 - The hero is a light, copy-led section with a large but capped headline, a wider text column, a lede about modern websites, ecommerce experiences, business tools, and sensible pricing, a primary Start a project CTA linking to Services, and a secondary CTA linking to Legacy Systems.
 - Scroll accent rails animate across the hero.
 - A dark development-studio section explains that websites can include accounts, product data, order flows, stock logic, payments, dashboards, API integrations, reporting, and internal processes.
-- A services section renders the shared `services` array through `ServiceGrid`.
+- A services section renders the first nine shared services through `ServiceGrid` as a 3x3 desktop grid.
 - A dark project showcase section renders shared `mvpShowcases` as product cards with animated product-specific visuals for SonaCrate and DTF Designer.
 - A process section explains the workflow: shape the offer, design the experience, build the system.
+- The homepage ends with a dark Contact CTA linking to the Contact page.
 
 ### Websites `/projects`
 
@@ -76,6 +77,9 @@ The Websites page frames Brandd builds as connected websites, products, and syst
 
 - The hero is dark and includes a stacked website-type visual for creator commerce, operational dashboards, and product platforms.
 - The Website Types section lists creator-commerce platforms, operational dashboards, product platforms, ecommerce systems, and business process tools.
+- A dark Good Game Apparel showcase section uses the dedicated page's creator-commerce content, Good Game logo, storefront browser mockup, live product imagery, creator-store/subscription/made-to-order details, and links to the case study and live site.
+- A dark Ace Hits TCG showcase section uses the dedicated page's collector retail styling, Ace Hits logo, Shopify banner image, category nav strip, and links to the case study and live site.
+- A light Ace retail details section uses the dedicated page's collector navigation, drop-led retail, trust-cue, and mobile-shopping cards.
 - The page ends with a dark CTA linking to Contact.
 
 ### Good Game Apparel `/projects/good-game-apparel`
@@ -107,7 +111,7 @@ The Ace Hits TCG page presents a standalone collector retail storefront project.
 
 The Projects page is a detailed project-breakdown surface. It currently focuses on SonaCrate first, with DTF Designer retained as the next project summary.
 
-- The hero is dark and positions project pages as deeper build breakdowns, with SonaCrate-led copy, a SonaCrate external CTA, a Contact CTA, and Stream/Upload/Discover/Download visual markers.
+- The hero is dark and positions project pages as deeper build breakdowns, with SonaCrate-led copy, a SonaCrate external CTA, and a Contact CTA.
 - SonaCrate starts with a dark overview section using the SonaCrate green accent, real listener-shell labels, and details about the Next.js frontend, Fastify API, Prisma data, BullMQ worker jobs, storage, signed playback URLs, release processing, carts, and download ownership.
 - A green artist-and-label section explains the creator side of SonaCrate: Creator Studio, Overview, Releases, Upload, Analytics, Profile, audio/artwork/ZIP uploads, release and track genres, identity checks, rights confirmation, copyright scans, media processing, and analytics.
 - A dark stream-and-own section compares Spotify-style streaming, Beatport-style downloads, and SonaCrate's combined stream, browse, save, cart, checkout, and 320 kbps download model.
@@ -134,14 +138,14 @@ The Services page describes practical digital services for businesses that need 
 - The page starts on a dark service areas section using the main Services headline and lede: "Digital services for websites that need to do more." and the short Brandd design/frontend/backend/data/commerce/integrations summary.
 - The service areas section renders a nine-card subset of the shared `services` array as the primary service breakdown without an eyebrow label: Web Design & UI/UX, Backend Services, Database Management, Legacy System Rebuilds, Ecommerce & Creator Commerce, Shopify App Building, Discord Bot Building, Customer Portals & Dashboards, and Integrations & Automation. Service cards use accent-specific icon and top-bar gradients.
 - On mobile, the service areas section is hidden so the Services route opens directly on the legacy systems priority section.
-- A dark priority legacy systems section follows the service grid, using the shared legacy order-detail visual, before/after proof cards, Microsoft Access and old-desktop-tool service cues, and a link to the Legacy Systems page.
+- A dark priority legacy systems section follows the service grid, using the shared legacy order-detail visual, before/after proof cards, focused legacy-rebuild copy, and a link to the Legacy Systems page.
 - A light website design and development section follows the legacy priority section and explains UI/UX, frontend development, backend/data support, and the website build sequence.
 - The first Contact CTA on the Services page appears after the website design and development section as a dark "Discuss your requirements" prompt linking to Contact.
 - The page has three themed service spotlight sections after the first Contact CTA:
   - Shopify App Building uses a green ecommerce operations theme for private apps, storefront extensions, product and order logic, and webhook automations.
   - Discord Bot Building uses a purple community operations theme for role automation, slash commands, store alerts, and creator rewards.
   - Customer Portals & Dashboards uses a light cyan and amber dashboard theme for self-serve accounts, admin controls, reports, and status views.
-- Each themed service spotlight includes a service icon, customer-facing contact CTA, a build-map visual, workflow steps, highlight tiles, and service-fit metrics.
+- Each themed service spotlight includes a service icon, customer-facing contact CTA, a build-map panel with row-based workflow steps, plain highlight lists, and service-fit metrics.
 - The page ends with a dark CTA.
 
 ### Contact `/contact`
@@ -192,6 +196,7 @@ The Privacy page explains how Brandd handles project enquiries, lead attribution
 - The Websites hero uses the same wider, capped heading treatment as the homepage hero.
 - Mobile hero headings share a capped scale across homepage, Websites, Projects, Services, Contact, and website/project pages so large uppercase titles fit cleanly on phone screens.
 - Mobile buttons wrap their labels safely, and browser-style visual bars truncate long URL labels instead of creating horizontal page overflow.
+- Service cards scale up slightly on desktop hover for pointer feedback, while reduced-motion users keep static cards.
 - Mobile card and tile grids use two columns with compact card typography so repeated service, project, proof, product, highlight, and metric cards remain grid-based on phone widths.
 - The Ace Hits TCG project page has its own black retail visual system with purple, magenta, yellow and cyan accents, a wider homepage-style hero heading, product cards, category chips and Shopify-derived imagery.
 - The Projects page product sections use CSS variables scoped by product slug:
@@ -211,7 +216,7 @@ The Privacy page explains how Brandd handles project enquiries, lead attribution
 
 ## Interaction Logic
 
-- Navigation active state is derived from the current pathname and supports dropdown child website links.
+- Navigation active state is derived from the current pathname.
 - External project links open in a new tab and use `rel="noreferrer"`.
 - Header tone is recalculated on scroll and resize by sampling the section under the top-middle of the viewport.
 - Route and reveal animations use Framer Motion and fall back cleanly when reduced motion is preferred. The Projects page SonaCrate sections use repeated reveal animations so elements move and fade in again when re-entering the viewport.

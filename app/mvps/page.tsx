@@ -220,7 +220,7 @@ export default function MvpsPage() {
           projectShowcaseJsonLd,
         ]}
       />
-      <section className="page-hero page-hero-dark section-grid" data-nav-tone="dark">
+      <section className="page-hero page-hero-dark" data-nav-tone="dark">
         <MotionReveal className="page-hero-copy" once={false}>
           <p className="eyebrow eyebrow-light">Projects</p>
           <h1>Inside the build.</h1>
@@ -242,13 +242,6 @@ export default function MvpsPage() {
               Start a project
             </Link>
           </div>
-        </MotionReveal>
-
-        <MotionReveal className="about-mark mvp-mark" delay={0.12} once={false}>
-          <span>Stream</span>
-          <span>Upload</span>
-          <span>Discover</span>
-          <span>Download</span>
         </MotionReveal>
       </section>
 

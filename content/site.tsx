@@ -19,22 +19,7 @@ export const whiteLogo =
 
 export const navItems = [
   { href: "/services", label: "Services" },
-  {
-    href: "/projects",
-    label: "Websites",
-    children: [
-      {
-        href: "/projects/good-game-apparel",
-        label: "Good Game Apparel",
-        description: "Made-for-creators merch website with storefronts, dashboard tracking, and UK fulfilment.",
-      },
-      {
-        href: "/projects/ace-hits-tcg",
-        label: "Ace Hits TCG",
-        description: "Collector retail storefront for Pokemon TCG drops.",
-      },
-    ],
-  },
+  { href: "/projects", label: "Websites" },
   { href: "/mvps", label: "Projects" },
   { href: "/legacy-systems", label: "Legacy Systems" },
   { href: "/contact", label: "Contact" },
