@@ -71,7 +71,7 @@ export function GoogleTag() {
               gtag('js', new Date());
               ${
                 gaMeasurementId
-                  ? `gtag('config', ${jsonString(gaMeasurementId)}, { send_page_view: true });`
+                  ? `gtag('config', ${jsonString(gaMeasurementId)}, { send_page_view: false });`
                   : ""
               }
               ${

@@ -47,6 +47,8 @@ type SendGridApiError = {
 
 const emailPattern = /^[^\s@<>]+@[^\s@<>]+\.[^\s@<>]+$/;
 const sendGridTimeoutMs = 8_000;
+const branddEmailLogoUrl =
+  "https://res.cloudinary.com/dhlqooyuk/image/upload/v1783248569/BRANDD_PP_web_yp3rvi.jpg";
 
 function readEnv(name: string) {
   return process.env[name]?.trim() ?? "";
@@ -137,7 +139,7 @@ function escapeHtml(value: string) {
 }
 
 function buildSubject(input: ContactEmailNotificationInput) {
-  return limitText(`New Brandd enquiry #${input.id}: ${input.focus}`, 150);
+  return limitText(`Brandd Enquiry ${input.id}`, 150);
 }
 
 function buildPlainText(input: ContactEmailNotificationInput) {
@@ -155,7 +157,7 @@ function buildPlainText(input: ContactEmailNotificationInput) {
     : [];
 
   return [
-    `New Brandd contact enquiry #${input.id}`,
+    `Brandd Enquiry ${input.id}`,
     `Received: ${input.createdAt}`,
     "",
     `Name: ${input.name}`,
@@ -191,7 +193,10 @@ function buildHtml(input: ContactEmailNotificationInput) {
 
   return `
     <div style="font-family:Arial,sans-serif;color:#161616;line-height:1.5">
-      <h1 style="font-size:22px;margin:0 0 18px">New Brandd contact enquiry</h1>
+      <div style="display:inline-block;margin:0 0 14px">
+        <img src="${branddEmailLogoUrl}" width="56" height="56" alt="Brandd Solutions" style="display:block;border:0;border-radius:12px;outline:none;text-decoration:none">
+      </div>
+      <h1 style="font-size:22px;margin:0 0 18px">${escapeHtml(buildSubject(input))}</h1>
       <table style="border-collapse:collapse;margin:0 0 20px;width:100%;max-width:680px">
         <tbody>
           ${rows

@@ -30,6 +30,10 @@ const privacySections = [
     copy: "Optional Google measurement is used only when the relevant site configuration is present and the visitor grants consent. Visitors can choose essential-only storage from the cookie preferences banner.",
   },
   {
+    title: "Website interaction analytics",
+    copy: "When optional measurement is accepted, Brandd may store anonymous visitor and session identifiers, page views, landing pages, referrers, campaign fields, scroll-depth milestones, link and CTA clicks, outbound links, and contact-form start or submit events. Form field contents are not stored in website analytics events.",
+  },
+  {
     title: "Retention and follow-up",
     copy: "Contact records are kept for project follow-up, lead quality review, campaign reporting, and operational audit. Records can be reviewed or removed when they are no longer needed.",
   },

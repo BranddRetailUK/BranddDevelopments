@@ -1,7 +1,8 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
-import { HiArrowLongRight, HiOutlineCheckCircle } from "react-icons/hi2";
+import { HiArrowLongRight, HiCheck, HiOutlineCheckCircle } from "react-icons/hi2";
+import { getLeadAttribution, type LeadAttribution } from "@/lib/clientAttribution";
 
 type FormState =
   | { status: "idle" }
@@ -9,126 +10,17 @@ type FormState =
   | { status: "sent"; message: string }
   | { status: "error"; message: string };
 
-type ContactAttribution = {
-  landingPage: string;
-  pagePath: string;
-  referrer: string;
-  utmSource: string;
-  utmMedium: string;
-  utmCampaign: string;
-  utmTerm: string;
-  utmContent: string;
-  gclid: string;
-  gbraid: string;
-  wbraid: string;
-  consentChoice: string;
-};
-
 declare global {
   interface Window {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
+    branddTrackEvent?: (eventName: string, properties?: Record<string, unknown>) => void;
   }
 }
-
-const attributionStorageKey = "brandd_first_touch_attribution";
-const consentStorageKey = "brandd_consent_choice";
 
 function getFormString(formData: FormData, key: string) {
   const value = formData.get(key);
   return typeof value === "string" ? value : "";
-}
-
-function readSearchParam(params: URLSearchParams, key: string) {
-  return params.get(key)?.trim() ?? "";
-}
-
-function hasCampaignAttribution(attribution: ContactAttribution) {
-  return Boolean(
-    attribution.utmSource ||
-      attribution.utmMedium ||
-      attribution.utmCampaign ||
-      attribution.utmTerm ||
-      attribution.utmContent ||
-      attribution.gclid ||
-      attribution.gbraid ||
-      attribution.wbraid,
-  );
-}
-
-function parseStoredAttribution(value: string | null) {
-  if (!value) {
-    return null;
-  }
-
-  try {
-    const parsed = JSON.parse(value) as Partial<ContactAttribution>;
-
-    return {
-      landingPage: parsed.landingPage ?? "",
-      pagePath: parsed.pagePath ?? "",
-      referrer: parsed.referrer ?? "",
-      utmSource: parsed.utmSource ?? "",
-      utmMedium: parsed.utmMedium ?? "",
-      utmCampaign: parsed.utmCampaign ?? "",
-      utmTerm: parsed.utmTerm ?? "",
-      utmContent: parsed.utmContent ?? "",
-      gclid: parsed.gclid ?? "",
-      gbraid: parsed.gbraid ?? "",
-      wbraid: parsed.wbraid ?? "",
-      consentChoice: parsed.consentChoice ?? "",
-    };
-  } catch {
-    return null;
-  }
-}
-
-function getCurrentAttribution(): ContactAttribution {
-  const url = new URL(window.location.href);
-  const params = url.searchParams;
-
-  return {
-    landingPage: window.location.href,
-    pagePath: `${url.pathname}${url.search}`,
-    referrer: document.referrer,
-    utmSource: readSearchParam(params, "utm_source"),
-    utmMedium: readSearchParam(params, "utm_medium"),
-    utmCampaign: readSearchParam(params, "utm_campaign"),
-    utmTerm: readSearchParam(params, "utm_term"),
-    utmContent: readSearchParam(params, "utm_content"),
-    gclid: readSearchParam(params, "gclid"),
-    gbraid: readSearchParam(params, "gbraid"),
-    wbraid: readSearchParam(params, "wbraid"),
-    consentChoice: window.localStorage.getItem(consentStorageKey) ?? "",
-  };
-}
-
-function getLeadAttribution() {
-  const currentAttribution = getCurrentAttribution();
-  const storedAttribution = parseStoredAttribution(
-    window.localStorage.getItem(attributionStorageKey),
-  );
-
-  if (!storedAttribution) {
-    window.localStorage.setItem(attributionStorageKey, JSON.stringify(currentAttribution));
-    return currentAttribution;
-  }
-
-  const nextAttribution = hasCampaignAttribution(currentAttribution)
-    ? {
-        ...storedAttribution,
-        ...currentAttribution,
-        landingPage: storedAttribution.landingPage || currentAttribution.landingPage,
-        referrer: storedAttribution.referrer || currentAttribution.referrer,
-      }
-    : {
-        ...storedAttribution,
-        pagePath: currentAttribution.pagePath,
-        consentChoice: currentAttribution.consentChoice || storedAttribution.consentChoice,
-      };
-
-  window.localStorage.setItem(attributionStorageKey, JSON.stringify(nextAttribution));
-  return nextAttribution;
 }
 
 function trackLeadConversion({
@@ -160,11 +52,17 @@ function trackLeadConversion({
       transaction_id: submissionId ?? undefined,
     });
   }
+
+  window.branddTrackEvent?.("generate_lead", {
+    form_name: "contact",
+    lead_id: submissionId,
+    service_focus: focus,
+  });
 }
 
 export function ContactForm() {
   const [formState, setFormState] = useState<FormState>({ status: "idle" });
-  const [attribution, setAttribution] = useState<ContactAttribution | null>(null);
+  const [attribution, setAttribution] = useState<LeadAttribution | null>(null);
 
   useEffect(() => {
     setAttribution(getLeadAttribution());
@@ -226,6 +124,7 @@ export function ContactForm() {
 
   const isSending = formState.status === "sending";
   const isSent = formState.status === "sent";
+  const isSubmitLocked = isSending || isSent;
 
   return (
     <form className="contact-form" onSubmit={handleSubmit} aria-busy={isSending}>
@@ -276,8 +175,24 @@ export function ContactForm() {
           disabled={isSending}
         />
       </label>
-      <button className="button button-light" type="submit" disabled={isSending}>
-        {isSending ? "Sending enquiry" : "Send enquiry"} <HiArrowLongRight aria-hidden="true" />
+      <button
+        className={`button button-light contact-submit-button${
+          isSending ? " submit-sending" : ""
+        }${isSent ? " submit-success" : ""}`}
+        type="submit"
+        disabled={isSubmitLocked}
+        aria-label={isSent ? "Enquiry sent" : undefined}
+      >
+        {isSent ? (
+          <span className="submit-success-mark" aria-hidden="true">
+            <HiCheck />
+          </span>
+        ) : (
+          <>
+            <span>{isSending ? "Sending enquiry" : "Send enquiry"}</span>
+            <HiArrowLongRight aria-hidden="true" />
+          </>
+        )}
       </button>
       {formState.status === "sent" ? (
         <p className="form-success" aria-live="polite">

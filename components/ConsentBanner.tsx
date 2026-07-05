@@ -1,6 +1,11 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import {
+  consentStorageKey,
+  readBrowserStorage,
+  writeBrowserStorage,
+} from "@/lib/clientAttribution";
 
 type ConsentChoice = "accepted" | "essential";
 
@@ -11,7 +16,7 @@ declare global {
   }
 }
 
-const storageKey = "brandd_consent_choice";
+const consentChangeEventName = "brandd:consent-change";
 
 function applyConsent(choice: ConsentChoice) {
   const granted = choice === "accepted";
@@ -30,6 +35,11 @@ function applyConsent(choice: ConsentChoice) {
     consent_choice: choice,
     ...consentState,
   });
+  window.dispatchEvent(
+    new CustomEvent(consentChangeEventName, {
+      detail: { choice },
+    }),
+  );
 }
 
 export function ConsentBanner() {
@@ -37,7 +47,7 @@ export function ConsentBanner() {
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
-    const storedChoice = window.localStorage.getItem(storageKey);
+    const storedChoice = readBrowserStorage(consentStorageKey);
 
     if (storedChoice === "accepted" || storedChoice === "essential") {
       setChoice(storedChoice);
@@ -48,7 +58,7 @@ export function ConsentBanner() {
   }, []);
 
   function saveChoice(nextChoice: ConsentChoice) {
-    window.localStorage.setItem(storageKey, nextChoice);
+    writeBrowserStorage(consentStorageKey, nextChoice);
     setChoice(nextChoice);
     applyConsent(nextChoice);
   }
@@ -62,8 +72,8 @@ export function ConsentBanner() {
       <div>
         <strong>Cookie preferences</strong>
         <p>
-          Brandd uses essential storage for the site and optional Google measurement for ads,
-          analytics, and lead attribution.
+          Brandd uses essential storage for the site, campaign attribution for enquiries, and
+          optional Google measurement for ads and analytics.
         </p>
       </div>
       <div className="consent-actions">

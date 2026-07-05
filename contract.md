@@ -7,11 +7,12 @@ This file describes the current feature shape of the Brandd website. It is a pro
 - The site is a Next.js App Router project using TypeScript, React, `next/image`, Framer Motion, and `react-icons`.
 - Routes live under `app/`. Shared components live under `components/`. Shared content and navigation data live in `content/site.tsx`.
 - Styling is handled through `app/globals.css` with global design tokens, page section classes, component classes, and responsive breakpoints.
-- The site is primarily marketing/UI content with a server-side contact submission API. There are no authentication flows or broader server-side business workflows in this repo.
+- The site is primarily marketing/UI content with server-side contact submission and first-party site analytics APIs. There are no authentication flows or broader server-side business workflows in this repo.
 - Contact enquiries use Postgres through `DATABASE_URL`. Optional SendGrid email notification, WhatsApp notification, and database pool settings are documented in `.env.example`.
+- First-party site analytics events use Postgres through `DATABASE_URL` and can be disabled with `SITE_ANALYTICS_DISABLED=true`.
 - Cloudinary and the Ace Hits Shopify CDN are the configured remote image hosts in `next.config.ts`.
 - SEO foundations are implemented through App Router metadata, `app/sitemap.ts`, `app/robots.ts`, `app/opengraph-image.tsx`, shared metadata helpers in `content/seo.ts`, and JSON-LD rendered by `StructuredData`.
-- Google measurement is environment-driven. `GoogleTag` renders Google Tag Manager or direct gtag in the document head only when public Google environment variables are configured, opts Google scripts out of Cloudflare Rocket Loader, defaults Google consent to denied until the visitor chooses a consent option, and supports Google Ads conversion events through the public Ads ID and conversion-label environment variables.
+- Google measurement is environment-driven. `GoogleTag` renders Google Tag Manager or direct gtag in the document head only when public Google environment variables are configured, opts Google scripts out of Cloudflare Rocket Loader, defaults Google consent to denied until the visitor chooses a consent option, disables automatic direct-gtag page views so route changes can be measured explicitly, and supports Google Ads conversion events through the public Ads ID and conversion-label environment variables.
 - `next.config.ts` disables the `X-Powered-By` header, redirects `www.brandd.co.uk` to `brandd.co.uk`, and sends basic security headers on all routes.
 - Playwright is available as a dev validation tool. `npm run check:mobile-layout` checks key routes at mobile widths against a running local site and writes screenshots to `/private/tmp/brandd-mobile-pass/playwright`.
 
@@ -156,20 +157,20 @@ The Contact page collects project enquiries.
 - The light hero section follows the form section and describes projects that may involve legacy database rebuilds, old internal dashboards, websites, customer portals, MVPs, backend data, ecommerce workflows, or custom integrations.
 - `ContactForm` renders name, email, service focus, and message fields.
 - Service focus options include website/frontend, legacy system rebuilds, backend APIs, database/reporting, ecommerce/product systems, Shopify apps, Discord bots, customer portals or dashboards, MVPs, Monday.com/integrations, warehouse/QR systems, and custom dashboards/internal tools.
-- On desktop layouts, focusing the project brief textarea expands the form across the contact grid and animates the supporting contact cards out of view so the user has more space to write.
-- Submitting the form posts to `POST /api/contact`, disables the form while sending, resets the form after a successful save, fires a `generate_lead` data-layer/gtag event when Google measurement is available, fires a Google Ads `conversion` event with `send_to` built from the public Ads ID and conversion-label environment variables when configured, and shows success or error feedback.
-- The form captures first-touch and current-page attribution in browser storage, including landing page, page path, referrer, UTM fields, Google click identifiers (`gclid`, `gbraid`, `wbraid`), and consent choice. The form also includes a hidden honeypot field for basic bot filtering.
+- The desktop contact grid keeps the form and supporting cards visible while the project brief textarea is focused, with the form column slightly wider than the original compact layout and the right supporting-card column reduced to balance the page.
+- Submitting the form posts to `POST /api/contact`, disables the submit button while sending, resets the form after a successful save, changes the submit button into a persistent green success state with a sweeping flare and centered check icon until page reload, fires a `generate_lead` data-layer/gtag event when Google measurement is available, fires a Google Ads `conversion` event with `send_to` built from the public Ads ID and conversion-label environment variables when configured, and shows success or error feedback.
+- The form submits stored first-touch and current-page attribution, including landing page, page path, referrer, UTM fields, Google click identifiers (`gclid`, `gbraid`, `wbraid`), and consent choice. The form also includes a hidden honeypot field for basic bot filtering.
 - The API validates the payload, applies an in-memory per-IP rate limit, ignores honeypot submissions with a generic success response, creates or migrates the `contact_submissions` table if needed, stores each enquiry with lead attribution, status, lead qualification/upload fields, `email_status`, WhatsApp notification fields, IP address, timestamps, and the request user agent, returns the submission id for client-side lead/conversion events, then attempts a SendGrid email notification and an optional Meta WhatsApp Cloud API notification.
-- SendGrid contact email notifications are controlled by `SENDGRID_API_KEY`, `CONTACT_EMAIL_TO`, and `CONTACT_EMAIL_FROM`. Emails are sent from the configured verified Brandd sender to the configured recipient, with the customer's submitted email set as the reply-to address. Form submissions still succeed when SendGrid is not configured or email delivery fails; failures are logged and recorded on the submission.
+- SendGrid contact email notifications are controlled by `SENDGRID_API_KEY`, `CONTACT_EMAIL_TO`, and `CONTACT_EMAIL_FROM`. The default sender display name is Brandd Solutions, emails are sent from the configured verified Brandd sender to the configured recipient, use `Brandd Enquiry <submission id>` as the subject and visible email title, include the square Brandd profile icon in the HTML notification header, and set the customer's submitted email as the reply-to address. Form submissions still succeed when SendGrid is not configured or email delivery fails; failures are logged and recorded on the submission.
 - WhatsApp contact notifications are controlled by `WHATSAPP_CONTACT_NOTIFICATIONS` and the related Meta Cloud API environment variables. Form submissions still succeed when WhatsApp is disabled or a notification attempt fails; failures are logged and recorded on the submission.
 - SendGrid and WhatsApp notification requests use bounded timeouts so slow external services do not hold the form request indefinitely.
 
 ### Privacy `/privacy`
 
-The Privacy page explains how Brandd handles project enquiries, lead attribution, optional Google measurement, notification services, and contact record retention.
+The Privacy page explains how Brandd handles project enquiries, lead attribution, optional Google measurement, accepted-consent website interaction analytics, notification services, and contact record retention.
 
 - The page starts on a dark hero with privacy-focused copy.
-- A light privacy content section explains contact enquiries, lead attribution, notifications, Google measurement, and retention/follow-up.
+- A light privacy content section explains contact enquiries, lead attribution, notifications, Google measurement, website interaction analytics, and retention/follow-up.
 - The page ends with a dark CTA linking to Contact.
 
 ## Reusable Components
@@ -180,10 +181,11 @@ The Privacy page explains how Brandd handles project enquiries, lead attribution
 - `ServiceGrid` maps shared service data into icon cards.
 - `LegacyDashboardVisual` renders the anonymised legacy order-detail browser mockup used by the Legacy Systems page and the Services page legacy priority section.
 - `MvpProductVisual` renders product-specific animated interface visuals for SonaCrate and DTF Designer. The SonaCrate visual reflects the listener shell with Home, New Releases, My Tracks, Playlists, Genres, and Tracks labels.
-- `ContactForm` is a client component that submits project enquiries to the contact API, captures lead attribution, fires lead/conversion measurement events after successful saves, and renders pending, success, and error states.
+- `ContactForm` is a client component that submits project enquiries to the contact API, captures lead attribution, fires lead/conversion measurement events after successful saves, and renders pending, persistent animated success, and error states.
 - `StructuredData` renders escaped JSON-LD for organization, website, breadcrumb, service, contact, privacy, and project structured data.
 - `GoogleTag` conditionally renders Google Tag Manager or direct gtag from public environment variables in the document head and initializes Google consent defaults. `GoogleTagManagerNoScript` renders the GTM fallback iframe in the body when a GTM container is configured.
-- `ConsentBanner` lets visitors accept all optional measurement storage or keep essential-only storage, persists the choice locally, and updates Google consent/data-layer state.
+- `ConsentBanner` explains essential storage, campaign attribution for enquiries, and optional Google measurement for ads and analytics. It lets visitors accept all optional measurement storage or keep essential-only storage, persists the choice locally, and updates Google consent/data-layer state.
+- `SiteAnalytics` runs globally as a client component. It persists campaign attribution when visitors arrive with UTM or Google click identifiers, sends accepted-consent page views to Google measurement on initial load and client-side route changes, exposes a `window.branddTrackEvent` hook for first-party analytics, and records accepted-consent site interaction events through `POST /api/site-analytics`.
 
 ## Styling Contract
 
@@ -223,7 +225,9 @@ The Privacy page explains how Brandd handles project enquiries, lead attribution
 - Contact form submission is handled by `POST /api/contact`, which stores validated enquiries and advertising attribution in Postgres, sends contact email notifications through SendGrid when configured, optionally sends a WhatsApp notification through Meta WhatsApp Cloud API, and returns the submission id for client-side lead/conversion events.
 - Successful contact submissions push a `generate_lead` event to `dataLayer` and gtag, then send a Google Ads `conversion` event with the returned submission id as `transaction_id` when `NEXT_PUBLIC_GOOGLE_ADS_ID` and `NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL` are configured.
 - Consent choice is persisted in local storage and pushed to Google consent/data-layer state when Google measurement is configured.
-- First-touch lead attribution is persisted in local storage and sent with the contact form payload so Google click IDs and UTM values can be used for campaign reporting and future offline/enhanced lead upload workflows.
+- First-touch campaign attribution is persisted in local storage as soon as campaign parameters or Google click identifiers are seen, then sent with the contact form payload so Google click IDs and UTM values can be used for campaign reporting and future offline/enhanced lead upload workflows. The stored attribution also keeps the current page path fresh while preserving the first landing page/referrer.
+- Accepted-consent site analytics are handled by `POST /api/site-analytics`, which creates the `site_analytics_events` table when needed and stores anonymous visitor/session IDs, page URL/path/title, referrer, landing page, previous page path, UTM and Google click identifiers, viewport size, event properties, user agent, and timestamp. The endpoint ignores non-accepted consent, rate limits requests in memory, and no-ops when `DATABASE_URL` is missing or `SITE_ANALYTICS_DISABLED=true`.
+- `SiteAnalytics` records `page_view`, `scroll_depth`, `nav_click`, `cta_click`, `link_click`, `outbound_link_click`, `button_click`, `form_start`, `form_submit_attempt`, and accepted first-party `generate_lead` events. Page views include previous-path context so sessions can be reconstructed into landing pages and journeys through the site.
 
 ## Maintenance Expectations
 
