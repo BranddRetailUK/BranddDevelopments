@@ -145,6 +145,7 @@ async function notifyByEmail(
       await updateContactSubmissionEmailStatus({
         id: submission.id,
         status: "sent",
+        messageId: result.messageId,
       });
 
       return;
@@ -227,20 +228,6 @@ export async function POST(request: Request) {
       { ok: false, message: "Please complete the form and try again." },
       { status: 400 },
     );
-  }
-
-  if (body && typeof body === "object") {
-    const payload = body as Record<string, unknown>;
-
-    if (readString(payload.companyWebsite)) {
-      return NextResponse.json(
-        {
-          ok: true,
-          message: "Thanks. Your enquiry has been received.",
-        },
-        { status: 201 },
-      );
-    }
   }
 
   const validation = validatePayload(body);

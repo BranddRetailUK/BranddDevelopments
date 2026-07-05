@@ -75,6 +75,7 @@ function ensureContactSubmissionTable() {
           google_ads_conversion_error TEXT,
           google_ads_conversion_uploaded_at TIMESTAMPTZ,
           email_status TEXT NOT NULL DEFAULT 'pending',
+          email_message_id TEXT,
           email_error TEXT,
           emailed_at TIMESTAMPTZ,
           whatsapp_status TEXT NOT NULL DEFAULT 'not_configured',
@@ -88,6 +89,9 @@ function ensureContactSubmissionTable() {
 
         ALTER TABLE contact_submissions
           ADD COLUMN IF NOT EXISTS email_status TEXT NOT NULL DEFAULT 'pending';
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS email_message_id TEXT;
 
         ALTER TABLE contact_submissions
           ADD COLUMN IF NOT EXISTS landing_page TEXT;
@@ -176,6 +180,9 @@ function ensureContactSubmissionTable() {
         CREATE INDEX IF NOT EXISTS contact_submissions_email_status_idx
           ON contact_submissions (email_status);
 
+        CREATE INDEX IF NOT EXISTS contact_submissions_email_message_id_idx
+          ON contact_submissions (email_message_id);
+
         CREATE INDEX IF NOT EXISTS contact_submissions_whatsapp_status_idx
           ON contact_submissions (whatsapp_status);
 
@@ -260,10 +267,12 @@ export async function createContactSubmission(input: ContactSubmissionInput) {
 export async function updateContactSubmissionEmailStatus({
   id,
   status,
+  messageId,
   error,
 }: {
   id: string;
   status: ContactSubmissionEmailStatus;
+  messageId?: string | null;
   error?: string | null;
 }) {
   await ensureContactSubmissionTable();
@@ -273,12 +282,13 @@ export async function updateContactSubmissionEmailStatus({
       UPDATE contact_submissions
       SET
         email_status = $2,
-        email_error = $3,
+        email_message_id = CASE WHEN $2 = 'sent' THEN $3 ELSE email_message_id END,
+        email_error = $4,
         emailed_at = CASE WHEN $2 = 'sent' THEN NOW() ELSE emailed_at END,
         updated_at = NOW()
       WHERE id = $1;
     `,
-    [id, status, error ?? null],
+    [id, status, messageId ?? null, error ?? null],
   );
 }
 

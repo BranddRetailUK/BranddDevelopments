@@ -87,7 +87,6 @@ export function ContactForm() {
           email: getFormString(formData, "email"),
           focus,
           message: getFormString(formData, "message"),
-          companyWebsite: getFormString(formData, "companyWebsite"),
           attribution: attribution ?? getLeadAttribution(),
         }),
       });
@@ -164,16 +163,6 @@ export function ContactForm() {
       <label className="brief-field">
         What are you building, improving or trying to fix?
         <textarea name="message" rows={5} required disabled={isSending} />
-      </label>
-      <label className="form-honeypot" aria-hidden="true">
-        Company website
-        <input
-          name="companyWebsite"
-          type="text"
-          autoComplete="off"
-          tabIndex={-1}
-          disabled={isSending}
-        />
       </label>
       <button
         className={`button button-light contact-submit-button${

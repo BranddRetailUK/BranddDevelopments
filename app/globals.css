@@ -4864,19 +4864,6 @@ h3 {
   opacity: 0.68;
 }
 
-.form-honeypot {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 1px;
-  height: 1px;
-  overflow: hidden;
-  opacity: 0;
-  pointer-events: none;
-  transform: scale(0);
-  transform-origin: top left;
-}
-
 .form-success,
 .form-error {
   margin: 0;
