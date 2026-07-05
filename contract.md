@@ -198,7 +198,7 @@ The Privacy page explains how Brandd handles project enquiries, lead attribution
 - The Websites hero uses the same wider, capped heading treatment as the homepage hero.
 - Mobile hero headings share a capped scale across homepage, Websites, Projects, Services, Contact, and website/project pages so large uppercase titles fit cleanly on phone screens.
 - Mobile buttons wrap their labels safely, and browser-style visual bars truncate long URL labels instead of creating horizontal page overflow.
-- Service cards scale up slightly on desktop hover for pointer feedback, while reduced-motion users keep static cards.
+- Service, project, workflow, contact, and Ace highlight cards scale up slightly on desktop pointer hover for feedback, while reduced-motion users keep static cards.
 - Mobile card and tile grids use two columns with compact card typography so repeated service, project, proof, product, highlight, and metric cards remain grid-based on phone widths.
 - The Ace Hits TCG project page has its own black retail visual system with purple, magenta, yellow and cyan accents, a wider homepage-style hero heading, product cards, category chips and Shopify-derived imagery.
 - The Projects page product sections use CSS variables scoped by product slug:

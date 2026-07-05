@@ -745,6 +745,11 @@ h3 {
   background: rgba(255, 255, 255, 0.045);
   overflow: hidden;
   transform-origin: center;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+  will-change: transform;
 }
 
 .service-card::before,
@@ -784,11 +789,6 @@ h3 {
 .service-card {
   --service-accent: var(--accent-gradient);
   --service-accent-glow: rgba(255, 11, 105, 0.18);
-  transition:
-    border-color 180ms ease,
-    box-shadow 180ms ease,
-    transform 180ms ease;
-  will-change: transform;
 }
 
 .service-card::before {
@@ -801,14 +801,19 @@ h3 {
 }
 
 @media (hover: hover) and (pointer: fine) {
-  .service-card:hover {
+  .service-card:hover,
+  .project-card:hover,
+  .workflow-item:hover,
+  .contact-card:hover {
     z-index: 3;
     border-color: rgba(255, 255, 255, 0.42);
     box-shadow: 0 24px 70px rgba(0, 0, 0, 0.24);
     transform: scale(1.035);
   }
 
-  .light-section .service-card:hover {
+  .light-section .service-card:hover,
+  .light-section .project-card:hover,
+  .light-section .workflow-item:hover {
     border-color: rgba(28, 28, 28, 0.22);
     box-shadow: 0 24px 70px rgba(28, 28, 28, 0.14);
   }
@@ -4544,6 +4549,21 @@ h3 {
   border-radius: 8px;
   background: var(--white);
   box-shadow: 0 20px 70px rgba(28, 28, 28, 0.08);
+  transform-origin: center;
+  transition:
+    border-color 180ms ease,
+    box-shadow 180ms ease,
+    transform 180ms ease;
+  will-change: transform;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .ace-highlight-card:hover {
+    z-index: 3;
+    border-color: rgba(28, 28, 28, 0.2);
+    box-shadow: 0 24px 70px rgba(28, 28, 28, 0.14);
+    transform: scale(1.035);
+  }
 }
 
 .ace-highlight-card svg {
@@ -5953,7 +5973,11 @@ h3 {
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .service-card:hover {
+  .service-card:hover,
+  .project-card:hover,
+  .workflow-item:hover,
+  .contact-card:hover,
+  .ace-highlight-card:hover {
     transform: none;
   }
 
