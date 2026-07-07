@@ -3,6 +3,7 @@
 import { FormEvent, useEffect, useState } from "react";
 import { HiArrowLongRight, HiCheck, HiOutlineCheckCircle } from "react-icons/hi2";
 import { getLeadAttribution, type LeadAttribution } from "@/lib/clientAttribution";
+import { contactBudgetOptions } from "@/lib/contactOptions";
 
 type FormState =
   | { status: "idle" }
@@ -24,9 +25,11 @@ function getFormString(formData: FormData, key: string) {
 }
 
 function trackLeadConversion({
+  budget,
   focus,
   submissionId,
 }: {
+  budget: string;
   focus: string;
   submissionId: string | null;
 }) {
@@ -37,12 +40,14 @@ function trackLeadConversion({
     event: "generate_lead",
     form_name: "contact",
     lead_id: submissionId,
+    budget_range: budget,
     service_focus: focus,
   });
 
   window.gtag?.("event", "generate_lead", {
     event_category: "Lead",
     event_label: focus,
+    budget_range: budget,
     lead_id: submissionId,
   });
 
@@ -56,6 +61,7 @@ function trackLeadConversion({
   window.branddTrackEvent?.("generate_lead", {
     form_name: "contact",
     lead_id: submissionId,
+    budget_range: budget,
     service_focus: focus,
   });
 }
@@ -72,6 +78,7 @@ export function ContactForm() {
     event.preventDefault();
     const form = event.currentTarget;
     const formData = new FormData(form);
+    const budget = getFormString(formData, "budget");
     const focus = getFormString(formData, "focus");
 
     setFormState({ status: "sending" });
@@ -86,6 +93,7 @@ export function ContactForm() {
           name: getFormString(formData, "name"),
           email: getFormString(formData, "email"),
           focus,
+          budget,
           message: getFormString(formData, "message"),
           attribution: attribution ?? getLeadAttribution(),
         }),
@@ -101,6 +109,7 @@ export function ContactForm() {
       }
 
       trackLeadConversion({
+        budget,
         focus,
         submissionId: payload?.submissionId ?? null,
       });
@@ -158,8 +167,27 @@ export function ContactForm() {
           <option>Monday.com and business integrations</option>
           <option>Warehouse, stock and QR tracking systems</option>
           <option>Custom dashboards and internal tools</option>
+          <option>Other</option>
         </select>
       </label>
+      <fieldset className="budget-field">
+        <legend>Budget</legend>
+        <div className="budget-options">
+          {contactBudgetOptions.map((option) => (
+            <label className="budget-option" key={option}>
+              <input
+                name="budget"
+                type="radio"
+                value={option}
+                required
+                disabled={isSending}
+              />
+              <span className="budget-check" aria-hidden="true" />
+              <span className="budget-option-text">{option}</span>
+            </label>
+          ))}
+        </div>
+      </fieldset>
       <label className="brief-field">
         What are you building, improving or trying to fix?
         <textarea name="message" rows={5} required disabled={isSending} />

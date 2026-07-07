@@ -25,6 +25,16 @@ const contactCards = [
     icon: HiOutlineEnvelope,
   },
   {
+    title: "Email directly",
+    copy: (
+      <>
+        Prefer not to use the form? Email{" "}
+        <a href="mailto:enquiries@brandd.co.uk">enquiries@brandd.co.uk</a>.
+      </>
+    ),
+    icon: HiOutlineEnvelope,
+  },
+  {
     title: "Planning sessions",
     copy: "Map the offer, user journey, system needs, integrations, and launch path.",
     icon: HiOutlineCalendarDays,

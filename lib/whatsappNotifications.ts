@@ -5,6 +5,7 @@ type ContactWhatsAppNotificationInput = {
   name: string;
   email: string;
   focus: string;
+  budget: string;
   message: string;
   createdAt: string;
   attribution?: ContactSubmissionAttribution;
@@ -135,6 +136,7 @@ function buildNotificationText(input: ContactWhatsAppNotificationInput) {
       `Name: ${input.name}`,
       `Email: ${input.email}`,
       `Focus: ${input.focus}`,
+      `Budget: ${input.budget}`,
       "",
       "Message:",
       input.message,

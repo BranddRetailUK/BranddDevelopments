@@ -5,6 +5,7 @@ import {
   updateContactSubmissionEmailStatus,
   updateContactSubmissionWhatsAppStatus,
 } from "@/lib/contactSubmissions";
+import { isContactBudgetOption } from "@/lib/contactOptions";
 import { sendContactEmailNotification } from "@/lib/emailNotifications";
 import { sendContactWhatsAppNotification } from "@/lib/whatsappNotifications";
 
@@ -14,6 +15,7 @@ type ContactPayload = {
   name: string;
   email: string;
   focus: string;
+  budget: string;
   message: string;
   attribution: ContactSubmissionAttribution;
 };
@@ -96,6 +98,7 @@ function validatePayload(body: unknown): {
     name: readString(payload.name),
     email: readString(payload.email).toLowerCase(),
     focus: readString(payload.focus),
+    budget: readString(payload.budget),
     message: readString(payload.message),
     attribution: readAttribution(payload.attribution),
   };
@@ -110,6 +113,10 @@ function validatePayload(body: unknown): {
 
   if (input.focus.length < 2 || input.focus.length > 160) {
     return { message: "Please choose a service focus." };
+  }
+
+  if (!isContactBudgetOption(input.budget)) {
+    return { message: "Please choose a project budget." };
   }
 
   if (input.message.length < 10) {

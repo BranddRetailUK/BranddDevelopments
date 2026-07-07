@@ -5,6 +5,7 @@ type ContactEmailNotificationInput = {
   name: string;
   email: string;
   focus: string;
+  budget: string;
   message: string;
   createdAt: string;
   attribution?: ContactSubmissionAttribution;
@@ -163,6 +164,7 @@ function buildPlainText(input: ContactEmailNotificationInput) {
     `Name: ${input.name}`,
     `Email: ${input.email}`,
     `Service focus: ${input.focus}`,
+    `Budget: ${input.budget}`,
     "",
     "Message:",
     input.message,
@@ -177,6 +179,7 @@ function buildHtml(input: ContactEmailNotificationInput) {
     ["Name", input.name],
     ["Email", input.email],
     ["Service focus", input.focus],
+    ["Budget", input.budget],
     ["Landing page", input.attribution?.landingPage ?? "Not captured"],
     ["Referrer", input.attribution?.referrer ?? "Not captured"],
     ["UTM source", input.attribution?.utmSource ?? "Not captured"],

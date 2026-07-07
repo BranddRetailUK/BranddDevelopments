@@ -15,7 +15,7 @@ export const metadata = createPageMetadata({
 const privacySections = [
   {
     title: "Contact enquiries",
-    copy: "When you submit the contact form, Brandd stores your name, email address, selected service focus, message, request details, and the time the enquiry was received so the project can be reviewed and answered.",
+    copy: "When you submit the contact form, Brandd stores your name, email address, selected service focus, budget range, message, request details, and the time the enquiry was received so the project can be reviewed and answered.",
   },
   {
     title: "Lead attribution",

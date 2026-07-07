@@ -4,6 +4,7 @@ export type ContactSubmissionInput = {
   name: string;
   email: string;
   focus: string;
+  budget: string;
   message: string;
   attribution: ContactSubmissionAttribution;
   ipAddress: string | null;
@@ -51,6 +52,7 @@ function ensureContactSubmissionTable() {
           name TEXT NOT NULL,
           email TEXT NOT NULL,
           focus TEXT NOT NULL,
+          budget TEXT NOT NULL,
           message TEXT NOT NULL,
           status TEXT NOT NULL DEFAULT 'new',
           source TEXT NOT NULL DEFAULT 'contact_page',
@@ -86,6 +88,9 @@ function ensureContactSubmissionTable() {
           created_at TIMESTAMPTZ NOT NULL DEFAULT NOW(),
           updated_at TIMESTAMPTZ NOT NULL DEFAULT NOW()
         );
+
+        ALTER TABLE contact_submissions
+          ADD COLUMN IF NOT EXISTS budget TEXT;
 
         ALTER TABLE contact_submissions
           ADD COLUMN IF NOT EXISTS email_status TEXT NOT NULL DEFAULT 'pending';
@@ -220,6 +225,7 @@ export async function createContactSubmission(input: ContactSubmissionInput) {
         name,
         email,
         focus,
+        budget,
         message,
         landing_page,
         page_path,
@@ -236,13 +242,14 @@ export async function createContactSubmission(input: ContactSubmissionInput) {
         ip_address,
         user_agent
       )
-      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18)
+      VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, $15, $16, $17, $18, $19)
       RETURNING id::text, created_at::text AS "createdAt";
     `,
     [
       input.name,
       input.email,
       input.focus,
+      input.budget,
       input.message,
       input.attribution.landingPage,
       input.attribution.pagePath,
