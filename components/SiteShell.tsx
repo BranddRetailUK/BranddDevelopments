@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
-import { HiOutlineBars3, HiOutlineXMark } from "react-icons/hi2";
+import { HiOutlineBars3, HiOutlineEnvelope, HiOutlineXMark } from "react-icons/hi2";
 import { darkLogo, navItems, routeTones, whiteLogo } from "@/content/site";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
@@ -19,11 +19,17 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const headerTone = visibleTone ?? (pathname === "/" ? (isScrolled ? "dark" : "light") : routeTone);
 
   const splitNav = useMemo(() => {
-    const splitAt = Math.max(1, Math.floor(navItems.length / 2));
+    const desktopNavItems = navItems.filter((item) => item.href !== "/contact");
+    const contactItem = navItems.find((item) => item.href === "/contact") ?? {
+      href: "/contact",
+      label: "Contact",
+    };
+    const splitAt = Math.max(1, Math.floor(desktopNavItems.length / 2));
 
     return {
-      left: navItems.slice(0, splitAt),
-      right: navItems.slice(splitAt),
+      contact: contactItem,
+      left: desktopNavItems.slice(0, splitAt),
+      right: desktopNavItems.slice(splitAt),
     };
   }, []);
 
@@ -98,6 +104,11 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                 pathname={pathname}
               />
             ))}
+            <ContactNavIcon
+              href={splitNav.contact.href}
+              label={splitNav.contact.label}
+              pathname={pathname}
+            />
           </div>
 
           <button
@@ -156,6 +167,29 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
       <SiteFooter />
     </div>
+  );
+}
+
+function ContactNavIcon({
+  href,
+  label,
+  pathname,
+}: {
+  href: string;
+  label: string;
+  pathname: string;
+}) {
+  const active = pathname.startsWith(href);
+
+  return (
+    <Link
+      className={active ? "nav-link nav-icon-link active" : "nav-link nav-icon-link"}
+      href={href}
+      aria-label={label}
+      title={label}
+    >
+      <HiOutlineEnvelope aria-hidden="true" />
+    </Link>
   );
 }
 

@@ -52,7 +52,7 @@ The current project showcases are:
 
 - The header is fixed and uses a centered no-strap Brandd logo with left and right navigation groups.
 - The Brandd logo links to the homepage; Home is not repeated as a text navigation item.
-- Desktop navigation is split around the logo with large uppercase tab labels. Services and Websites sit on the left of the logo, while Projects, Legacy Systems, and Contact sit on the right. Websites is a plain text navigation link to the Websites page, and Projects links to focused version-one product work.
+- Desktop navigation is split around the logo with large uppercase tab labels. Services and Websites sit on the left of the logo, Projects and Legacy Systems sit on the right, and Contact is an icon-only mail link at the far right of the header. Websites is a plain text navigation link to the Websites page, and Projects links to focused version-one product work.
 - Mobile navigation keeps the Brandd logo centered in the header while the menu button sits on the right, and opens top-level links only.
 - Header colour is controlled by route defaults and visible section tone. Sections expose `data-nav-tone="light"` or `data-nav-tone="dark"` so the shell can choose the correct logo and text colour while scrolling.
 - Route transitions use Framer Motion with a page fade/blur movement and a route-wash overlay.
