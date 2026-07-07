@@ -153,7 +153,7 @@ The Services page describes practical digital services for businesses that need 
 
 The Contact page collects project enquiries.
 
-- The page starts with a dark contact section that places `ContactForm` before the project enquiry, direct email, planning session, and UK-based online-first cards.
+- The page starts with a dark contact section that places `ContactForm` before the direct email, project enquiry, planning session, and UK-based online-first cards.
 - The light hero section follows the form section and describes projects that may involve legacy database rebuilds, old internal dashboards, websites, customer portals, MVPs, backend data, ecommerce workflows, or custom integrations.
 - `ContactForm` renders name, email, service focus, required budget range, and message fields.
 - Service focus options include website/frontend, legacy system rebuilds, backend APIs, database/reporting, ecommerce/product systems, Shopify apps, Discord bots, customer portals or dashboards, MVPs, Monday.com/integrations, warehouse/QR systems, custom dashboards/internal tools, and Other.

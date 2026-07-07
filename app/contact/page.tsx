@@ -20,11 +20,6 @@ export const metadata = createPageMetadata({
 
 const contactCards = [
   {
-    title: "Project enquiries",
-    copy: "Share the goal, the current problem, and what needs to happen next.",
-    icon: HiOutlineEnvelope,
-  },
-  {
     title: "Email directly",
     copy: (
       <>
@@ -32,6 +27,11 @@ const contactCards = [
         <a href="mailto:enquiries@brandd.co.uk">enquiries@brandd.co.uk</a>.
       </>
     ),
+    icon: HiOutlineEnvelope,
+  },
+  {
+    title: "Project enquiries",
+    copy: "Share the goal, the current problem, and what needs to happen next.",
     icon: HiOutlineEnvelope,
   },
   {
