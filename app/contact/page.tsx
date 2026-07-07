@@ -1,8 +1,4 @@
-import {
-  HiOutlineCalendarDays,
-  HiOutlineEnvelope,
-  HiOutlineMapPin,
-} from "react-icons/hi2";
+import { HiOutlineEnvelope } from "react-icons/hi2";
 import { ContactForm } from "@/components/ContactForm";
 import { MotionReveal } from "@/components/MotionReveal";
 import { ScrollAccent } from "@/components/ScrollAccent";
@@ -33,16 +29,6 @@ const contactCards = [
     title: "Project enquiries",
     copy: "Share the goal, the current problem, and what needs to happen next.",
     icon: HiOutlineEnvelope,
-  },
-  {
-    title: "Planning sessions",
-    copy: "Map the offer, user journey, system needs, integrations, and launch path.",
-    icon: HiOutlineCalendarDays,
-  },
-  {
-    title: "UK based, online first",
-    copy: "Built for focused collaboration with clear checkpoints and practical delivery.",
-    icon: HiOutlineMapPin,
   },
 ];
 
