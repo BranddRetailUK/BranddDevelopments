@@ -32,13 +32,13 @@ function isAllowedHost(hostname: string) {
   return configuredHosts?.includes(hostname) ?? false;
 }
 
-function createContentSecurityPolicy(nonce: string) {
+function createContentSecurityPolicy() {
   const developmentScriptSource =
     process.env.NODE_ENV === "production" ? "" : " 'unsafe-eval'";
   const developmentConnectSource = process.env.NODE_ENV === "production" ? "" : " ws:";
   const directives = [
     "default-src 'self'",
-    `script-src 'self' 'nonce-${nonce}'${developmentScriptSource} https://www.googletagmanager.com https://www.google-analytics.com https://www.googleadservices.com https://pagead2.googlesyndication.com https://challenges.cloudflare.com`,
+    `script-src 'self' 'unsafe-inline'${developmentScriptSource} https://www.googletagmanager.com https://www.google-analytics.com https://www.googleadservices.com https://pagead2.googlesyndication.com https://challenges.cloudflare.com`,
     "script-src-attr 'none'",
     "style-src 'self' 'unsafe-inline'",
     "img-src 'self' data: blob: https://res.cloudinary.com https://www.acehitstcg.co.uk https://www.google-analytics.com https://www.googleadservices.com https://pagead2.googlesyndication.com https://*.g.doubleclick.net",
@@ -75,8 +75,7 @@ function getCanonicalDestination(request: NextRequest) {
 }
 
 export function middleware(request: NextRequest) {
-  const nonce = btoa(crypto.randomUUID());
-  const policy = createContentSecurityPolicy(nonce);
+  const policy = createContentSecurityPolicy();
   const hostname = getHostname(request);
   const isHealthRequest = request.nextUrl.pathname === healthPath;
 
@@ -104,17 +103,7 @@ export function middleware(request: NextRequest) {
     );
   }
 
-  const requestHeaders = new Headers(request.headers);
-  requestHeaders.set("x-nonce", nonce);
-  requestHeaders.set("Content-Security-Policy", policy);
-
-  const response = NextResponse.next({
-    request: {
-      headers: requestHeaders,
-    },
-  });
-
-  return applyContentSecurityPolicy(response, policy);
+  return applyContentSecurityPolicy(NextResponse.next(), policy);
 }
 
 export const config = {
