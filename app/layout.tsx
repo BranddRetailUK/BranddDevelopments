@@ -1,3 +1,4 @@
+import "@fontsource-variable/manrope";
 import "./globals.css";
 import { ConsentBanner } from "@/components/ConsentBanner";
 import { GoogleTag } from "@/components/GoogleTag";

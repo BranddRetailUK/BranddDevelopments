@@ -22,7 +22,7 @@ export const metadata = createPageMetadata({
 });
 
 const goodGameLogo =
-  "https://res.cloudinary.com/dhlqooyuk/image/upload/v1778143541/Good_Game_Apparel_Gold_Logo_nlmdt2.png";
+  "/images/good-game/good-game-apparel-logo.png";
 
 const goodGameVideo =
   "https://res.cloudinary.com/dhlqooyuk/video/upload/v1777315888/bannervid_ikakzu.mp4";
@@ -114,17 +114,20 @@ export default function GoodGameApparelPage() {
             <Image
               alt="Good Game Apparel"
               className="good-game-hero-logo"
-              height={164}
+              height={644}
               priority
               src={goodGameLogo}
-              width={340}
+              unoptimized
+              width={1000}
             />
             <span>www.goodgameapparel.co.uk</span>
           </MotionReveal>
 
           <MotionReveal className="good-game-hero-copy" delay={0.08}>
             <p className="eyebrow eyebrow-light">Good Game Apparel</p>
-            <h1>Bring your brand to life.</h1>
+            <h1>
+              Bring your brand to <span>life.</span>
+            </h1>
             <p>
               Premium print-on-demand apparel and merch, made for creators.
               Brandd built the platform behind that promise: creator tools,
@@ -189,7 +192,7 @@ export default function GoodGameApparelPage() {
               <strong>goodgameapparel.co.uk/team-gg</strong>
             </div>
             <div className="good-game-storefront-nav">
-              <Image alt="" height={82} src={goodGameLogo} width={170} />
+              <Image alt="" height={644} src={goodGameLogo} unoptimized width={1000} />
               <div>
                 <span>Collections</span>
                 <span>Products</span>
@@ -245,7 +248,7 @@ export default function GoodGameApparelPage() {
 
           <MotionReveal className="good-game-dashboard-ui" delay={0.12} aria-hidden="true">
             <aside className="good-game-dashboard-rail">
-              <Image alt="" height={64} src={goodGameLogo} width={132} />
+              <Image alt="" height={644} src={goodGameLogo} unoptimized width={1000} />
               {["Products", "Orders", "Earnings", "Assets", "Support"].map((item, index) => (
                 <span className={index === 0 ? "is-active" : undefined} key={item}>
                   {item}

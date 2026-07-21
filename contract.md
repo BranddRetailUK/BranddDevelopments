@@ -80,7 +80,7 @@ The Websites page frames Brandd builds as connected websites, products, and syst
 
 - The hero is dark and includes a stacked website-type visual for creator commerce, operational dashboards, and product platforms.
 - The Website Types section lists creator-commerce platforms, operational dashboards, product platforms, ecommerce systems, and business process tools.
-- A dark Good Game Apparel showcase section uses the dedicated page's creator-commerce content, Good Game logo, storefront browser mockup, live product imagery, creator-store/subscription/made-to-order details, and links to the case study and live site.
+- A dark Good Game Apparel showcase section uses the dedicated page's creator-commerce content, current white/acid Good Game logo, storefront browser mockup, live product imagery, creator-store/subscription/made-to-order details, and links to the case study and live site. Its flat near-black, acid-green, signal-orange and Manrope treatment mirrors the current Good Game storefront.
 - A dark Ace Hits TCG showcase section uses the dedicated page's collector retail styling, Ace Hits logo, Shopify banner image, category nav strip, and links to the case study and live site.
 - A light Ace retail details section uses the dedicated page's collector navigation, drop-led retail, trust-cue, and mobile-shopping cards.
 - The page ends with a dark CTA linking to Contact.
@@ -89,7 +89,7 @@ The Websites page frames Brandd builds as connected websites, products, and syst
 
 The Good Game Apparel page presents Brandd-owned creator-commerce platform work as a standalone project page.
 
-- The hero is dark/gold, uses the main Good Game Apparel logo centered at the top, links externally to `https://www.goodgameapparel.co.uk/`, includes a Back to Websites action, uses a Cloudinary-hosted video backdrop, and uses the storefront's "Bring your brand to life" / "Made for Creators" positioning.
+- The hero uses the current white/acid Good Game Apparel logo centered at the top, links externally to `https://www.goodgameapparel.co.uk/`, includes a Back to Websites action, uses a Cloudinary-hosted video backdrop, and presents the storefront's "Bring your brand to life" / "Made for Creators" positioning with signal-orange title emphasis.
 - The hero summary cards introduce the three connected services: storefront, creator dashboard, and product creator, using real storefront language around creator stores, subscriptions, UK fulfilment, dashboard tracking, rewards and payouts.
 - The storefront service section uses the Create Your Merch and live creator-store language to explain public creator stores, subscription tiers, made-to-order ordering, production, packing, fulfilment and delivery, with a browser-style storefront mockup.
 - The creator dashboard service section explains the Creator Hub account, creator earnings, coins, XP, payout state, Discord support, product setup, order activity and store performance, with a dashboard UI mockup.
@@ -216,7 +216,7 @@ The Privacy page explains how Brandd handles project enquiries, lead attribution
   - `.service-theme-portals` uses a light cyan and amber dashboard theme.
 - The Services page uses `.services-legacy-*`, `.services-websites-*`, and `.services-requirements-cta` classes for the legacy priority section, website design/development section, and first requirements CTA.
 - The Legacy Systems page uses scoped `.legacy-*` classes for its dark service hero, fit cards, anonymised Microsoft Access-inspired order-detail mockup, three-panel process map, and capability bridge. The proof visual keeps a classic database UI treatment inside a modern browser frame, uses a reduced field set so values remain readable, and uses responsive rules so the mobile mockup hides secondary tabs, sidebar navigation, and non-essential fields to stay short.
-- The Good Game Apparel project page uses a separate dark/gold visual system based around `#f2c653`, dark navy-black backgrounds, glassy panels, the Good Game logo, a video-backed hero, and animated storefront/dashboard/product-creator mockups.
+- The Good Game Apparel project page uses the current storefront's editorial visual system: Manrope typography, near-black `#11110f` backgrounds, flat `#191917` surfaces, warm-white copy, acid green `#d7ff45`, signal orange `#ff5a36`, sharp borders, skewed accent blocks and buttons, the current white/acid logo, a video-backed hero, and animated storefront/dashboard/product-creator mockups.
 - The Privacy page uses `.privacy-*` classes for the dark hero and light policy content rows.
 - The cookie preferences banner uses `.consent-*` classes, stays fixed above the page content until the visitor chooses a preference, and reopens when the footer Cookie settings control is used.
 - Responsive rules collapse grids at tablet sizes and simplify hero/section layouts at mobile sizes.

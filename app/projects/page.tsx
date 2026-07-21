@@ -54,7 +54,7 @@ const projectTypes = [
 ];
 
 const goodGameLogo =
-  "https://res.cloudinary.com/dhlqooyuk/image/upload/v1778143541/Good_Game_Apparel_Gold_Logo_nlmdt2.png";
+  "/images/good-game/good-game-apparel-logo.png";
 
 const productTemplateImages = [
   {
@@ -261,7 +261,7 @@ export default function ProjectsPage() {
               <strong>goodgameapparel.co.uk/team-gg</strong>
             </div>
             <div className="good-game-storefront-nav">
-              <Image alt="" height={82} src={goodGameLogo} width={170} />
+              <Image alt="" height={644} src={goodGameLogo} unoptimized width={1000} />
               <div>
                 <span>Collections</span>
                 <span>Products</span>
