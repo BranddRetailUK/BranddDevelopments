@@ -6,6 +6,7 @@
     "dev": "next dev",
     "build": "next build",
     "check:mobile-layout": "node scripts/mobile-layout-check.mjs",
+    "db:migrate": "node scripts/migrate.mjs",
     "start": "next start",
     "lint": "eslint . --max-warnings=0"
   },

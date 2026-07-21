@@ -17,6 +17,11 @@ export type LeadAttribution = {
 
 export const attributionStorageKey = "brandd_first_touch_attribution";
 export const consentStorageKey = "brandd_consent_choice";
+export const consentChangeEventName = "brandd:consent-change";
+export const consentSettingsEventName = "brandd:open-consent-settings";
+export const analyticsVisitorStorageKey = "brandd_analytics_visitor_id";
+export const analyticsSessionStorageKey = "brandd_analytics_session_id";
+export const analyticsSessionActivityStorageKey = "brandd_analytics_session_last_activity";
 
 export function readBrowserStorage(key: string) {
   try {
@@ -31,6 +36,49 @@ export function writeBrowserStorage(key: string, value: string) {
     window.localStorage.setItem(key, value);
   } catch {
     // Storage can be unavailable in hardened/private browser modes.
+  }
+}
+
+export function removeBrowserStorage(key: string) {
+  try {
+    window.localStorage.removeItem(key);
+  } catch {
+    // Storage can be unavailable in hardened/private browser modes.
+  }
+}
+
+export function clearOptionalMeasurementStorage() {
+  removeBrowserStorage(attributionStorageKey);
+  removeBrowserStorage(analyticsVisitorStorageKey);
+
+  try {
+    window.sessionStorage.removeItem(analyticsSessionStorageKey);
+    window.sessionStorage.removeItem(analyticsSessionActivityStorageKey);
+  } catch {
+    // Storage can be unavailable in hardened/private browser modes.
+  }
+
+  const cookieNames = document.cookie
+    .split(";")
+    .map((entry) => entry.split("=", 1)[0]?.trim())
+    .filter(
+      (name): name is string =>
+        Boolean(name) &&
+        (name.startsWith("_ga") ||
+          name.startsWith("_gid") ||
+          name.startsWith("_gat") ||
+          name.startsWith("_gcl") ||
+          name.startsWith("_dc_gtm")),
+    );
+  const hostname = window.location.hostname;
+  const domains = ["", hostname, `.${hostname}`, ".brandd.co.uk"];
+
+  for (const name of cookieNames) {
+    for (const domain of domains) {
+      document.cookie = `${name}=; Max-Age=0; Path=/; SameSite=Lax${
+        domain ? `; Domain=${domain}` : ""
+      }`;
+    }
   }
 }
 
@@ -108,6 +156,11 @@ export function syncLeadAttribution({
   storeWithoutCampaign: boolean;
 }) {
   const currentAttribution = getCurrentAttribution();
+
+  if (currentAttribution.consentChoice !== "accepted") {
+    return currentAttribution;
+  }
+
   const storedAttribution = getStoredAttribution();
 
   if (!storedAttribution) {

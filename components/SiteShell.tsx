@@ -7,6 +7,7 @@ import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
 import { HiOutlineBars3, HiOutlineEnvelope, HiOutlineXMark } from "react-icons/hi2";
 import { darkLogo, navItems, routeTones, whiteLogo } from "@/content/site";
+import { consentSettingsEventName } from "@/lib/clientAttribution";
 
 export function SiteShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -223,6 +224,13 @@ function SiteFooter() {
           </Link>
         ))}
         <Link href="/privacy">Privacy</Link>
+        <button
+          className="footer-cookie-button"
+          type="button"
+          onClick={() => window.dispatchEvent(new Event(consentSettingsEventName))}
+        >
+          Cookie settings
+        </button>
       </div>
     </footer>
   );

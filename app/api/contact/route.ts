@@ -1,13 +1,21 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
+import { processContactNotificationJobs } from "@/lib/contactNotificationProcessor";
 import {
   createContactSubmission,
   type ContactSubmissionAttribution,
-  updateContactSubmissionEmailStatus,
-  updateContactSubmissionWhatsAppStatus,
 } from "@/lib/contactSubmissions";
-import { isContactBudgetOption } from "@/lib/contactOptions";
-import { sendContactEmailNotification } from "@/lib/emailNotifications";
-import { sendContactWhatsAppNotification } from "@/lib/whatsappNotifications";
+import {
+  isContactBudgetOption,
+  isContactFocusOption,
+} from "@/lib/contactOptions";
+import { runDataRetention } from "@/lib/dataRetention";
+import {
+  consumeRateLimit,
+  getClientIp,
+  readBoundedJson,
+  RequestBodyError,
+} from "@/lib/requestSecurity";
+import { verifyTurnstileToken } from "@/lib/turnstile";
 
 export const runtime = "nodejs";
 
@@ -18,12 +26,18 @@ type ContactPayload = {
   budget: string;
   message: string;
   attribution: ContactSubmissionAttribution;
+  turnstileToken: string;
 };
 
 const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-const rateLimitWindowMs = 60_000;
-const rateLimitMaxRequests = 8;
-const requestBuckets = new Map<string, { count: number; resetAt: number }>();
+const idempotencyKeyPattern = /^[a-zA-Z0-9._:-]{16,120}$/;
+const maxContactBodyBytes = 16 * 1024;
+const minimumFormFillMs = 1_800;
+
+function readPositiveInteger(name: string, fallback: number) {
+  const value = Number(process.env[name]);
+  return Number.isFinite(value) && value > 0 ? Math.round(value) : fallback;
+}
 
 function readString(value: unknown) {
   return typeof value === "string" ? value.trim() : "";
@@ -31,12 +45,12 @@ function readString(value: unknown) {
 
 function readOptionalString(value: unknown, maxLength: number) {
   const cleaned = readString(value);
+  return cleaned ? cleaned.slice(0, maxLength) : null;
+}
 
-  if (!cleaned) {
-    return null;
-  }
-
-  return cleaned.slice(0, maxLength);
+function readConsentChoice(value: unknown) {
+  const choice = readString(value);
+  return choice === "accepted" || choice === "essential" ? choice : null;
 }
 
 function readAttribution(value: unknown): ContactSubmissionAttribution {
@@ -54,46 +68,34 @@ function readAttribution(value: unknown): ContactSubmissionAttribution {
     gclid: readOptionalString(payload.gclid, 500),
     gbraid: readOptionalString(payload.gbraid, 500),
     wbraid: readOptionalString(payload.wbraid, 500),
-    consentChoice: readOptionalString(payload.consentChoice, 80),
+    consentChoice: readConsentChoice(payload.consentChoice),
   };
-}
-
-function getClientIp(request: Request) {
-  const forwardedFor = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-  const realIp = request.headers.get("x-real-ip")?.trim();
-  const connectingIp = request.headers.get("cf-connecting-ip")?.trim();
-
-  return forwardedFor || realIp || connectingIp || "unknown";
-}
-
-function isRateLimited(request: Request) {
-  const key = getClientIp(request);
-  const now = Date.now();
-  const currentBucket = requestBuckets.get(key);
-
-  if (!currentBucket || currentBucket.resetAt <= now) {
-    requestBuckets.set(key, {
-      count: 1,
-      resetAt: now + rateLimitWindowMs,
-    });
-
-    return false;
-  }
-
-  currentBucket.count += 1;
-
-  return currentBucket.count > rateLimitMaxRequests;
 }
 
 function validatePayload(body: unknown): {
   input?: ContactPayload;
   message?: string;
+  spam?: boolean;
 } {
-  if (!body || typeof body !== "object") {
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
     return { message: "Please complete the form and try again." };
   }
 
   const payload = body as Record<string, unknown>;
+
+  if (readString(payload.website)) {
+    return { spam: true };
+  }
+
+  const startedAt =
+    typeof payload.startedAt === "number" && Number.isFinite(payload.startedAt)
+      ? payload.startedAt
+      : 0;
+
+  if (!startedAt || Date.now() - startedAt < minimumFormFillMs) {
+    return { message: "Please wait a moment, then submit the form again." };
+  }
+
   const input = {
     name: readString(payload.name),
     email: readString(payload.email).toLowerCase(),
@@ -101,6 +103,7 @@ function validatePayload(body: unknown): {
     budget: readString(payload.budget),
     message: readString(payload.message),
     attribution: readAttribution(payload.attribution),
+    turnstileToken: readString(payload.turnstileToken).slice(0, 4096),
   };
 
   if (input.name.length < 2 || input.name.length > 120) {
@@ -111,7 +114,7 @@ function validatePayload(body: unknown): {
     return { message: "Please enter a valid email address." };
   }
 
-  if (input.focus.length < 2 || input.focus.length > 160) {
+  if (!isContactFocusOption(input.focus)) {
     return { message: "Please choose a service focus." };
   }
 
@@ -130,152 +133,137 @@ function validatePayload(body: unknown): {
   return { input };
 }
 
-function getErrorMessage(error: unknown) {
-  return error instanceof Error ? error.message : "Unknown notification error.";
-}
-
-async function notifyByEmail(
-  submission: {
-    id: string;
-    createdAt: string;
-  },
-  input: ContactPayload,
-) {
-  try {
-    const result = await sendContactEmailNotification({
-      ...input,
-      id: submission.id,
-      createdAt: submission.createdAt,
-    });
-
-    if (result.status === "sent") {
-      await updateContactSubmissionEmailStatus({
-        id: submission.id,
-        status: "sent",
-        messageId: result.messageId,
-      });
-
-      return;
-    }
-
-    await updateContactSubmissionEmailStatus({
-      id: submission.id,
-      status: "not_configured",
-      error: result.reason.slice(0, 1000),
-    });
-  } catch (error) {
-    const message = getErrorMessage(error);
-
-    console.error("SendGrid contact email notification failed", error);
-
-    try {
-      await updateContactSubmissionEmailStatus({
-        id: submission.id,
-        status: "failed",
-        error: message.slice(0, 1000),
-      });
-    } catch (statusError) {
-      console.error("Email status update failed", statusError);
-    }
-  }
-}
-
-async function notifyByWhatsApp(
-  submission: {
-    id: string;
-    createdAt: string;
-  },
-  input: ContactPayload,
-) {
-  try {
-    const result = await sendContactWhatsAppNotification({
-      ...input,
-      id: submission.id,
-      createdAt: submission.createdAt,
-    });
-
-    if (result.status === "sent") {
-      await updateContactSubmissionWhatsAppStatus({
-        id: submission.id,
-        status: "sent",
-        messageId: result.messageId,
-      });
-    }
-  } catch (error) {
-    const message = getErrorMessage(error);
-
-    console.error("WhatsApp contact notification failed", error);
-
-    try {
-      await updateContactSubmissionWhatsAppStatus({
-        id: submission.id,
-        status: "failed",
-        error: message.slice(0, 1000),
-      });
-    } catch (statusError) {
-      console.error("WhatsApp status update failed", statusError);
-    }
-  }
+function jsonResponse(body: Record<string, unknown>, status: number, headers?: HeadersInit) {
+  return NextResponse.json(body, {
+    status,
+    headers: {
+      "Cache-Control": "no-store",
+      ...headers,
+    },
+  });
 }
 
 export async function POST(request: Request) {
-  if (isRateLimited(request)) {
-    return NextResponse.json(
-      { ok: false, message: "Too many attempts. Please wait a moment and try again." },
-      { status: 429 },
+  const idempotencyKey = request.headers.get("idempotency-key")?.trim() ?? "";
+
+  if (!idempotencyKeyPattern.test(idempotencyKey)) {
+    return jsonResponse(
+      { ok: false, message: "The form request is missing a valid idempotency key." },
+      400,
+    );
+  }
+
+  const clientIp = getClientIp(request);
+
+  try {
+    const rateLimit = await consumeRateLimit({
+      key: clientIp,
+      limit: readPositiveInteger("CONTACT_RATE_LIMIT_MAX", 5),
+      scope: "contact",
+      windowSeconds: readPositiveInteger("CONTACT_RATE_LIMIT_WINDOW_SECONDS", 600),
+    });
+
+    if (rateLimit.limited) {
+      const retryAfter = Math.max(
+        1,
+        Math.ceil((new Date(rateLimit.resetAt).getTime() - Date.now()) / 1000),
+      );
+
+      return jsonResponse(
+        { ok: false, message: "Too many attempts. Please wait and try again." },
+        429,
+        { "Retry-After": String(retryAfter) },
+      );
+    }
+  } catch (error) {
+    console.error("Contact rate-limit check failed", error);
+    return jsonResponse(
+      { ok: false, message: "The enquiry service is temporarily unavailable." },
+      503,
     );
   }
 
   let body: unknown;
 
   try {
-    body = await request.json();
-  } catch {
-    return NextResponse.json(
-      { ok: false, message: "Please complete the form and try again." },
-      { status: 400 },
-    );
+    body = await readBoundedJson(request, maxContactBodyBytes);
+  } catch (error) {
+    if (error instanceof RequestBodyError) {
+      const message =
+        error.status === 413
+          ? "The form request is too large. Please shorten the project message."
+          : "Please complete the form and try again.";
+
+      return jsonResponse({ ok: false, message }, error.status);
+    }
+
+    throw error;
   }
 
   const validation = validatePayload(body);
 
+  if (validation.spam) {
+    return jsonResponse(
+      { ok: true, message: "Thanks. Your enquiry has been received." },
+      201,
+    );
+  }
+
   if (!validation.input) {
-    return NextResponse.json(
+    return jsonResponse(
       {
         ok: false,
         message: validation.message ?? "Please check the form and try again.",
       },
-      { status: 400 },
+      400,
     );
   }
 
+  const turnstile = await verifyTurnstileToken({
+    ipAddress: clientIp,
+    token: validation.input.turnstileToken,
+  });
+
+  if (!turnstile.success) {
+    const message = turnstile.configured
+      ? "Please complete the security check and try again."
+      : "The enquiry security check is temporarily unavailable.";
+    return jsonResponse({ ok: false, message }, turnstile.configured ? 400 : 503);
+  }
+
   try {
+    const { turnstileToken: _turnstileToken, ...input } = validation.input;
     const submission = await createContactSubmission({
-      ...validation.input,
-      ipAddress: getClientIp(request),
-      userAgent: request.headers.get("user-agent"),
+      ...input,
+      idempotencyKey,
+      ipAddress: clientIp === "unknown" ? null : clientIp,
+      userAgent: request.headers.get("user-agent")?.slice(0, 1000) ?? null,
     });
 
-    await notifyByEmail(submission, validation.input);
-    await notifyByWhatsApp(submission, validation.input);
+    after(async () => {
+      await processContactNotificationJobs(4).catch((error) => {
+        console.error("Contact notification queue processing failed", error);
+      });
+      await runDataRetention();
+    });
 
-    return NextResponse.json(
+    return jsonResponse(
       {
         ok: true,
         message: "Thanks. Your enquiry has been received.",
         submissionId: submission.id,
       },
-      { status: 201 },
+      submission.created ? 201 : 200,
     );
   } catch (error) {
     console.error("Contact submission failed", error);
 
-    return NextResponse.json(
+    return jsonResponse(
       {
         ok: false,
         message: "We could not save the enquiry. Please try again shortly.",
       },
-      { status: 500 },
+      500,
     );
   }
 }

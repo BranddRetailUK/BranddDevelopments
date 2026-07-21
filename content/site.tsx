@@ -135,7 +135,7 @@ export const mvpShowcases: MvpShowcase[] = [
     name: "SonaCrate",
     slug: "sonacrate",
     eyebrow: "Music platform project",
-    href: "https://www.sonacreate.com/",
+    href: "https://www.sonacrate.com/",
     headline: "Music uploads, streaming, and paid downloads.",
     shortCopy:
       "SonaCrate is a music platform project for listeners, artists, and labels: stream tracks, manage releases, and sell high-quality downloads.",

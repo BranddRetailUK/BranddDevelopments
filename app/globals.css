@@ -4847,6 +4847,18 @@ h3 {
     box-shadow 520ms ease;
 }
 
+.form-honeypot {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+
+.cf-turnstile {
+  min-height: 65px;
+}
+
 .form-heading {
   display: flex;
   align-items: center;
@@ -5227,6 +5239,18 @@ h3 {
   line-height: 1.7;
 }
 
+.privacy-section a {
+  color: #5c2fda;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.privacy-updated {
+  font-size: 0.84rem !important;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
 .consent-banner {
   position: fixed;
   right: clamp(14px, 3vw, 28px);
@@ -5274,6 +5298,22 @@ h3 {
   font-size: 0.72rem;
 }
 
+.consent-close {
+  border: 0;
+  background: transparent;
+  color: rgba(255, 255, 255, 0.78);
+  cursor: pointer;
+  font-size: 0.72rem;
+  font-weight: 900;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.consent-close:hover,
+.consent-close:focus-visible {
+  color: var(--white);
+}
+
 .site-footer {
   display: flex;
   align-items: flex-end;
@@ -5309,15 +5349,23 @@ h3 {
   gap: 16px;
 }
 
-.footer-links a {
+.footer-links a,
+.footer-cookie-button {
+  border: 0;
+  padding: 0;
+  background: transparent;
   color: rgba(255, 255, 255, 0.72);
+  cursor: pointer;
+  font-family: inherit;
   font-size: 0.74rem;
   font-weight: 950;
   letter-spacing: 0.08em;
   text-transform: uppercase;
 }
 
-.footer-links a:hover {
+.footer-links a:hover,
+.footer-cookie-button:hover,
+.footer-cookie-button:focus-visible {
   color: var(--white);
 }
 

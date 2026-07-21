@@ -1,9 +1,14 @@
 "use client";
 
-import { FormEvent, useEffect, useState } from "react";
+import Script from "next/script";
+import { FormEvent, useRef, useState } from "react";
 import { HiArrowLongRight, HiCheck, HiOutlineCheckCircle } from "react-icons/hi2";
-import { getLeadAttribution, type LeadAttribution } from "@/lib/clientAttribution";
-import { contactBudgetOptions } from "@/lib/contactOptions";
+import {
+  consentStorageKey,
+  getLeadAttribution,
+  readBrowserStorage,
+} from "@/lib/clientAttribution";
+import { contactBudgetOptions, contactFocusOptions } from "@/lib/contactOptions";
 
 type FormState =
   | { status: "idle" }
@@ -16,6 +21,9 @@ declare global {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
     branddTrackEvent?: (eventName: string, properties?: Record<string, unknown>) => void;
+    turnstile?: {
+      reset: () => void;
+    };
   }
 }
 
@@ -36,26 +44,28 @@ function trackLeadConversion({
   const googleAdsId = process.env.NEXT_PUBLIC_GOOGLE_ADS_ID;
   const conversionLabel = process.env.NEXT_PUBLIC_GOOGLE_ADS_CONVERSION_LABEL;
 
-  window.dataLayer?.push({
-    event: "generate_lead",
-    form_name: "contact",
-    lead_id: submissionId,
-    budget_range: budget,
-    service_focus: focus,
-  });
-
-  window.gtag?.("event", "generate_lead", {
-    event_category: "Lead",
-    event_label: focus,
-    budget_range: budget,
-    lead_id: submissionId,
-  });
-
-  if (googleAdsId && conversionLabel) {
-    window.gtag?.("event", "conversion", {
-      send_to: `${googleAdsId}/${conversionLabel}`,
-      transaction_id: submissionId ?? undefined,
+  if (readBrowserStorage(consentStorageKey) === "accepted") {
+    window.dataLayer?.push({
+      event: "generate_lead",
+      form_name: "contact",
+      lead_id: submissionId,
+      budget_range: budget,
+      service_focus: focus,
     });
+
+    window.gtag?.("event", "generate_lead", {
+      event_category: "Lead",
+      event_label: focus,
+      budget_range: budget,
+      lead_id: submissionId,
+    });
+
+    if (googleAdsId && conversionLabel) {
+      window.gtag?.("event", "conversion", {
+        send_to: `${googleAdsId}/${conversionLabel}`,
+        transaction_id: submissionId ?? undefined,
+      });
+    }
   }
 
   window.branddTrackEvent?.("generate_lead", {
@@ -68,11 +78,9 @@ function trackLeadConversion({
 
 export function ContactForm() {
   const [formState, setFormState] = useState<FormState>({ status: "idle" });
-  const [attribution, setAttribution] = useState<LeadAttribution | null>(null);
-
-  useEffect(() => {
-    setAttribution(getLeadAttribution());
-  }, []);
+  const formStartedAtRef = useRef(Date.now());
+  const idempotencyKeyRef = useRef<string | null>(null);
+  const turnstileSiteKey = process.env.NEXT_PUBLIC_TURNSTILE_SITE_KEY?.trim();
 
   async function handleSubmit(event: FormEvent<HTMLFormElement>) {
     event.preventDefault();
@@ -80,6 +88,13 @@ export function ContactForm() {
     const formData = new FormData(form);
     const budget = getFormString(formData, "budget");
     const focus = getFormString(formData, "focus");
+    const idempotencyKey =
+      idempotencyKeyRef.current ??
+      (typeof crypto !== "undefined" && "randomUUID" in crypto
+        ? crypto.randomUUID()
+        : `contact-${Date.now()}-${Math.random().toString(36).slice(2)}`);
+
+    idempotencyKeyRef.current = idempotencyKey;
 
     setFormState({ status: "sending" });
 
@@ -88,6 +103,7 @@ export function ContactForm() {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          "Idempotency-Key": idempotencyKey,
         },
         body: JSON.stringify({
           name: getFormString(formData, "name"),
@@ -95,7 +111,10 @@ export function ContactForm() {
           focus,
           budget,
           message: getFormString(formData, "message"),
-          attribution: attribution ?? getLeadAttribution(),
+          website: getFormString(formData, "website"),
+          startedAt: formStartedAtRef.current,
+          turnstileToken: getFormString(formData, "cf-turnstile-response"),
+          attribution: getLeadAttribution(),
         }),
       });
 
@@ -108,18 +127,22 @@ export function ContactForm() {
         throw new Error(payload?.message ?? "We could not send the enquiry. Please try again.");
       }
 
-      trackLeadConversion({
-        budget,
-        focus,
-        submissionId: payload?.submissionId ?? null,
-      });
+      if (payload?.submissionId) {
+        trackLeadConversion({
+          budget,
+          focus,
+          submissionId: payload.submissionId,
+        });
+      }
 
       form.reset();
+      idempotencyKeyRef.current = null;
       setFormState({
         status: "sent",
         message: payload?.message ?? "Thanks. Your enquiry has been received.",
       });
     } catch (error) {
+      window.turnstile?.reset();
       setFormState({
         status: "error",
         message:
@@ -144,6 +167,12 @@ export function ContactForm() {
         Name
         <input name="name" type="text" autoComplete="name" required disabled={isSending} />
       </label>
+      <div className="form-honeypot" aria-hidden="true">
+        <label>
+          Website
+          <input name="website" type="text" tabIndex={-1} autoComplete="off" />
+        </label>
+      </div>
       <label>
         Email
         <input name="email" type="email" autoComplete="email" required disabled={isSending} />
@@ -155,19 +184,9 @@ export function ContactForm() {
           defaultValue="Website design and frontend build"
           disabled={isSending}
         >
-          <option>Website design and frontend build</option>
-          <option>Legacy system rebuild</option>
-          <option>Backend services and APIs</option>
-          <option>Database structure and reporting</option>
-          <option>Ecommerce and product systems</option>
-          <option>Shopify app build</option>
-          <option>Discord bot build</option>
-          <option>Customer portal or dashboard</option>
-          <option>MVP design and build</option>
-          <option>Monday.com and business integrations</option>
-          <option>Warehouse, stock and QR tracking systems</option>
-          <option>Custom dashboards and internal tools</option>
-          <option>Other</option>
+          {contactFocusOptions.map((option) => (
+            <option key={option}>{option}</option>
+          ))}
         </select>
       </label>
       <fieldset className="budget-field">
@@ -192,6 +211,21 @@ export function ContactForm() {
         What are you building, improving or trying to fix?
         <textarea name="message" rows={5} required disabled={isSending} />
       </label>
+      {turnstileSiteKey ? (
+        <>
+          <Script
+            id="cloudflare-turnstile"
+            src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+            strategy="afterInteractive"
+          />
+          <div
+            className="cf-turnstile"
+            data-sitekey={turnstileSiteKey}
+            data-theme="dark"
+            data-action="contact"
+          />
+        </>
+      ) : null}
       <button
         className={`button button-light contact-submit-button${
           isSending ? " submit-sending" : ""

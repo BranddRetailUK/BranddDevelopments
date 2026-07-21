@@ -1,16 +1,31 @@
-import { NextResponse } from "next/server";
+import { after, NextResponse } from "next/server";
+import { runDataRetention } from "@/lib/dataRetention";
+import {
+  consumeRateLimit,
+  getClientIp,
+  readBoundedJson,
+  RequestBodyError,
+} from "@/lib/requestSecurity";
 import {
   createSiteAnalyticsEvent,
   isSiteAnalyticsConfigured,
   type SiteAnalyticsAttribution,
   type SiteAnalyticsProperties,
 } from "@/lib/siteAnalytics";
+import {
+  isSiteAnalyticsEventName,
+  isSiteAnalyticsPropertyName,
+} from "@/lib/siteAnalyticsEvents";
 
 export const runtime = "nodejs";
 
-const rateLimitWindowMs = 60_000;
-const rateLimitMaxRequests = 180;
-const requestBuckets = new Map<string, { count: number; resetAt: number }>();
+const maxAnalyticsBodyBytes = 32 * 1024;
+const analyticsIdPattern = /^(visitor|session)_[a-zA-Z0-9-]{8,100}$/;
+
+function readPositiveInteger(name: string, fallback: number) {
+  const value = Number(process.env[name]);
+  return Number.isFinite(value) && value > 0 ? Math.round(value) : fallback;
+}
 
 function readString(value: unknown, maxLength: number) {
   return typeof value === "string" ? value.trim().slice(0, maxLength) : "";
@@ -27,22 +42,7 @@ function readInteger(value: unknown) {
   }
 
   const rounded = Math.round(value);
-
-  if (rounded < 0 || rounded > 20_000) {
-    return null;
-  }
-
-  return rounded;
-}
-
-function sanitizeEventName(value: unknown) {
-  const eventName = readString(value, 80)
-    .toLowerCase()
-    .replace(/[^a-z0-9_:-]/g, "_")
-    .replace(/_{2,}/g, "_")
-    .replace(/^_+|_+$/g, "");
-
-  return eventName || "interaction";
+  return rounded >= 0 && rounded <= 20_000 ? rounded : null;
 }
 
 function readAttribution(value: unknown): SiteAnalyticsAttribution {
@@ -66,62 +66,22 @@ function readProperties(value: unknown): SiteAnalyticsProperties {
   }
 
   const properties: SiteAnalyticsProperties = {};
-  const entries = Object.entries(value as Record<string, unknown>).slice(0, 40);
 
-  for (const [key, rawValue] of entries) {
-    const cleanKey = key.trim().slice(0, 80).replace(/[^a-zA-Z0-9_:-]/g, "_");
-
-    if (!cleanKey) {
+  for (const [key, rawValue] of Object.entries(value as Record<string, unknown>)) {
+    if (!isSiteAnalyticsPropertyName(key)) {
       continue;
     }
 
     if (typeof rawValue === "string") {
-      properties[cleanKey] = rawValue.trim().slice(0, 1000) || null;
+      properties[key] = rawValue.trim().slice(0, 1000) || null;
     } else if (typeof rawValue === "number" && Number.isFinite(rawValue)) {
-      properties[cleanKey] = rawValue;
+      properties[key] = rawValue;
     } else if (typeof rawValue === "boolean" || rawValue === null) {
-      properties[cleanKey] = rawValue;
+      properties[key] = rawValue;
     }
   }
 
   return properties;
-}
-
-function getClientIp(request: Request) {
-  const forwardedFor = request.headers.get("x-forwarded-for")?.split(",")[0]?.trim();
-  const realIp = request.headers.get("x-real-ip")?.trim();
-  const connectingIp = request.headers.get("cf-connecting-ip")?.trim();
-
-  return forwardedFor || realIp || connectingIp || "unknown";
-}
-
-function isRateLimited(request: Request) {
-  const key = getClientIp(request);
-  const now = Date.now();
-  const currentBucket = requestBuckets.get(key);
-
-  if (!currentBucket || currentBucket.resetAt <= now) {
-    requestBuckets.set(key, {
-      count: 1,
-      resetAt: now + rateLimitWindowMs,
-    });
-
-    return false;
-  }
-
-  currentBucket.count += 1;
-
-  return currentBucket.count > rateLimitMaxRequests;
-}
-
-async function readPayload(request: Request) {
-  const text = await request.text();
-
-  if (!text) {
-    return null;
-  }
-
-  return JSON.parse(text) as Record<string, unknown>;
 }
 
 export async function POST(request: Request) {
@@ -129,52 +89,79 @@ export async function POST(request: Request) {
     return new Response(null, { status: 202 });
   }
 
-  if (isRateLimited(request)) {
-    return new Response(null, { status: 204 });
+  try {
+    const rateLimit = await consumeRateLimit({
+      key: getClientIp(request),
+      limit: readPositiveInteger("SITE_ANALYTICS_RATE_LIMIT_MAX", 120),
+      scope: "site_analytics",
+      windowSeconds: readPositiveInteger("SITE_ANALYTICS_RATE_LIMIT_WINDOW_SECONDS", 60),
+    });
+
+    if (rateLimit.limited) {
+      return new Response(null, { status: 204 });
+    }
+  } catch (error) {
+    console.error("Site analytics rate-limit check failed", error);
+    return new Response(null, { status: 202 });
   }
 
-  let payload: Record<string, unknown> | null;
+  let body: unknown;
 
   try {
-    payload = await readPayload(request);
-  } catch {
-    return NextResponse.json({ message: "Invalid analytics payload." }, { status: 400 });
+    body = await readBoundedJson(request, maxAnalyticsBodyBytes);
+  } catch (error) {
+    const status = error instanceof RequestBodyError ? error.status : 400;
+    return NextResponse.json({ message: "Invalid analytics payload." }, { status });
   }
 
-  if (!payload) {
+  if (!body || typeof body !== "object" || Array.isArray(body)) {
     return NextResponse.json({ message: "Missing analytics payload." }, { status: 400 });
   }
 
+  const payload = body as Record<string, unknown>;
   const consentChoice = readString(payload.consentChoice, 80);
 
   if (consentChoice !== "accepted") {
     return new Response(null, { status: 204 });
   }
 
-  const event = {
-    eventName: sanitizeEventName(payload.eventName),
-    visitorId: readString(payload.visitorId, 120),
-    sessionId: readString(payload.sessionId, 120),
-    pageUrl: readOptionalString(payload.pageUrl, 2000),
-    pagePath: readString(payload.pagePath, 1000),
-    pageTitle: readOptionalString(payload.pageTitle, 300),
-    referrer: readOptionalString(payload.referrer, 2000),
-    landingPage: readOptionalString(payload.landingPage, 2000),
-    previousPagePath: readOptionalString(payload.previousPagePath, 1000),
-    attribution: readAttribution(payload.attribution),
-    consentChoice,
-    viewportWidth: readInteger(payload.viewportWidth),
-    viewportHeight: readInteger(payload.viewportHeight),
-    properties: readProperties(payload.properties),
-    userAgent: readOptionalString(request.headers.get("user-agent"), 1000),
-  };
+  const eventName = readString(payload.eventName, 80);
 
-  if (!event.visitorId || !event.sessionId || !event.pagePath) {
-    return NextResponse.json({ message: "Missing required analytics fields." }, { status: 400 });
+  if (!isSiteAnalyticsEventName(eventName)) {
+    return new Response(null, { status: 204 });
+  }
+
+  const visitorId = readString(payload.visitorId, 120);
+  const sessionId = readString(payload.sessionId, 120);
+  const pagePath = readString(payload.pagePath, 1000);
+
+  if (
+    !analyticsIdPattern.test(visitorId) ||
+    !analyticsIdPattern.test(sessionId) ||
+    !pagePath.startsWith("/")
+  ) {
+    return NextResponse.json({ message: "Invalid analytics identifiers." }, { status: 400 });
   }
 
   try {
-    await createSiteAnalyticsEvent(event);
+    await createSiteAnalyticsEvent({
+      eventName,
+      visitorId,
+      sessionId,
+      pageUrl: readOptionalString(payload.pageUrl, 2000),
+      pagePath,
+      pageTitle: readOptionalString(payload.pageTitle, 300),
+      referrer: readOptionalString(payload.referrer, 2000),
+      landingPage: readOptionalString(payload.landingPage, 2000),
+      previousPagePath: readOptionalString(payload.previousPagePath, 1000),
+      attribution: readAttribution(payload.attribution),
+      consentChoice,
+      viewportWidth: readInteger(payload.viewportWidth),
+      viewportHeight: readInteger(payload.viewportHeight),
+      properties: readProperties(payload.properties),
+      userAgent: readOptionalString(request.headers.get("user-agent"), 1000),
+    });
+    after(runDataRetention);
   } catch (error) {
     console.error("Site analytics event save failed", error);
     return new Response(null, { status: 202 });

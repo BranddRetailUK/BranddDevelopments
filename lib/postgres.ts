@@ -50,6 +50,11 @@ function getPoolMax() {
   return 5;
 }
 
+function readPositiveInteger(name: string, fallback: number) {
+  const value = Number(process.env[name]);
+  return Number.isFinite(value) && value > 0 ? Math.round(value) : fallback;
+}
+
 export function getPostgresPool() {
   if (globalForPostgres.branddPostgresPool) {
     return globalForPostgres.branddPostgresPool;
@@ -60,8 +65,12 @@ export function getPostgresPool() {
 
   globalForPostgres.branddPostgresPool = new Pool({
     connectionString,
+    connectionTimeoutMillis: readPositiveInteger("DATABASE_CONNECTION_TIMEOUT_MS", 5_000),
+    idleTimeoutMillis: readPositiveInteger("DATABASE_IDLE_TIMEOUT_MS", 30_000),
     max: getPoolMax(),
+    query_timeout: readPositiveInteger("DATABASE_QUERY_TIMEOUT_MS", 8_000),
     ssl,
+    statement_timeout: readPositiveInteger("DATABASE_STATEMENT_TIMEOUT_MS", 7_000),
   });
 
   return globalForPostgres.branddPostgresPool;

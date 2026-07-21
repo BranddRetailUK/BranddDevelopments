@@ -2,6 +2,9 @@
 
 import { useEffect, useState } from "react";
 import {
+  clearOptionalMeasurementStorage,
+  consentChangeEventName,
+  consentSettingsEventName,
   consentStorageKey,
   readBrowserStorage,
   writeBrowserStorage,
@@ -16,8 +19,6 @@ declare global {
   }
 }
 
-const consentChangeEventName = "brandd:consent-change";
-
 function applyConsent(choice: ConsentChoice) {
   const granted = choice === "accepted";
   const consentState = {
@@ -29,8 +30,16 @@ function applyConsent(choice: ConsentChoice) {
     security_storage: "granted",
   };
 
-  window.gtag?.("consent", "update", consentState);
-  window.dataLayer?.push({
+  if (!granted) {
+    clearOptionalMeasurementStorage();
+  }
+
+  window.dataLayer ??= [];
+  window.gtag ??= (...args: unknown[]) => {
+    window.dataLayer?.push(args);
+  };
+  window.gtag("consent", "update", consentState);
+  window.dataLayer.push({
     event: "brandd_consent_update",
     consent_choice: choice,
     ...consentState,
@@ -44,6 +53,7 @@ function applyConsent(choice: ConsentChoice) {
 
 export function ConsentBanner() {
   const [choice, setChoice] = useState<ConsentChoice | null>(null);
+  const [open, setOpen] = useState(false);
   const [ready, setReady] = useState(false);
 
   useEffect(() => {
@@ -52,18 +62,25 @@ export function ConsentBanner() {
     if (storedChoice === "accepted" || storedChoice === "essential") {
       setChoice(storedChoice);
       applyConsent(storedChoice);
+    } else {
+      setOpen(true);
     }
 
+    const openSettings = () => setOpen(true);
+    window.addEventListener(consentSettingsEventName, openSettings);
     setReady(true);
+
+    return () => window.removeEventListener(consentSettingsEventName, openSettings);
   }, []);
 
   function saveChoice(nextChoice: ConsentChoice) {
     writeBrowserStorage(consentStorageKey, nextChoice);
     setChoice(nextChoice);
+    setOpen(false);
     applyConsent(nextChoice);
   }
 
-  if (!ready || choice) {
+  if (!ready || !open) {
     return null;
   }
 
@@ -72,17 +89,23 @@ export function ConsentBanner() {
       <div>
         <strong>Cookie preferences</strong>
         <p>
-          Brandd uses essential storage for the site, campaign attribution for enquiries, and
-          optional Google measurement for ads and analytics.
+          Brandd uses essential storage to operate and secure the site. Optional Google
+          measurement and stored campaign attribution run only if you accept them. You can
+          change this choice at any time.
         </p>
       </div>
       <div className="consent-actions">
         <button className="button button-light" type="button" onClick={() => saveChoice("accepted")}>
-          Accept all
+          Accept optional
         </button>
-        <button className="button button-outline" type="button" onClick={() => saveChoice("essential")}>
+        <button className="button button-light" type="button" onClick={() => saveChoice("essential")}>
           Essential only
         </button>
+        {choice ? (
+          <button className="consent-close" type="button" onClick={() => setOpen(false)}>
+            Close
+          </button>
+        ) : null}
       </div>
     </aside>
   );

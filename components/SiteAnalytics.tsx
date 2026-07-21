@@ -4,6 +4,10 @@ import { usePathname } from "next/navigation";
 import { useCallback, useEffect, useRef, useState } from "react";
 import {
   captureCampaignAttribution,
+  analyticsSessionActivityStorageKey,
+  analyticsSessionStorageKey,
+  analyticsVisitorStorageKey,
+  consentChangeEventName,
   consentStorageKey,
   getLeadAttribution,
   readBrowserStorage,
@@ -21,11 +25,7 @@ declare global {
   }
 }
 
-const visitorStorageKey = "brandd_analytics_visitor_id";
-const sessionStorageKey = "brandd_analytics_session_id";
-const sessionActivityStorageKey = "brandd_analytics_session_last_activity";
 const sessionTimeoutMs = 30 * 60 * 1000;
-const consentChangeEventName = "brandd:consent-change";
 const scrollMilestones = [25, 50, 75, 90];
 
 function createAnalyticsId(prefix: string) {
@@ -60,14 +60,14 @@ function readConsentChoice(): ConsentChoice | null {
 
 function writeVisitorId(visitorId: string) {
   try {
-    window.localStorage.setItem(visitorStorageKey, visitorId);
+    window.localStorage.setItem(analyticsVisitorStorageKey, visitorId);
   } catch {
     // Storage can be unavailable in hardened/private browser modes.
   }
 }
 
 function getAnalyticsIdentity() {
-  let visitorId = readBrowserStorage(visitorStorageKey);
+  let visitorId = readBrowserStorage(analyticsVisitorStorageKey);
 
   if (!visitorId) {
     visitorId = createAnalyticsId("visitor");
@@ -75,15 +75,15 @@ function getAnalyticsIdentity() {
   }
 
   const now = Date.now();
-  const lastActivity = Number(readSessionStorage(sessionActivityStorageKey));
-  let sessionId = readSessionStorage(sessionStorageKey);
+  const lastActivity = Number(readSessionStorage(analyticsSessionActivityStorageKey));
+  let sessionId = readSessionStorage(analyticsSessionStorageKey);
 
   if (!sessionId || !Number.isFinite(lastActivity) || now - lastActivity > sessionTimeoutMs) {
     sessionId = createAnalyticsId("session");
-    writeSessionStorage(sessionStorageKey, sessionId);
+    writeSessionStorage(analyticsSessionStorageKey, sessionId);
   }
 
-  writeSessionStorage(sessionActivityStorageKey, String(now));
+  writeSessionStorage(analyticsSessionActivityStorageKey, String(now));
 
   return {
     visitorId,
