@@ -79,7 +79,9 @@ The homepage presents Brandd as a studio for sharp, functional websites and digi
 The Websites page frames Brandd builds as connected websites, products, and systems.
 
 - The hero is dark and includes a stacked website-type visual for creator commerce, operational dashboards, and product platforms.
-- The Website Types section lists creator-commerce platforms, operational dashboards, product platforms, ecommerce systems, and business process tools.
+- Eyebrow labels are not rendered on the Websites page; section hierarchy comes from the main headings, project branding and visual transitions.
+- The standalone Website Types heading and card-grid section is not rendered; the hero's compact visual retains creator-commerce platform, operational dashboard, and product platform signals before the project showcases begin.
+- A bright UpForIt showcase section appears before Good Game Apparel and mirrors the live event platform's cyan, yellow, pink, black-bordered pop-art styling. It uses real UpForIt and Summer Roundup artwork, event details, live ticket-tier names and prices, and a compact native ticket selector visual. The accompanying copy highlights account-gated Stripe checkout, customer QR-ticket wallets, downloadable tickets, and protected door check-in, with links to the live ticket section and UpForIt homepage.
 - A dark Good Game Apparel showcase section uses the dedicated page's creator-commerce content, current white/acid Good Game logo, storefront browser mockup, live product imagery, creator-store/subscription/made-to-order details, and links to the case study and live site. Its flat near-black, acid-green, signal-orange and Manrope treatment mirrors the current Good Game storefront.
 - A dark Ace Hits TCG showcase section uses the dedicated page's collector retail styling, Ace Hits logo, Shopify banner image, category nav strip, and links to the case study and live site.
 - A light Ace retail details section uses the dedicated page's collector navigation, drop-led retail, trust-cue, and mobile-shopping cards.
@@ -202,6 +204,7 @@ The Privacy page explains how Brandd handles project enquiries, lead attribution
 - The homepage hero has its own grid and heading sizing so its headline is wider and less tall than the global page heading scale.
 - The Websites hero uses the same wider, capped heading treatment as the homepage hero.
 - Mobile hero headings share a capped scale across homepage, Websites, Projects, Services, Contact, and website/project pages so large uppercase titles fit cleanly on phone screens.
+- Desktop section headings use a wide reading area, and two-column sections give headline-bearing copy roughly half or more of the available width. Branded display headings on the UpForIt and Ace Hits sections are capped so they form deliberate phrases instead of narrow one-to-three-word stacks.
 - Mobile buttons wrap their labels safely, and browser-style visual bars truncate long URL labels instead of creating horizontal page overflow.
 - Service, project, workflow, contact, and Ace highlight cards scale up slightly on desktop pointer hover for feedback, while reduced-motion users keep static cards.
 - Mobile card and tile grids use two columns with compact card typography so repeated service, project, proof, product, highlight, and metric cards remain grid-based on phone widths.
@@ -217,6 +220,7 @@ The Privacy page explains how Brandd handles project enquiries, lead attribution
 - The Services page uses `.services-legacy-*`, `.services-websites-*`, and `.services-requirements-cta` classes for the legacy priority section, website design/development section, and first requirements CTA.
 - The Legacy Systems page uses scoped `.legacy-*` classes for its dark service hero, fit cards, anonymised Microsoft Access-inspired order-detail mockup, three-panel process map, and capability bridge. The proof visual keeps a classic database UI treatment inside a modern browser frame, uses a reduced field set so values remain readable, and uses responsive rules so the mobile mockup hides secondary tabs, sidebar navigation, and non-essential fields to stay short.
 - The Good Game Apparel project page uses the current storefront's editorial visual system: Manrope typography, near-black `#11110f` backgrounds, flat `#191917` surfaces, warm-white copy, acid green `#d7ff45`, signal orange `#ff5a36`, sharp borders, skewed accent blocks and buttons, the current white/acid logo, a video-backed hero, and animated storefront/dashboard/product-creator mockups.
+- The Websites page UpForIt showcase uses scoped `.upforit-*` classes for its cyan `#29c6f5`, yellow `#ffdf00`, pink `#d90062` and black pop-art system, including thick borders, offset shadows, halftone textures, responsive real-event artwork and a compact ticket-tier mockup.
 - The Privacy page uses `.privacy-*` classes for the dark hero and light policy content rows.
 - The cookie preferences banner uses `.consent-*` classes, stays fixed above the page content until the visitor chooses a preference, and reopens when the footer Cookie settings control is used.
 - Responsive rules collapse grids at tablet sizes and simplify hero/section layouts at mobile sizes.

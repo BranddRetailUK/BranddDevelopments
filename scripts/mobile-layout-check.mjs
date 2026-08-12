@@ -77,6 +77,7 @@ for (const viewport of viewports) {
         const rect = element.getBoundingClientRect();
 
         if (
+          element.closest('[aria-hidden="true"]') ||
           style.display === "none" ||
           style.visibility === "hidden" ||
           Number(style.opacity) === 0 ||

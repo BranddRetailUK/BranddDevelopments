@@ -4,16 +4,17 @@ import {
   HiArrowLongRight,
   HiArrowTopRightOnSquare,
   HiOutlineChartBarSquare,
+  HiOutlineCreditCard,
   HiOutlineCpuChip,
   HiOutlineDevicePhoneMobile,
+  HiOutlineQrCode,
   HiOutlineShieldCheck,
   HiOutlineShoppingCart,
   HiOutlineSparkles,
   HiOutlineSquares2X2,
-  HiOutlineWrenchScrewdriver,
+  HiOutlineTicket,
 } from "react-icons/hi2";
 import { MotionReveal } from "@/components/MotionReveal";
-import { ScrollAccent } from "@/components/ScrollAccent";
 import { StructuredData } from "@/components/StructuredData";
 import { absoluteUrl, createBreadcrumbJsonLd, createPageMetadata, organizationId } from "@/content/seo";
 
@@ -40,16 +41,6 @@ const projectTypes = [
     title: "Product platforms",
     copy: "For ideas that need a working website with real users, real data and a clear path to improvement.",
     icon: HiOutlineCpuChip,
-  },
-  {
-    title: "Ecommerce systems",
-    copy: "For brands selling products, managing catalogues, improving checkout journeys or connecting stores to fulfilment processes.",
-    icon: HiOutlineSquares2X2,
-  },
-  {
-    title: "Business process tools",
-    copy: "For companies still relying on manual admin, spreadsheets, disconnected apps or repeated internal tasks.",
-    icon: HiOutlineWrenchScrewdriver,
   },
 ];
 
@@ -96,6 +87,37 @@ const storefrontDetails = [
   ["Creator Stores", "Dedicated collection pages let shoppers browse live creator ranges and product drops."],
   ["Subscription tiers", "Free, Starter, Core and Pro options control listings, support and creator tools."],
   ["Made to order", "Orders move through production, packing, fulfilment and delivery without creators buying stock upfront."],
+];
+
+const upForItAssets = {
+  logo: "https://res.cloudinary.com/brandduk/image/upload/f_auto,q_auto,c_limit,w_480/NEW_ROUND_LOGO_amtvr0.png",
+  background: "https://res.cloudinary.com/brandduk/image/upload/f_auto,q_auto,c_limit,w_1200/UPFORIT/summer-roundup-2026-background.jpg",
+  presents: "https://res.cloudinary.com/brandduk/image/upload/f_auto,q_auto,c_limit,w_500/UPFORIT/summer-roundup-2026-presents.png",
+  title: "https://res.cloudinary.com/brandduk/image/upload/f_auto,q_auto,c_limit,w_900/UPFORIT/summer-roundup-2026-title.png",
+};
+
+const upForItTicketFeatures = [
+  {
+    title: "Native ticket sales",
+    copy: "Tiered availability, live quantities and Stripe-hosted checkout stay inside the UpForIt journey.",
+    icon: HiOutlineTicket,
+  },
+  {
+    title: "Ticket wallet",
+    copy: "Paid orders give customers downloadable tickets and a unique QR code for every admission.",
+    icon: HiOutlineQrCode,
+  },
+  {
+    title: "Door check-in",
+    copy: "Protected staff tools scan each QR once and record the check-in against the ticket order.",
+    icon: HiOutlineCreditCard,
+  },
+];
+
+const upForItTiers = [
+  { name: "Early Bird", price: "£5.00", status: "On sale" },
+  { name: "General Release", price: "£7.50", status: "Coming soon" },
+  { name: "On The Door", price: "£10.00", status: "Coming soon" },
 ];
 
 const aceLogo =
@@ -161,7 +183,6 @@ export default function ProjectsPage() {
       />
       <section className="page-hero page-hero-dark section-grid projects-hero" data-nav-tone="dark">
         <MotionReveal className="page-hero-copy">
-          <p className="eyebrow eyebrow-light">Websites</p>
           <h1>Real websites for brands that need the frontend, the product and the system behind it.</h1>
           <p>
             Brandd works on websites where design, development and
@@ -171,7 +192,7 @@ export default function ProjectsPage() {
           </p>
         </MotionReveal>
         <MotionReveal className="project-stack" delay={0.12}>
-          {projectTypes.slice(0, 3).map((item) => {
+          {projectTypes.map((item) => {
             const Icon = item.icon;
             return (
               <article key={item.title}>
@@ -183,46 +204,118 @@ export default function ProjectsPage() {
         </MotionReveal>
       </section>
 
-      <section className="section light-section" data-nav-tone="light">
-        <div className="section-inner">
-          <ScrollAccent
-            className="section-accent section-accent-projects"
-            rotateFrom={9}
-            rotateTo={-8}
-            xFrom="-5%"
-            xTo="4%"
-            yFrom="5%"
-            yTo="-4%"
-          />
-          <MotionReveal className="section-heading">
-            <p className="eyebrow">Website types</p>
-            <h2>Every website is shaped around a commercial job, a user flow, and the system that has to support it.</h2>
-          </MotionReveal>
-          <div className="project-grid">
-            {projectTypes.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <MotionReveal
-                  className="project-card"
-                  delay={index * 0.07}
-                  key={item.title}
-                >
-                  <div className="card-icon">
+      <section className="section upforit-showcase-section" data-nav-tone="light">
+        <div className="section-inner upforit-showcase-grid">
+          <MotionReveal className="upforit-showcase-copy">
+            <div className="upforit-brand-lockup">
+              <Image
+                alt="UpForIt"
+                height={1174}
+                src={upForItAssets.logo}
+                width={1202}
+              />
+              <span>Events, music &amp; good vibes</span>
+            </div>
+            <h2>An event website with its own ticketing system built in.</h2>
+            <p>
+              UpForIt pairs an unmistakable pop-art event identity with a
+              complete buying journey. Visitors can discover The Summer
+              Roundup, choose a live ticket tier, pay securely, and return to
+              their account for the QR tickets used at the door.
+            </p>
+            <div className="upforit-feature-list">
+              {upForItTicketFeatures.map((item) => {
+                const Icon = item.icon;
+                return (
+                  <article key={item.title}>
                     <Icon aria-hidden="true" />
-                  </div>
-                  <h3>{item.title}</h3>
-                  <p>{item.copy}</p>
-                </MotionReveal>
-              );
-            })}
-          </div>
+                    <div>
+                      <strong>{item.title}</strong>
+                      <span>{item.copy}</span>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+            <div className="websites-showcase-actions upforit-showcase-actions">
+              <a
+                className="button upforit-button"
+                href="https://www.upforitevents.co.uk/events/summer-roundup-2026#tickets"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Explore live ticketing <HiArrowTopRightOnSquare aria-hidden="true" />
+              </a>
+              <a
+                className="button upforit-secondary-button"
+                href="https://www.upforitevents.co.uk/"
+                rel="noreferrer"
+                target="_blank"
+              >
+                Open UpForIt <HiArrowTopRightOnSquare aria-hidden="true" />
+              </a>
+            </div>
+          </MotionReveal>
+
+          <MotionReveal className="upforit-browser" delay={0.12} aria-hidden="true">
+            <div className="upforit-browser-bar">
+              <span />
+              <span />
+              <span />
+              <strong>upforitevents.co.uk/events/summer-roundup-2026</strong>
+            </div>
+            <div className="upforit-event-preview">
+              <Image
+                alt=""
+                className="upforit-event-background"
+                fill
+                sizes="(max-width: 1080px) 92vw, 48vw"
+                src={upForItAssets.background}
+              />
+              <div className="upforit-event-art">
+                <Image alt="" height={164} src={upForItAssets.presents} width={840} />
+                <Image alt="" height={1026} src={upForItAssets.title} width={1865} />
+              </div>
+              <div className="upforit-event-facts">
+                <span><small>Date</small><strong>26 September</strong></span>
+                <span><small>Time</small><strong>Noon–11PM</strong></span>
+                <span><small>Venue</small><strong>McCarthys</strong></span>
+              </div>
+              <div className="upforit-ticket-panel">
+                <div className="upforit-ticket-heading">
+                  <strong>Tickets</strong>
+                  <span>No booking fee</span>
+                </div>
+                <div className="upforit-ticket-tiers">
+                  {upForItTiers.map((tier, index) => (
+                    <article className={index === 0 ? "is-live" : ""} key={tier.name}>
+                      <div>
+                        <strong>{tier.name}</strong>
+                        <small>{tier.status}</small>
+                      </div>
+                      <b>{tier.price}</b>
+                      {index === 0 ? (
+                        <span className="upforit-ticket-quantity">← <b>1</b> →</span>
+                      ) : (
+                        <span className="upforit-coming-soon">Coming soon</span>
+                      )}
+                    </article>
+                  ))}
+                </div>
+                <div className="upforit-ticket-total">
+                  <span>Total</span>
+                  <strong>£5.00</strong>
+                  <b>Buy tickets</b>
+                </div>
+              </div>
+            </div>
+          </MotionReveal>
         </div>
       </section>
 
       <section className="section dark-section good-game-service-section websites-good-game-showcase" data-nav-tone="dark">
         <div className="section-inner good-game-service-layout">
           <MotionReveal className="good-game-service-copy">
-            <p className="eyebrow eyebrow-light">Creator commerce example</p>
             <h2>Good Game Apparel connects storefronts, creator tools and fulfilment.</h2>
             <p>
               The Good Game Apparel work shows how a website can become a full
@@ -310,7 +403,6 @@ export default function ProjectsPage() {
       <section className="section dark-section ace-commerce-section websites-ace-showcase" data-nav-tone="dark">
         <div className="section-inner ace-commerce-grid">
           <MotionReveal className="ace-commerce-copy">
-            <p className="eyebrow eyebrow-light">Collector retail example</p>
             <Image
               alt="Ace Hits TCG"
               className="ace-hero-logo websites-ace-logo"
@@ -361,7 +453,6 @@ export default function ProjectsPage() {
       <section className="section light-section ace-retail-section websites-ace-retail-section" data-nav-tone="light">
         <div className="section-inner">
           <MotionReveal className="section-heading ace-section-heading">
-            <p className="eyebrow">Retail website details</p>
             <h2>Specific catalogue decisions make ecommerce easier to scan and buy from.</h2>
           </MotionReveal>
           <div className="ace-highlight-grid">
@@ -382,7 +473,6 @@ export default function ProjectsPage() {
       <section className="section dark-section compact-cta" data-nav-tone="dark">
         <div className="section-inner cta-row">
           <MotionReveal>
-            <p className="eyebrow eyebrow-light">Next build</p>
             <h2>Bring the idea, the target, or the messy system.</h2>
           </MotionReveal>
           <Link className="button button-light" href="/contact">
