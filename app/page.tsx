@@ -38,8 +38,7 @@ export default function Home() {
           <Image
             src={homepageBanner}
             alt=""
-            fill
-            sizes="100vw"
+            sizes="(min-width: 2000px) 2000px, 100vw"
             priority
           />
         </div>
