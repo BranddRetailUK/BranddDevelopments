@@ -10,16 +10,6 @@ export const upForItAssets = {
 
 export const work = [
   {
-    slug: "upforit",
-    name: "UpForIt",
-    category: "Events and ticketing",
-    copy: "Event discovery, ticket sales and QR check-in in one website.",
-    role: "Website design and ticketing development",
-    image: upForItAssets.title,
-    imageAlt: "The Summer Roundup event artwork",
-    href: "/projects/upforit",
-  },
-  {
     slug: "good-game-apparel",
     name: "Good Game Apparel",
     category: "Brandd-owned product",
@@ -28,6 +18,16 @@ export const work = [
     image: "/images/good-game/good-game-apparel-logo.png",
     imageAlt: "Good Game Apparel",
     href: "/projects/good-game-apparel",
+  },
+  {
+    slug: "upforit",
+    name: "UpForIt",
+    category: "Events and ticketing",
+    copy: "Event discovery, ticket sales and QR check-in in one website.",
+    role: "Website design and ticketing development",
+    image: upForItAssets.title,
+    imageAlt: "The Summer Roundup event artwork",
+    href: "/projects/upforit",
   },
   {
     slug: "ace-hits-tcg",

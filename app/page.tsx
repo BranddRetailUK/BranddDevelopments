@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { HiArrowLongRight } from "react-icons/hi2";
 import { MotionReveal } from "@/components/MotionReveal";
 import { ServiceGrid } from "@/components/ServiceGrid";
@@ -7,6 +8,7 @@ import { ProjectContact } from "@/components/ProjectContact";
 import { StructuredData } from "@/components/StructuredData";
 import { serviceGroups } from "@/content/site";
 import { work } from "@/content/work";
+import homepageBanner from "@/public/images/brandd/homepage-banner.png";
 import {
   createBreadcrumbJsonLd,
   createPageMetadata,
@@ -32,6 +34,15 @@ export default function Home() {
         ]}
       />
       <section className="hero hero-light home-intro" data-nav-tone="light">
+        <div className="home-intro-art" aria-hidden="true">
+          <Image
+            src={homepageBanner}
+            alt=""
+            fill
+            sizes="100vw"
+            priority
+          />
+        </div>
         <MotionReveal className="hero-copy">
           <p className="eyebrow">Brandd · Design and development</p>
           <h1>Websites and software built around your business.</h1>
@@ -69,7 +80,9 @@ export default function Home() {
           </MotionReveal>
           <WorkGrid
             projects={work.filter((project) =>
-              ["upforit", "ace-hits-tcg", "sonacrate"].includes(project.slug),
+              ["good-game-apparel", "upforit", "ace-hits-tcg"].includes(
+                project.slug,
+              ),
             )}
           />
         </div>

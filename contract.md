@@ -22,7 +22,7 @@ This file describes the current feature shape of the Brandd website. It is a pro
 
 - `content/site.tsx` holds Brandd logo URLs, navigation items, route header tones and the four service groups used on Home and Services.
 - The service groups are Websites and online stores; Business software and legacy rebuilds; Customer portals and digital products; Integrations and automation.
-- `content/work.ts` holds the five portfolio summaries, internal case-study URLs, project artwork and UpForIt image assets. Good Game Apparel is explicitly identified as a Brandd-owned product; the other summaries describe their sector and Brandd's contribution without assuming ownership.
+- `content/work.ts` holds the five portfolio summaries, internal case-study URLs, project artwork and UpForIt image assets, with Good Game Apparel first. Good Game Apparel is explicitly identified as a Brandd-owned product; the other summaries describe their sector and Brandd's contribution without assuming ownership. SonaCrate remains in the wider portfolio with its existing music-platform description and is not a homepage highlight.
 - `content/seo.ts` holds route metadata helpers, sitemap entries, organization and project structured data. Organization data identifies Leighton Buzzard, Bedfordshire, UK, without a street address.
 - `lib/contactOptions.ts` defines the visible service and budget options and the specialist service presets. Its validators also accept a fixed list of previous options so a form opened before an update can still submit.
 
@@ -42,7 +42,8 @@ This file describes the current feature shape of the Brandd website. It is a pro
 ### Home `/`
 
 - A compact light hero presents “Websites and software built around your business.” Its primary Discuss a project link goes to Contact; See our work goes to `/projects`. Location is shown below the actions.
-- Selected work immediately follows the hero. Three cards feature UpForIt, Ace Hits TCG and SonaCrate, with artwork, project type, Brandd's role and internal case-study links. An All our work link leads to the full portfolio.
+- The desktop hero uses `public/images/brandd/homepage-banner.png`, generated artwork showing an illustrative business website, online shop and connected order-management screen in Brandd colours on the right, with white space behind the text. These are service illustrations rather than client screenshots. The decorative image uses Next.js image optimisation and an empty alt attribute. Below 1081px it is hidden so the text and enquiry actions retain the full width.
+- Selected work immediately follows the hero. Three cards feature Good Game Apparel, UpForIt and Ace Hits TCG in that order, with artwork, project type, Brandd's role and internal case-study links. These are live businesses/services. SonaCrate appears only in the wider portfolio. An All our work link leads to the full portfolio.
 - A light section presents the four service groups as linked cards.
 - The dark `#about` section describes Brandd as a design and development studio in Leighton Buzzard, Bedfordshire, explains the experience from its own Good Game Apparel product, and offers ongoing support and management where required.
 - A three-step process explains Agree the scope, Review the design, and Build and test. Scope covers costs, launch, access and support arrangements.
@@ -52,7 +53,7 @@ This file describes the current feature shape of the Brandd website. It is a pro
 ### Our work `/projects`
 
 - A compact dark hero introduces the portfolio and offers an enquiry action and a jump to the projects.
-- Five cards show UpForIt, Good Game Apparel, Ace Hits TCG, SonaCrate and DTF Designer. Each explains the work and links to its own case study.
+- Five cards show Good Game Apparel, UpForIt, Ace Hits TCG, SonaCrate and DTF Designer. Each explains the work and links to its own case study.
 - Cards use existing project artwork, the local Good Game logo, or simple music/print illustrations. The Good Game logo bypasses image optimisation, matching its case-study treatment.
 - A short Access rebuild feature links to `/legacy-systems#project`.
 - The page ends with a Contact action. External product visits are secondary actions on the case-study pages.
@@ -166,7 +167,7 @@ This file describes the current feature shape of the Brandd website. It is a pro
 
 - The Brandd palette remains black, white, off-white, cyan, violet, magenta and pink, with an 8px radius on cards and controls.
 - Body copy uses the bundled Manrope variable font with regular/medium weight. Main headings use sentence case, a capped scale and a readable line height. Short category and eyebrow labels retain uppercase styling.
-- The homepage has a compact hero with a gradient border. Standalone `ScrollBridge` transitions and decorative rails are not rendered on the current pages.
+- The homepage has a white hero with a gradient border and right-aligned Brandd-colour artwork. Desktop copy occupies the white left portion; smaller screens use the full text width without the decorative image. Standalone `ScrollBridge` transitions and decorative rails are not rendered on the current pages.
 - `light-section` and `dark-section` establish section tone; major sections expose `data-nav-tone` for header contrast.
 - Portfolio cards have a three-column desktop grid, two columns at tablet widths and one on phones. Artwork and project descriptions remain together with the case-study action.
 - Service groups use two desktop columns and one mobile column. Explanatory service, process, fit and project-summary cards use single columns on phones; body text remains approximately 16px.
