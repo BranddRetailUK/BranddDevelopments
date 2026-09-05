@@ -1,5 +1,6 @@
 import type { Metadata, MetadataRoute } from "next";
-import { mvpShowcases, services } from "@/content/site";
+import { serviceGroups } from "@/content/site";
+import { work } from "@/content/work";
 
 export const siteUrl = (
   process.env.NEXT_PUBLIC_SITE_URL?.trim() || "https://brandd.co.uk"
@@ -7,10 +8,10 @@ export const siteUrl = (
 
 export const siteName = "Brandd";
 
-export const defaultTitle = "Brandd | Websites, Product Platforms & Business Systems";
+export const defaultTitle = "Brandd | Websites and business software";
 
 export const defaultDescription =
-  "Brandd designs and builds websites, product platforms, backend systems, databases, projects, ecommerce workflows, integrations, and operational tools.";
+  "Brandd designs websites, builds online stores and develops business software. Based in Leighton Buzzard, Bedfordshire, with ongoing support and management available.";
 
 export const ogImagePath = "/opengraph-image";
 
@@ -25,9 +26,23 @@ export const seoRoutes: SeoRoute[] = [
   { path: "/services", priority: 0.95, changeFrequency: "monthly" },
   { path: "/legacy-systems", priority: 0.95, changeFrequency: "monthly" },
   { path: "/projects", priority: 0.85, changeFrequency: "monthly" },
-  { path: "/mvps", priority: 0.8, changeFrequency: "monthly" },
-  { path: "/projects/good-game-apparel", priority: 0.72, changeFrequency: "monthly" },
-  { path: "/projects/ace-hits-tcg", priority: 0.72, changeFrequency: "monthly" },
+  { path: "/projects/upforit", priority: 0.72, changeFrequency: "monthly" },
+  { path: "/projects/sonacrate", priority: 0.72, changeFrequency: "monthly" },
+  {
+    path: "/projects/dtf-designer",
+    priority: 0.72,
+    changeFrequency: "monthly",
+  },
+  {
+    path: "/projects/good-game-apparel",
+    priority: 0.72,
+    changeFrequency: "monthly",
+  },
+  {
+    path: "/projects/ace-hits-tcg",
+    priority: 0.72,
+    changeFrequency: "monthly",
+  },
   { path: "/contact", priority: 0.9, changeFrequency: "monthly" },
   { path: "/privacy", priority: 0.35, changeFrequency: "yearly" },
 ];
@@ -169,6 +184,12 @@ export const organizationJsonLd = {
   name: siteName,
   url: siteUrl,
   logo: absoluteUrl("/icon"),
+  address: {
+    "@type": "PostalAddress",
+    addressLocality: "Leighton Buzzard",
+    addressRegion: "Bedfordshire",
+    addressCountry: "GB",
+  },
   description: defaultDescription,
   contactPoint: [
     {
@@ -193,7 +214,9 @@ export const websiteJsonLd = {
   inLanguage: "en-GB",
 };
 
-export function createBreadcrumbJsonLd(items: Array<{ name: string; path: string }>) {
+export function createBreadcrumbJsonLd(
+  items: Array<{ name: string; path: string }>,
+) {
   return {
     "@context": "https://schema.org",
     "@type": "BreadcrumbList",
@@ -210,7 +233,7 @@ export const servicesJsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
   name: "Brandd digital services",
-  itemListElement: services.map((service, index) => ({
+  itemListElement: serviceGroups.map((service, index) => ({
     "@type": "ListItem",
     position: index + 1,
     item: {
@@ -232,7 +255,7 @@ export const legacyServiceJsonLd = {
   name: "Legacy System Rebuilds",
   serviceType: "Legacy system rebuilds",
   description:
-    "Microsoft Access databases, old desktop tools, spreadsheet workflows, and unsupported internal systems rebuilt as owned web apps.",
+    "Replace Microsoft Access databases and unsupported desktop tools with maintainable web apps built around the work your team does.",
   provider: {
     "@id": organizationId,
   },
@@ -244,14 +267,14 @@ export const projectShowcaseJsonLd = {
   "@context": "https://schema.org",
   "@type": "ItemList",
   name: "Brandd project showcases",
-  itemListElement: mvpShowcases.map((project, index) => ({
+  itemListElement: work.map((project, index) => ({
     "@type": "ListItem",
     position: index + 1,
     item: {
       "@type": "CreativeWork",
       name: project.name,
-      description: project.expandedCopy,
-      url: project.href,
+      description: project.copy,
+      url: absoluteUrl(project.href),
       creator: {
         "@id": organizationId,
       },

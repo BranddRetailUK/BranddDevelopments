@@ -89,17 +89,17 @@ export function ConsentBanner() {
       <div>
         <strong>Cookie preferences</strong>
         <p>
-          Brandd uses essential storage to operate and secure the site. Optional Google
-          measurement and stored campaign attribution run only if you accept them. You can
-          change this choice at any time.
+          Essential storage keeps the site working and secure. With your permission,
+          we also use Google tools and record how you found us to understand site use
+          and advertising results. Change your choice in Cookie settings.
         </p>
       </div>
       <div className="consent-actions">
         <button className="button button-light" type="button" onClick={() => saveChoice("accepted")}>
-          Accept optional
+          Accept optional tracking
         </button>
         <button className="button button-light" type="button" onClick={() => saveChoice("essential")}>
-          Essential only
+          Use essential only
         </button>
         {choice ? (
           <button className="consent-close" type="button" onClick={() => setOpen(false)}>

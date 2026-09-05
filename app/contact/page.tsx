@@ -1,38 +1,31 @@
-import { HiOutlineEnvelope } from "react-icons/hi2";
 import { ContactForm } from "@/components/ContactForm";
 import { MotionReveal } from "@/components/MotionReveal";
-import { ScrollAccent } from "@/components/ScrollAccent";
-import { ScrollBridge } from "@/components/ScrollBridge";
 import { StructuredData } from "@/components/StructuredData";
-import { absoluteUrl, createBreadcrumbJsonLd, createPageMetadata, organizationId } from "@/content/seo";
+import {
+  createBreadcrumbJsonLd,
+  createPageMetadata,
+  absoluteUrl,
+  organizationId,
+} from "@/content/seo";
+import { contactServicePresets } from "@/lib/contactOptions";
 
 export const metadata = createPageMetadata({
-  title: "Contact",
+  title: "Discuss a project",
   description:
-    "Start a project brief with Brandd for legacy system rebuilds, web design, development, backend, database, MVP, retail, and ecommerce services.",
+    "Tell Brandd what you want to build or improve. Based in Leighton Buzzard, Bedfordshire, with a typical reply time of one hour.",
   path: "/contact",
-  keywords: ["Brandd contact", "project enquiry", "web development quote", "legacy system rebuild quote"],
 });
 
-const contactCards = [
-  {
-    title: "Email directly",
-    copy: (
-      <>
-        Prefer not to use the form? Email{" "}
-        <a href="mailto:enquiries@brandd.co.uk">enquiries@brandd.co.uk</a>.
-      </>
-    ),
-    icon: HiOutlineEnvelope,
-  },
-  {
-    title: "Project enquiries",
-    copy: "Share the goal, the current problem, and what needs to happen next.",
-    icon: HiOutlineEnvelope,
-  },
-];
-
-export default function ContactPage() {
+export default async function ContactPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ service?: string | string[] }>;
+}) {
+  const { service } = await searchParams;
+  const initialFocus =
+    typeof service === "string" && Object.hasOwn(contactServicePresets, service)
+      ? contactServicePresets[service]
+      : undefined;
   return (
     <>
       <StructuredData
@@ -46,58 +39,56 @@ export default function ContactPage() {
             "@type": "ContactPage",
             name: "Contact Brandd",
             url: absoluteUrl("/contact"),
-            about: {
-              "@id": organizationId,
-            },
+            about: { "@id": organizationId },
           },
         ]}
       />
-      <section className="section dark-section contact-form-first" data-nav-tone="dark">
-        <div className="section-inner contact-layout">
-          <ScrollAccent
-            className="section-accent section-accent-contact"
-            rotateFrom={-10}
-            rotateTo={9}
-            xFrom="5%"
-            xTo="-4%"
-            yFrom="-5%"
-            yTo="5%"
-          />
-          <MotionReveal className="contact-form-shell">
-            <ContactForm />
+      <section
+        className="section dark-section contact-form-first"
+        data-nav-tone="dark"
+      >
+        <div className="section-inner">
+          <MotionReveal className="section-heading contact-introduction">
+            <p className="eyebrow eyebrow-light">Contact Brandd</p>
+            <h1>Tell us about your project.</h1>
+            <p className="section-copy">
+              What would you like to build or improve? A few sentences about
+              your business and the problem are enough to get started.
+            </p>
           </MotionReveal>
-          <div className="contact-info">
-            {contactCards.map((item, index) => {
-              const Icon = item.icon;
-              return (
-                <MotionReveal
-                  className="contact-card"
-                  delay={index * 0.07}
-                  key={item.title}
-                >
-                  <Icon aria-hidden="true" />
-                  <h3>{item.title}</h3>
-                  <p>{item.copy}</p>
-                </MotionReveal>
-              );
-            })}
+          <div className="contact-layout">
+            <MotionReveal className="contact-form-shell">
+              <ContactForm initialFocus={initialFocus} />
+            </MotionReveal>
+            <div className="contact-info">
+              <article className="contact-card">
+                <h2>What happens next?</h2>
+                <p>
+                  We’ll review your message and reply by email, typically within
+                  one hour. We can then discuss the requirements and agree the
+                  next step.
+                </p>
+              </article>
+              <article className="contact-card">
+                <h2>Prefer to email?</h2>
+                <p>
+                  <a href="mailto:enquiries@brandd.co.uk">
+                    enquiries@brandd.co.uk
+                  </a>
+                </p>
+                <p>Based in Leighton Buzzard, Bedfordshire.</p>
+              </article>
+              <article className="contact-card">
+                <h2>Support after launch</h2>
+                <p>
+                  We offer ongoing support and management where required. Let us
+                  know if you need help maintaining an existing website or
+                  system.
+                </p>
+              </article>
+            </div>
           </div>
         </div>
-      </section>
-
-      <ScrollBridge tone="light" label="Brief to build plan" variant="sweep-right" />
-
-      <section className="page-hero page-hero-light contact-hero" data-nav-tone="light">
-        <MotionReveal className="page-hero-copy">
-          <p className="eyebrow">Contact</p>
-          <h1>Tell us what you are building, improving or trying to fix.</h1>
-          <p>
-            Whether you need to rebuild a legacy database, replace an old
-            internal dashboard, launch a new website, create a customer portal,
-            shape an MVP, clean up backend data, or connect an ecommerce
-            workflow, Brandd can help shape the next step.
-          </p>
-        </MotionReveal>
       </section>
     </>
   );

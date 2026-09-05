@@ -1,18 +1,12 @@
 import Link from "next/link";
-import {
-  HiArrowLongRight,
-  HiArrowTopRightOnSquare,
-  HiOutlineCubeTransparent,
-  HiOutlineDevicePhoneMobile,
-  HiOutlineSquares2X2,
-} from "react-icons/hi2";
+import { HiArrowLongRight } from "react-icons/hi2";
 import { MotionReveal } from "@/components/MotionReveal";
-import { MvpProductVisual } from "@/components/MvpProductVisual";
-import { ScrollAccent } from "@/components/ScrollAccent";
-import { ScrollBridge } from "@/components/ScrollBridge";
 import { ServiceGrid } from "@/components/ServiceGrid";
+import { WorkGrid } from "@/components/WorkGrid";
+import { ProjectContact } from "@/components/ProjectContact";
 import { StructuredData } from "@/components/StructuredData";
-import { mvpShowcases, services } from "@/content/site";
+import { serviceGroups } from "@/content/site";
+import { work } from "@/content/work";
 import {
   createBreadcrumbJsonLd,
   createPageMetadata,
@@ -22,37 +16,10 @@ import {
 } from "@/content/seo";
 
 export const metadata = createPageMetadata({
-  title: "Websites, Product Platforms & Business Systems",
+  title: "Websites and software for your business",
   description: defaultDescription,
   path: "/",
-  keywords: [
-    "web design UK",
-    "business systems",
-    "product platforms",
-    "backend development",
-    "ecommerce systems",
-  ],
 });
-
-const workflow = [
-  {
-    title: "Shape the offer",
-    copy: "We turn the commercial objective into a clear user journey, feature set, system shape, and launch sequence.",
-    icon: HiOutlineSquares2X2,
-  },
-  {
-    title: "Design the experience",
-    copy: "Interfaces are structured around what users need to understand first, where they click next, and what the business needs to manage.",
-    icon: HiOutlineDevicePhoneMobile,
-  },
-  {
-    title: "Build the system",
-    copy: "Frontend, backend, data, ecommerce, and integrations are developed as one connected product rather than separate moving parts.",
-    icon: HiOutlineCubeTransparent,
-  },
-];
-
-const homepageServices = services.slice(0, 9);
 
 export default function Home() {
   return (
@@ -64,202 +31,138 @@ export default function Home() {
           projectShowcaseJsonLd,
         ]}
       />
-      <section className="hero hero-light" data-nav-tone="light">
-        <div className="hero-copy">
-          <MotionReveal>
-            <p className="eyebrow">Brandd</p>
-            <h1>Create sharp, functional websites and digital services.</h1>
-            <p className="hero-lede">
-              We build modern, animated websites, ecommerce experiences and
-              business tools for growing brands. The kind of polished,
-              high-end web experience that used to need a much bigger budget is
-              now within reach at a sensible price.
-            </p>
-            <div className="hero-actions">
-              <Link className="button button-dark" href="/services">
-                Start a project <HiArrowLongRight aria-hidden="true" />
-              </Link>
-              <Link className="button button-outline" href="/legacy-systems">
-                Legacy system rebuilds
-              </Link>
-            </div>
-          </MotionReveal>
-        </div>
-
-        <ScrollAccent
-          className="accent-rail accent-rail-one"
-          rotateFrom={-13}
-          rotateTo={4}
-          xFrom="-4%"
-          xTo="5%"
-        />
-        <ScrollAccent
-          className="accent-rail accent-rail-two"
-          rotateFrom={16}
-          rotateTo={-5}
-          xFrom="4%"
-          xTo="-4%"
-        />
+      <section className="hero hero-light home-intro" data-nav-tone="light">
+        <MotionReveal className="hero-copy">
+          <p className="eyebrow">Brandd · Design and development</p>
+          <h1>Websites and software built around your business.</h1>
+          <p className="hero-lede">
+            We design websites, build online stores and replace outdated
+            business software. From the pages your customers see to the tools
+            your team uses, we help you plan, design and build what you need.
+          </p>
+          <div className="hero-actions">
+            <Link className="button button-dark" href="/contact">
+              Discuss a project <HiArrowLongRight aria-hidden="true" />
+            </Link>
+            <Link className="button button-outline" href="/projects">
+              See our work
+            </Link>
+          </div>
+          <p className="hero-location">
+            Based in Leighton Buzzard, Bedfordshire.
+          </p>
+        </MotionReveal>
       </section>
-
-      <ScrollBridge
-        tone="dark"
-        label="From brand idea to working product"
-        variant="long-drift"
-      />
-
-      <section className="section dark-section overlap-section" data-nav-tone="dark">
+      <section
+        className="section dark-section selected-work-section"
+        data-nav-tone="dark"
+      >
+        <div className="section-inner">
+          <MotionReveal className="section-heading heading-with-link">
+            <div>
+              <p className="eyebrow eyebrow-light">Selected work</p>
+              <h2>See what we’ve built.</h2>
+            </div>
+            <Link className="text-link" href="/projects">
+              All our work <HiArrowLongRight aria-hidden="true" />
+            </Link>
+          </MotionReveal>
+          <WorkGrid
+            projects={work.filter((project) =>
+              ["upforit", "ace-hits-tcg", "sonacrate"].includes(project.slug),
+            )}
+          />
+        </div>
+      </section>
+      <section
+        className="section light-section service-groups-section"
+        data-nav-tone="light"
+      >
+        <div className="section-inner">
+          <MotionReveal className="section-heading">
+            <p className="eyebrow">How we can help</p>
+            <h2>What do you need to improve?</h2>
+          </MotionReveal>
+          <ServiceGrid items={serviceGroups} />
+        </div>
+      </section>
+      <section
+        className="section dark-section about-section"
+        id="about"
+        data-nav-tone="dark"
+      >
         <div className="section-inner two-column">
           <MotionReveal>
-            <p className="eyebrow eyebrow-light">Development studio</p>
-            <h2 className="studio-title">
-              <span>Digital products</span>
-              <span>with frontend,</span>
-              <span>backend, and</span>
-              <span>operations</span>
-              <span>built in.</span>
+            <p className="eyebrow eyebrow-light">About Brandd</p>
+            <h2>
+              Design and development, from the website to the work behind it.
             </h2>
           </MotionReveal>
-          <MotionReveal delay={0.08}>
-            <p className="section-copy">
-              A website is usually only one part of the job. Behind the public
-              interface there may be customer accounts, product data, order
-              flows, stock logic, payment journeys, admin dashboards, API
-              integrations, reporting tools, and internal processes that need to
-              work together.
+          <MotionReveal className="about-copy">
+            <p>
+              Brandd is a design and development studio based in Leighton
+              Buzzard, Bedfordshire. Our work spans event ticketing, retail,
+              music, print ordering and internal production systems.
             </p>
+            <p>
+              We also build our own products, including Good Game Apparel. That
+              work connects the customer experience with the product tools,
+              orders and fulfilment behind it.
+            </p>
+            <p>
+              Whether you need a focused website or a more involved system, we
+              start by understanding the problem and agreeing what the work
+              needs to achieve. Ongoing support and management are available
+              where required.
+            </p>
+            <Link className="text-link" href="/contact">
+              Tell us what you have in mind{" "}
+              <HiArrowLongRight aria-hidden="true" />
+            </Link>
           </MotionReveal>
         </div>
       </section>
-
-      <ScrollBridge
-        tone="light"
-        label="Services shaped for connected growth"
-        variant="snap-cross"
-      />
-
-      <section className="section light-section services-section" data-nav-tone="light">
+      <section
+        className="section light-section process-section"
+        data-nav-tone="light"
+      >
         <div className="section-inner">
           <MotionReveal className="section-heading">
-            <p className="eyebrow">What we build</p>
-            <h2>Digital products with the front end, backend and operational thinking built in.</h2>
+            <p className="eyebrow">Working together</p>
+            <h2>From first conversation to launch.</h2>
           </MotionReveal>
-          <ServiceGrid items={homepageServices} />
-        </div>
-      </section>
-
-      <ScrollBridge
-        tone="dark"
-        label="Projects built for real users and workflows"
-        variant="rise"
-      />
-
-      <section className="section dark-section mvp-showcase-section" data-nav-tone="dark">
-        <div className="section-inner">
-          <ScrollAccent
-            className="section-accent section-accent-mvp-showcase"
-            rotateFrom={-9}
-            rotateTo={8}
-            xFrom="5%"
-            xTo="-4%"
-            yFrom="-4%"
-            yTo="5%"
-          />
-          <MotionReveal className="section-heading">
-            <p className="eyebrow eyebrow-light">Project showcase</p>
-            <h2>Version-one products with account logic, upload flows, pricing rules, and real operational shape.</h2>
-          </MotionReveal>
-          <div className="mvp-showcase-grid">
-            {mvpShowcases.map((product, index) => (
-              <MotionReveal
-                className={`mvp-showcase-card mvp-${product.slug}`}
-                delay={index * 0.08}
-                key={product.name}
-              >
-                <div className="mvp-card-copy">
-                  <p className="eyebrow eyebrow-light">{product.eyebrow}</p>
-                  <h3>{product.name}</h3>
-                  <p>{product.shortCopy}</p>
-                  <ul>
-                    {product.features.slice(0, 3).map((feature) => (
-                      <li key={feature.title}>{feature.title}</li>
-                    ))}
-                  </ul>
-                  <a
-                    className="button button-light"
-                    href={product.href}
-                    rel="noreferrer"
-                    target="_blank"
-                  >
-                    Open {product.name} <HiArrowTopRightOnSquare aria-hidden="true" />
-                  </a>
-                </div>
-                <MvpProductVisual slug={product.slug} />
+          <div className="workflow-grid">
+            {[
+              [
+                "01",
+                "Agree the scope",
+                "Work through the problem, priorities and what the first release needs to include.",
+              ],
+              [
+                "02",
+                "Review the design",
+                "See how the pages and key tasks will work, with room to discuss the details.",
+              ],
+              [
+                "03",
+                "Build and test",
+                "Check the website or system against the agreed requirements and prepare it for launch.",
+              ],
+            ].map(([step, title, copy]) => (
+              <MotionReveal as="article" className="workflow-item" key={step}>
+                <span className="step-number">{step}</span>
+                <h3>{title}</h3>
+                <p>{copy}</p>
               </MotionReveal>
             ))}
           </div>
+          <p className="process-note">
+            The project scope sets out the work, costs and arrangements for
+            launch, access and ongoing support.
+          </p>
         </div>
       </section>
-
-      <ScrollBridge
-        tone="light"
-        label="From service scope to build process"
-        variant="snap-cross"
-      />
-
-      <section className="section light-section crossover-section" data-nav-tone="light">
-        <div className="section-inner">
-          <div className="crossover-card">
-            <ScrollAccent
-              className="section-accent section-accent-crossover"
-              rotateFrom={-11}
-              rotateTo={7}
-              xFrom="5%"
-              xTo="-4%"
-              yFrom="6%"
-              yTo="-5%"
-            />
-            <MotionReveal>
-              <p className="eyebrow">Process</p>
-              <h2>Clean direction first. Then fast, careful execution.</h2>
-            </MotionReveal>
-            <div className="workflow-grid">
-              {workflow.map((item, index) => {
-                const Icon = item.icon;
-                return (
-                  <MotionReveal
-                    className="workflow-item"
-                    delay={index * 0.08}
-                    key={item.title}
-                  >
-                    <Icon aria-hidden="true" />
-                    <h3>{item.title}</h3>
-                    <p>{item.copy}</p>
-                  </MotionReveal>
-                );
-              })}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      <ScrollBridge
-        tone="dark"
-        label="Start a practical build"
-        variant="rise"
-      />
-
-      <section className="section dark-section compact-cta home-contact-cta" data-nav-tone="dark">
-        <div className="section-inner cta-row">
-          <MotionReveal>
-            <p className="eyebrow eyebrow-light">Ready to start</p>
-            <h2>Bring the goal, workflow, or website problem and we will shape the build.</h2>
-          </MotionReveal>
-          <Link className="button button-light" href="/contact">
-            Contact Brandd <HiArrowLongRight aria-hidden="true" />
-          </Link>
-        </div>
-      </section>
+      <ProjectContact title="Tell us what you need to improve." />
     </>
   );
 }

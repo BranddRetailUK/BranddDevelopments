@@ -1,6 +1,6 @@
 import { ImageResponse } from "next/og";
 
-export const alt = "Brandd websites, product platforms and business systems";
+export const alt = "Brandd websites and business software";
 export const size = {
   width: 1200,
   height: 630,
@@ -35,7 +35,7 @@ export default function OpenGraphImage() {
           }}
         >
           <span>Brandd</span>
-          <span style={{ color: "#0bb6d0" }}>UK digital studio</span>
+          <span style={{ color: "#0bb6d0" }}>Leighton Buzzard, UK</span>
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 28 }}>
           <div
@@ -49,13 +49,13 @@ export default function OpenGraphImage() {
             style={{
               margin: 0,
               maxWidth: 930,
-              fontSize: 82,
+              fontSize: 76,
               lineHeight: 0.98,
               fontWeight: 950,
               letterSpacing: 0,
             }}
           >
-            Websites, product platforms and business systems.
+            Websites and software built around your business.
           </h1>
         </div>
         <div
@@ -67,11 +67,11 @@ export default function OpenGraphImage() {
             color: "#f7f7f4",
           }}
         >
-          <span>Frontend</span>
+          <span>Websites</span>
           <span style={{ color: "#ff0b69" }}>/</span>
-          <span>Backend</span>
+          <span>Online stores</span>
           <span style={{ color: "#ff0b69" }}>/</span>
-          <span>Data</span>
+          <span>Software</span>
           <span style={{ color: "#ff0b69" }}>/</span>
           <span>Automation</span>
         </div>

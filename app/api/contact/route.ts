@@ -115,7 +115,7 @@ function validatePayload(body: unknown): {
   }
 
   if (!isContactFocusOption(input.focus)) {
-    return { message: "Please choose a service focus." };
+    return { message: "Please choose what you need help with." };
   }
 
   if (!isContactBudgetOption(input.budget)) {
@@ -148,7 +148,7 @@ export async function POST(request: Request) {
 
   if (!idempotencyKeyPattern.test(idempotencyKey)) {
     return jsonResponse(
-      { ok: false, message: "The form request is missing a valid idempotency key." },
+      { ok: false, message: "We could not verify this submission. Please reload the page and try again, or email us directly." },
       400,
     );
   }

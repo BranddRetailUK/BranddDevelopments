@@ -9,7 +9,7 @@ function SonaCrateVisual() {
         <span />
         <span />
         <span />
-        <strong>SonaCrate listener shell</strong>
+        <strong>SonaCrate listener preview</strong>
       </div>
       <div className="sonacrate-visual-shell">
         <aside className="sonacrate-visual-rail">

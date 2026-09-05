@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { useEffect, useMemo, useState } from "react";
-import { HiOutlineBars3, HiOutlineEnvelope, HiOutlineXMark } from "react-icons/hi2";
+import { HiOutlineBars3, HiOutlineXMark } from "react-icons/hi2";
 import { darkLogo, navItems, routeTones, whiteLogo } from "@/content/site";
 import { consentSettingsEventName } from "@/lib/clientAttribution";
 
@@ -17,7 +17,9 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   const [menuOpen, setMenuOpen] = useState(false);
 
   const routeTone = routeTones[pathname] ?? "light";
-  const headerTone = visibleTone ?? (pathname === "/" ? (isScrolled ? "dark" : "light") : routeTone);
+  const headerTone =
+    visibleTone ??
+    (pathname === "/" ? (isScrolled ? "dark" : "light") : routeTone);
 
   const splitNav = useMemo(() => {
     const desktopNavItems = navItems.filter((item) => item.href !== "/contact");
@@ -35,7 +37,8 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   }, []);
 
   useEffect(() => {
-    const onScroll = () => setIsScrolled(window.scrollY > window.innerHeight * 0.72);
+    const onScroll = () =>
+      setIsScrolled(window.scrollY > window.innerHeight * 0.72);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
@@ -79,11 +82,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
         <nav className="nav-shell" aria-label="Main navigation">
           <div className="nav-side nav-side-left">
             {splitNav.left.map((item) => (
-              <NavLink
-                key={item.href}
-                item={item}
-                pathname={pathname}
-              />
+              <NavLink key={item.href} item={item} pathname={pathname} />
             ))}
           </div>
 
@@ -99,19 +98,14 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
 
           <div className="nav-side nav-side-right">
             {splitNav.right.map((item) => (
-              <NavLink
-                key={item.href}
-                item={item}
-                pathname={pathname}
-              />
+              <NavLink key={item.href} item={item} pathname={pathname} />
             ))}
-            <ContactNavIcon
-              href={splitNav.contact.href}
-              label={splitNav.contact.label}
-              pathname={pathname}
-            />
+            <ContactNavLink href={splitNav.contact.href} pathname={pathname} />
           </div>
 
+          <Link className="mobile-enquiry-link" href="/contact">
+            Enquire
+          </Link>
           <button
             className="mobile-menu-button"
             type="button"
@@ -119,7 +113,11 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((value) => !value)}
           >
-            {menuOpen ? <HiOutlineXMark aria-hidden="true" /> : <HiOutlineBars3 aria-hidden="true" />}
+            {menuOpen ? (
+              <HiOutlineXMark aria-hidden="true" />
+            ) : (
+              <HiOutlineBars3 aria-hidden="true" />
+            )}
           </button>
         </nav>
 
@@ -137,6 +135,7 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
                   <NavLink
                     item={item}
                     pathname={pathname}
+                    onNavigate={() => setMenuOpen(false)}
                   />
                 </div>
               ))}
@@ -148,9 +147,17 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <AnimatePresence mode="wait" initial={false}>
         <motion.main
           key={pathname}
-          initial={prefersReducedMotion ? false : { opacity: 0, y: 24, filter: "blur(10px)" }}
+          initial={
+            prefersReducedMotion
+              ? false
+              : { opacity: 0, y: 24, filter: "blur(10px)" }
+          }
           animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-          exit={prefersReducedMotion ? { opacity: 0 } : { opacity: 0, y: -18, filter: "blur(8px)" }}
+          exit={
+            prefersReducedMotion
+              ? { opacity: 0 }
+              : { opacity: 0, y: -18, filter: "blur(8px)" }
+          }
           transition={{ duration: 0.44, ease: [0.22, 1, 0.36, 1] }}
         >
           {children}
@@ -160,9 +167,15 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
       <motion.div
         className={`route-wash route-wash-${routeTone}`}
         key={`wash-${pathname}`}
-        initial={prefersReducedMotion ? { opacity: 0 } : { y: "-100%" }}
-        animate={prefersReducedMotion ? { opacity: 0 } : { y: ["-100%", "0%", "100%"] }}
-        transition={{ duration: 0.92, times: [0, 0.48, 1], ease: [0.83, 0, 0.17, 1] }}
+        initial={{ y: "-100%" }}
+        animate={
+          prefersReducedMotion ? { y: "-100%" } : { y: ["-100%", "0%", "100%"] }
+        }
+        transition={{
+          duration: 0.92,
+          times: [0, 0.48, 1],
+          ease: [0.83, 0, 0.17, 1],
+        }}
         aria-hidden="true"
       />
 
@@ -171,25 +184,22 @@ export function SiteShell({ children }: { children: React.ReactNode }) {
   );
 }
 
-function ContactNavIcon({
+function ContactNavLink({
   href,
-  label,
   pathname,
 }: {
   href: string;
-  label: string;
   pathname: string;
 }) {
   const active = pathname.startsWith(href);
 
   return (
     <Link
-      className={active ? "nav-link nav-icon-link active" : "nav-link nav-icon-link"}
+      className={active ? "nav-project-link active" : "nav-project-link"}
       href={href}
-      aria-label={label}
-      title={label}
+      aria-current={active ? "page" : undefined}
     >
-      <HiOutlineEnvelope aria-hidden="true" />
+      Discuss a project
     </Link>
   );
 }
@@ -197,14 +207,21 @@ function ContactNavIcon({
 function NavLink({
   item,
   pathname,
+  onNavigate,
 }: {
   item: (typeof navItems)[number];
   pathname: string;
+  onNavigate?: () => void;
 }) {
-  const active = item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
+  const active =
+    item.href === "/" ? pathname === "/" : pathname.startsWith(item.href);
 
   return (
-    <Link className={active ? "nav-link active" : "nav-link"} href={item.href}>
+    <Link
+      className={active ? "nav-link active" : "nav-link"}
+      href={item.href}
+      onClick={onNavigate}
+    >
       {item.label}
     </Link>
   );
@@ -215,7 +232,13 @@ function SiteFooter() {
     <footer className="site-footer" data-nav-tone="dark">
       <div>
         <Image src={whiteLogo} width={886} height={205} alt="Brandd" />
-        <p>Websites, product platforms, backend systems, databases, projects, ecommerce, integrations, and operational tools.</p>
+        <p>
+          Websites, online stores and business software. Based in Leighton
+          Buzzard, Bedfordshire.
+        </p>
+        <a className="footer-email" href="mailto:enquiries@brandd.co.uk">
+          enquiries@brandd.co.uk
+        </a>
       </div>
       <div className="footer-links">
         {navItems.map((item) => (
@@ -227,7 +250,9 @@ function SiteFooter() {
         <button
           className="footer-cookie-button"
           type="button"
-          onClick={() => window.dispatchEvent(new Event(consentSettingsEventName))}
+          onClick={() =>
+            window.dispatchEvent(new Event(consentSettingsEventName))
+          }
         >
           Cookie settings
         </button>

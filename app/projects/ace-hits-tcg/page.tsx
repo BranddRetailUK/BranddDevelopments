@@ -11,15 +11,26 @@ import {
   HiOutlineSquares2X2,
 } from "react-icons/hi2";
 import { MotionReveal } from "@/components/MotionReveal";
+import { ProjectBrief } from "@/components/ProjectBrief";
 import { StructuredData } from "@/components/StructuredData";
-import { absoluteUrl, createBreadcrumbJsonLd, createPageMetadata, organizationId } from "@/content/seo";
+import {
+  absoluteUrl,
+  createBreadcrumbJsonLd,
+  createPageMetadata,
+  organizationId,
+} from "@/content/seo";
 
 export const metadata = createPageMetadata({
-  title: "Ace Hits TCG",
+  title: "Ace Hits TCG case study",
   description:
-    "Ace Hits TCG project page for a high-energy collector retail storefront with drops, product navigation, cart, account, and trust-led shopping.",
+    "Brandd’s Shopify storefront work for Ace Hits TCG: collector navigation, product displays and clear paths to checkout.",
   path: "/projects/ace-hits-tcg",
-  keywords: ["collector retail storefront", "TCG ecommerce", "Shopify storefront", "product navigation"],
+  keywords: [
+    "collector retail storefront",
+    "TCG ecommerce",
+    "Shopify storefront",
+    "product navigation",
+  ],
 });
 
 const aceLogo =
@@ -56,18 +67,18 @@ const aceHighlights = [
     icon: HiOutlineSquares2X2,
   },
   {
-    title: "Drop-led retail",
-    copy: "New-in products, featured banners, prices and fast purchase paths.",
+    title: "New releases",
+    copy: "Featured collections and banners introduce the latest products.",
     icon: HiOutlineSparkles,
   },
   {
-    title: "Trust cues",
-    copy: "Reviews, shipping messages, secure payments and social proof.",
+    title: "Buying information",
+    copy: "Reviews, delivery information and payment options help shoppers make a decision.",
     icon: HiOutlineShieldCheck,
   },
   {
     title: "Mobile shopping",
-    copy: "Compact menu, account access, cart drawer and mobile toolbar.",
+    copy: "Search, account and basket controls stay within reach on a phone.",
     icon: HiOutlineDevicePhoneMobile,
   },
 ];
@@ -75,7 +86,7 @@ const aceHighlights = [
 const aceSignals = [
   "New in",
   "Shop by type",
-  "Pokemon TCG",
+  "Pokémon TCG",
   "English",
   "Japanese",
   "Korean",
@@ -90,7 +101,7 @@ export default function AceHitsTcgPage() {
         data={[
           createBreadcrumbJsonLd([
             { name: "Home", path: "/" },
-            { name: "Websites", path: "/projects" },
+            { name: "Our work", path: "/projects" },
             { name: "Ace Hits TCG", path: "/projects/ace-hits-tcg" },
           ]),
           {
@@ -98,7 +109,7 @@ export default function AceHitsTcgPage() {
             "@type": "CreativeWork",
             name: "Ace Hits TCG",
             description:
-              "Collector retail storefront work with product drops, category navigation, cart, account, trust cues, and mobile shopping.",
+              "Shopify storefront design with collector categories, product displays and mobile shopping.",
             url: absoluteUrl("/projects/ace-hits-tcg"),
             creator: {
               "@id": organizationId,
@@ -106,10 +117,18 @@ export default function AceHitsTcgPage() {
           },
         ]}
       />
-      <section className="section dark-section ace-project-hero" data-nav-tone="dark">
+      <section
+        className="section dark-section ace-project-hero"
+        data-nav-tone="dark"
+      >
         <div className="section-inner ace-hero-grid">
           <MotionReveal className="ace-hero-copy">
-            <p className="eyebrow eyebrow-light">Ace Hits TCG</p>
+            <Link className="case-back-link" href="/projects">
+              ← Our work
+            </Link>
+            <p className="eyebrow eyebrow-light">
+              Ace Hits TCG · Online retail
+            </p>
             <Image
               alt="Ace Hits TCG"
               className="ace-hero-logo"
@@ -118,29 +137,33 @@ export default function AceHitsTcgPage() {
               src={aceLogo}
               width={600}
             />
-            <h1>High-energy TCG storefront for collector drops.</h1>
+            <h1>A trading-card store built for collectors.</h1>
             <p>
-              Ace Hits TCG is a fast retail site for Pokemon cards, sealed
-              products, accessories and collector drops. The experience is built
-              around clear categories, strong product visuals, cart flow and
-              trust-led shopping.
+              Brandd’s storefront work for Ace Hits TCG brings Pokémon cards,
+              sealed products and accessories into a Shopify store organised
+              around how collectors search and shop.
             </p>
             <div className="ace-hero-actions">
+              <Link className="button ace-button" href="/contact">
+                Discuss an online store <HiArrowLongRight aria-hidden="true" />
+              </Link>
               <a
-                className="button ace-button"
+                className="button ace-secondary-button"
                 href="https://www.acehitstcg.co.uk/"
                 rel="noreferrer"
                 target="_blank"
               >
-                View Ace Hits TCG <HiArrowTopRightOnSquare aria-hidden="true" />
+                Visit Ace Hits TCG{" "}
+                <HiArrowTopRightOnSquare aria-hidden="true" />
               </a>
-              <Link className="button button-light ace-secondary-button" href="/projects">
-                Back to websites <HiArrowLongRight aria-hidden="true" />
-              </Link>
             </div>
           </MotionReveal>
 
-          <MotionReveal className="ace-storefront-visual" delay={0.12} aria-hidden="true">
+          <MotionReveal
+            className="ace-storefront-visual"
+            delay={0.12}
+            aria-hidden="true"
+          >
             <div className="ace-browser-bar">
               <span />
               <span />
@@ -165,17 +188,30 @@ export default function AceHitsTcgPage() {
         </div>
       </section>
 
-      <section className="section light-section ace-retail-section" data-nav-tone="light">
+      <ProjectBrief
+        need="Help collectors browse trading cards and accessories by the details that matter to them, including type, language and set."
+        role="Storefront design and development on Shopify, including catalogue navigation, product presentation and the mobile shopping experience."
+        result="Shoppers can browse collector categories, discover new releases and reach their basket and account as they shop."
+      />
+
+      <section
+        className="section light-section ace-retail-section"
+        data-nav-tone="light"
+      >
         <div className="section-inner">
           <MotionReveal className="section-heading ace-section-heading">
-            <p className="eyebrow">Storefront shape</p>
-            <h2>A collector shop built around drops, categories and quick buying decisions.</h2>
+            <p className="eyebrow">Finding the right product</p>
+            <h2>Shop by type, language and set.</h2>
           </MotionReveal>
           <div className="ace-highlight-grid">
             {aceHighlights.map((item, index) => {
               const Icon = item.icon;
               return (
-                <MotionReveal className="ace-highlight-card" delay={index * 0.06} key={item.title}>
+                <MotionReveal
+                  className="ace-highlight-card"
+                  delay={index * 0.06}
+                  key={item.title}
+                >
                   <Icon aria-hidden="true" />
                   <h3>{item.title}</h3>
                   <p>{item.copy}</p>
@@ -186,22 +222,37 @@ export default function AceHitsTcgPage() {
         </div>
       </section>
 
-      <section className="section dark-section ace-commerce-section" data-nav-tone="dark">
+      <section
+        className="section dark-section ace-commerce-section"
+        data-nav-tone="dark"
+      >
         <div className="section-inner ace-commerce-grid">
           <MotionReveal className="ace-commerce-copy">
-            <p className="eyebrow eyebrow-light">Commerce flow</p>
-            <h2>Product discovery, basket, account and checkout all stay close to the shopper.</h2>
+            <p className="eyebrow eyebrow-light">From browsing to checkout</p>
+            <h2>Keep the next step easy to find.</h2>
             <p>
-              The site keeps key retail actions visible: search, account login,
-              cart drawer, product prices, shipping prompts, newsletter signup
-              and social channels.
+              Search, basket and account links stay easy to reach while
+              customers shop. Product prices and delivery information help them
+              check the details before buying.
             </p>
           </MotionReveal>
           <MotionReveal className="ace-flow-stack" delay={0.12}>
             {[
-              { title: "Shop", copy: "Type, language, era and set categories.", icon: HiOutlineShoppingBag },
-              { title: "Promote", copy: "Banners, drops, TikTok proof and newsletter.", icon: HiOutlineMegaphone },
-              { title: "Convert", copy: "Cart, account, shipping message and checkout.", icon: HiOutlineShieldCheck },
+              {
+                title: "Shop",
+                copy: "Type, language, era and set categories.",
+                icon: HiOutlineShoppingBag,
+              },
+              {
+                title: "Promote",
+                copy: "Featured products, TikTok content and email updates.",
+                icon: HiOutlineMegaphone,
+              },
+              {
+                title: "Buy",
+                copy: "Review the basket, delivery information and checkout.",
+                icon: HiOutlineShieldCheck,
+              },
             ].map((item) => {
               const Icon = item.icon;
               return (
@@ -218,36 +269,56 @@ export default function AceHitsTcgPage() {
         </div>
       </section>
 
-      <section className="section light-section ace-product-section" data-nav-tone="light">
+      <section
+        className="section light-section ace-product-section"
+        data-nav-tone="light"
+      >
         <div className="section-inner ace-product-grid-wrap">
           <MotionReveal className="ace-product-copy">
             <p className="eyebrow">Product catalogue</p>
-            <h2>Trading-card retail needs a catalogue that is easy to scan.</h2>
+            <h2>The product details shoppers need.</h2>
             <p>
-              Product cards carry the essentials first: image, product name,
-              price, stock path and checkout intent.
+              Product cards put the image, name and price first so collectors
+              can browse the range and choose what to explore.
             </p>
           </MotionReveal>
-          <div className="ace-product-grid">
-            {aceProductDrops.map((item, index) => (
-              <MotionReveal className="ace-product-card" delay={index * 0.08} key={item.title}>
-                <Image alt={`${item.title} product image`} height={800} src={item.image} width={800} />
-                <span>{item.title}</span>
-                <strong>{item.price}</strong>
-              </MotionReveal>
-            ))}
+          <div>
+            <p className="visual-caption">
+              Product display examples · prices shown for illustration.
+            </p>
+            <div className="ace-product-grid">
+              {aceProductDrops.map((item, index) => (
+                <MotionReveal
+                  className="ace-product-card"
+                  delay={index * 0.08}
+                  key={item.title}
+                >
+                  <Image
+                    alt={`${item.title} product image`}
+                    height={800}
+                    src={item.image}
+                    width={800}
+                  />
+                  <span>{item.title}</span>
+                  <strong>{item.price}</strong>
+                </MotionReveal>
+              ))}
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="section dark-section compact-cta ace-cta-section" data-nav-tone="dark">
+      <section
+        className="section dark-section compact-cta ace-cta-section"
+        data-nav-tone="dark"
+      >
         <div className="section-inner cta-row">
           <MotionReveal>
             <p className="eyebrow eyebrow-light">Retail build</p>
-            <h2>Need a store that moves with product drops?</h2>
+            <h2>Need an online store for a changing product range?</h2>
           </MotionReveal>
           <Link className="button button-light" href="/contact">
-            Plan a commerce project <HiArrowLongRight aria-hidden="true" />
+            Discuss an online store <HiArrowLongRight aria-hidden="true" />
           </Link>
         </div>
       </section>

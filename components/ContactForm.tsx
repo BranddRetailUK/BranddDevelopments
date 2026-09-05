@@ -1,14 +1,23 @@
 "use client";
 
 import Script from "next/script";
+import Link from "next/link";
 import { FormEvent, useRef, useState } from "react";
-import { HiArrowLongRight, HiCheck, HiOutlineCheckCircle } from "react-icons/hi2";
+import {
+  HiArrowLongRight,
+  HiCheck,
+  HiOutlineCheckCircle,
+} from "react-icons/hi2";
 import {
   consentStorageKey,
   getLeadAttribution,
   readBrowserStorage,
 } from "@/lib/clientAttribution";
-import { contactBudgetOptions, contactFocusOptions } from "@/lib/contactOptions";
+import {
+  contactBudgetOptions,
+  contactFocusOptions,
+  type ContactFocusOption,
+} from "@/lib/contactOptions";
 
 type FormState =
   | { status: "idle" }
@@ -20,7 +29,10 @@ declare global {
   interface Window {
     dataLayer?: unknown[];
     gtag?: (...args: unknown[]) => void;
-    branddTrackEvent?: (eventName: string, properties?: Record<string, unknown>) => void;
+    branddTrackEvent?: (
+      eventName: string,
+      properties?: Record<string, unknown>,
+    ) => void;
     turnstile?: {
       reset: () => void;
     };
@@ -76,7 +88,11 @@ function trackLeadConversion({
   });
 }
 
-export function ContactForm() {
+export function ContactForm({
+  initialFocus,
+}: {
+  initialFocus?: ContactFocusOption;
+}) {
   const [formState, setFormState] = useState<FormState>({ status: "idle" });
   const formStartedAtRef = useRef(Date.now());
   const idempotencyKeyRef = useRef<string | null>(null);
@@ -124,7 +140,10 @@ export function ContactForm() {
       } | null;
 
       if (!response.ok) {
-        throw new Error(payload?.message ?? "We could not send the enquiry. Please try again.");
+        throw new Error(
+          payload?.message ??
+            "We could not send the enquiry. Please try again.",
+        );
       }
 
       if (payload?.submissionId) {
@@ -139,14 +158,15 @@ export function ContactForm() {
       idempotencyKeyRef.current = null;
       setFormState({
         status: "sent",
-        message: payload?.message ?? "Thanks. Your enquiry has been received.",
+        message:
+          "Thanks. We’ll review your message and reply by email, typically within one hour.",
       });
     } catch (error) {
       window.turnstile?.reset();
       setFormState({
         status: "error",
         message:
-          error instanceof Error
+          error instanceof Error && !(error instanceof TypeError)
             ? error.message
             : "We could not send the enquiry. Please try again.",
       });
@@ -158,14 +178,26 @@ export function ContactForm() {
   const isSubmitLocked = isSending || isSent;
 
   return (
-    <form className="contact-form" onSubmit={handleSubmit} aria-busy={isSending}>
+    <form
+      className="contact-form"
+      onSubmit={handleSubmit}
+      aria-busy={isSending}
+    >
       <div className="form-heading">
-        <span>Project brief</span>
+        <span>Your project</span>
         {isSent ? <HiOutlineCheckCircle aria-hidden="true" /> : null}
       </div>
       <label>
         Name
-        <input name="name" type="text" autoComplete="name" required disabled={isSending} />
+        <input
+          name="name"
+          type="text"
+          autoComplete="name"
+          minLength={2}
+          maxLength={120}
+          required
+          disabled={isSubmitLocked}
+        />
       </label>
       <div className="form-honeypot" aria-hidden="true">
         <label>
@@ -175,14 +207,21 @@ export function ContactForm() {
       </div>
       <label>
         Email
-        <input name="email" type="email" autoComplete="email" required disabled={isSending} />
+        <input
+          name="email"
+          type="email"
+          autoComplete="email"
+          maxLength={180}
+          required
+          disabled={isSubmitLocked}
+        />
       </label>
       <label>
-        Service focus
+        What do you need help with?
         <select
           name="focus"
-          defaultValue="Website design and frontend build"
-          disabled={isSending}
+          defaultValue={initialFocus ?? "Not sure yet"}
+          disabled={isSubmitLocked}
         >
           {contactFocusOptions.map((option) => (
             <option key={option}>{option}</option>
@@ -190,7 +229,7 @@ export function ContactForm() {
         </select>
       </label>
       <fieldset className="budget-field">
-        <legend>Budget</legend>
+        <legend>Approximate budget</legend>
         <div className="budget-options">
           {contactBudgetOptions.map((option) => (
             <label className="budget-option" key={option}>
@@ -199,7 +238,7 @@ export function ContactForm() {
                 type="radio"
                 value={option}
                 required
-                disabled={isSending}
+                disabled={isSubmitLocked}
               />
               <span className="budget-check" aria-hidden="true" />
               <span className="budget-option-text">{option}</span>
@@ -209,7 +248,14 @@ export function ContactForm() {
       </fieldset>
       <label className="brief-field">
         What are you building, improving or trying to fix?
-        <textarea name="message" rows={5} required disabled={isSending} />
+        <textarea
+          name="message"
+          rows={5}
+          minLength={10}
+          maxLength={5000}
+          required
+          disabled={isSubmitLocked}
+        />
       </label>
       {turnstileSiteKey ? (
         <>
@@ -235,9 +281,12 @@ export function ContactForm() {
         aria-label={isSent ? "Enquiry sent" : undefined}
       >
         {isSent ? (
-          <span className="submit-success-mark" aria-hidden="true">
-            <HiCheck />
-          </span>
+          <>
+            <span className="submit-success-mark" aria-hidden="true">
+              <HiCheck />
+            </span>
+            <span>Enquiry sent</span>
+          </>
         ) : (
           <>
             <span>{isSending ? "Sending enquiry" : "Send enquiry"}</span>
@@ -245,6 +294,9 @@ export function ContactForm() {
           </>
         )}
       </button>
+      <p className="form-privacy">
+        Read <Link href="/privacy">how we use your information</Link>.
+      </p>
       {formState.status === "sent" ? (
         <p className="form-success" aria-live="polite">
           {formState.message}
@@ -252,7 +304,8 @@ export function ContactForm() {
       ) : null}
       {formState.status === "error" ? (
         <p className="form-error" aria-live="polite">
-          {formState.message}
+          {formState.message} You can also email{" "}
+          <a href="mailto:enquiries@brandd.co.uk">enquiries@brandd.co.uk</a>.
         </p>
       ) : null}
     </form>
