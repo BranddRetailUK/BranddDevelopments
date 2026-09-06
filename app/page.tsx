@@ -58,9 +58,6 @@ export default function Home() {
               See our work
             </Link>
           </div>
-          <p className="hero-location">
-            Based in Leighton Buzzard, Bedfordshire.
-          </p>
         </MotionReveal>
       </section>
       <section

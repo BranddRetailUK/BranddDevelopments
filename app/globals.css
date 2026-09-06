@@ -6827,7 +6827,7 @@ body {
   font-weight: 750;
 }
 
-.site-shell main p:not(.eyebrow):not(.work-category):not(.visual-caption):not(.privacy-updated):not(.hero-location) {
+.site-shell main p:not(.eyebrow):not(.work-category):not(.visual-caption):not(.privacy-updated) {
   font-size: 1rem;
   font-weight: 450;
   line-height: 1.7;
@@ -6883,7 +6883,6 @@ body {
   transform: translateY(-50%);
   mix-blend-mode: multiply;
 }
-.hero-location { margin: 24px 0 0; color: var(--muted); font-size: 0.9rem; }
 .home-intro .hero-copy { max-width: min(960px, 58%); }
 .hero-actions { margin-top: 26px; }
 .button { text-transform: none; letter-spacing: 0; font-size: 0.95rem; font-weight: 750; }
