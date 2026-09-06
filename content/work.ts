@@ -12,7 +12,7 @@ export const work = [
   {
     slug: "good-game-apparel",
     name: "Good Game Apparel",
-    category: "Brandd-owned product",
+    category: "Print on Demand Merch Service",
     copy: "Creator stores, product design tools and made-to-order fulfilment.",
     role: "Commerce platform and creator tools",
     image: "/images/good-game/good-game-apparel-logo.png",

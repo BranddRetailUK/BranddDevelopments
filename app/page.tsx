@@ -67,7 +67,6 @@ export default function Home() {
         <div className="section-inner">
           <MotionReveal className="section-heading heading-with-link">
             <div>
-              <p className="eyebrow eyebrow-light">Selected work</p>
               <h2>See what we’ve built.</h2>
             </div>
             <Link className="text-link" href="/projects">
