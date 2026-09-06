@@ -38,7 +38,7 @@ export default function Home() {
           <Image
             src={homepageBanner}
             alt=""
-            sizes="(min-width: 2000px) 2000px, 100vw"
+            sizes="(max-width: 636px) calc(250vw - 90px), (max-width: 1080px) 1500px, (min-width: 2000px) 2000px, 100vw"
             priority
           />
         </div>

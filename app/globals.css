@@ -7032,7 +7032,21 @@ body {
 }
 
 @media (max-width: 1080px) {
-  .home-intro-art { display: none; }
+  .home-intro { display: flex; flex-direction: column; gap: 24px; }
+  .home-intro-art {
+    position: relative;
+    inset: auto;
+    order: 1;
+    align-self: center;
+    width: min(100%, 600px);
+    aspect-ratio: 10 / 7;
+    overflow: hidden;
+  }
+  .home-intro-art::before {
+    inset: 0;
+    mask-image: radial-gradient(ellipse, black 35%, transparent 72%);
+  }
+  .home-intro-art img { right: -10%; }
   .home-intro .hero-copy { max-width: 960px; }
   .nav-shell { grid-template-columns: 1fr; padding-inline: 22px; }
   .mobile-enquiry-link { display: inline-flex; align-items: center; justify-content: center; grid-column: 1; grid-row: 1; justify-self: start; min-height: 44px; padding: 0 12px; border: 1px solid currentColor; border-radius: 8px; font-size: 0.88rem; font-weight: 750; }
